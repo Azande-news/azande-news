@@ -39,11 +39,11 @@ export default function LoginPage() {
 
   return (
     <div className="max-w-md mx-auto">
-      <h1 className="font-display text-3xl text-forest mb-8">Log in</h1>
+      <h1 className="font-display text-3xl font-bold text-ink mb-8">Log in</h1>
 
       <form onSubmit={handleSubmit} className="space-y-5">
         <div>
-          <label className="block font-body text-sm text-forest mb-1">
+          <label className="block font-body text-sm text-ink mb-1">
             Email
           </label>
           <input
@@ -51,12 +51,12 @@ export default function LoginPage() {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full border border-forest/30 rounded-sm px-3 py-2 font-body focus:outline-none focus:ring-2 focus:ring-ochre"
+            className="w-full border border-border rounded-sm px-3 py-2 font-body focus:outline-none focus:ring-2 focus:ring-accent"
           />
         </div>
 
         <div>
-          <label className="block font-body text-sm text-forest mb-1">
+          <label className="block font-body text-sm text-ink mb-1">
             Password
           </label>
           <input
@@ -64,24 +64,24 @@ export default function LoginPage() {
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full border border-forest/30 rounded-sm px-3 py-2 font-body focus:outline-none focus:ring-2 focus:ring-ochre"
+            className="w-full border border-border rounded-sm px-3 py-2 font-body focus:outline-none focus:ring-2 focus:ring-accent"
           />
         </div>
 
-        {error && <p className="text-clay font-body text-sm">{error}</p>}
+        {error && <p className="text-accent font-body text-sm">{error}</p>}
 
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-forest text-ivory py-3 rounded-sm hover:bg-forest-light transition-colors font-body disabled:opacity-60"
+          className="w-full bg-ink text-paper py-3 rounded-sm hover:bg-accent transition-colors font-body font-medium disabled:opacity-60"
         >
           {loading ? "Logging in…" : "Log in"}
         </button>
       </form>
 
-      <p className="font-body text-sm text-ink/70 mt-6">
+      <p className="font-body text-sm text-grey mt-6">
         New here?{" "}
-        <Link href="/register" className="text-clay hover:underline">
+        <Link href="/register" className="text-accent hover:underline">
           Create a free account
         </Link>
       </p>

@@ -32,17 +32,17 @@ export default function AdminUsersTable({
   }
 
   return (
-    <div className="divide-y divide-forest/10">
+    <div className="divide-y divide-border">
       {profiles.map((profile) => (
         <div
           key={profile.id}
           className="py-4 flex flex-wrap items-center justify-between gap-3"
         >
           <div>
-            <span className="font-body font-medium text-forest">
+            <span className="font-body font-medium text-ink">
               {profile.display_name}
             </span>{" "}
-            <span className="font-meta text-xs text-forest/60">
+            <span className="font-meta text-xs text-grey">
               @{profile.username} &middot; {profile.role}
             </span>
           </div>
@@ -50,7 +50,7 @@ export default function AdminUsersTable({
             <button
               onClick={() => toggleRole(profile)}
               disabled={busyId === profile.id}
-              className="font-body text-sm text-forest hover:underline disabled:opacity-50"
+              className="font-body text-sm text-ink hover:underline disabled:opacity-50"
             >
               {profile.role === "admin" ? "Remove admin" : "Make admin"}
             </button>

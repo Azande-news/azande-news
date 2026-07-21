@@ -24,11 +24,11 @@ export default async function AdminPage() {
   if (myProfile?.role !== "admin") {
     return (
       <div className="max-w-md mx-auto text-center py-16">
-        <h1 className="font-display text-3xl text-forest mb-4">
+        <h1 className="font-display text-3xl font-bold text-ink mb-4">
           Admins only
         </h1>
-        <p className="font-body text-ink/70">
-          You don't have access to this page. If you think this is a
+        <p className="font-body text-grey">
+          You don&apos;t have access to this page. If you think this is a
           mistake, ask an existing admin to promote your account from the
           Supabase dashboard.
         </p>
@@ -55,29 +55,29 @@ export default async function AdminPage() {
 
   return (
     <div className="max-w-3xl mx-auto">
-      <h1 className="font-display text-3xl text-forest mb-1">
+      <h1 className="font-display text-3xl font-bold text-ink mb-1">
         Admin dashboard
       </h1>
-      <p className="font-body text-ink/70 mb-12">
+      <p className="font-body text-grey mb-12">
         Moderate posts, manage user roles, and review reports.
       </p>
 
       <section className="mb-14">
-        <h2 className="font-display text-xl text-forest mb-4">
+        <h2 className="font-display text-xl font-bold text-ink border-l-4 border-accent pl-3 mb-4">
           Open reports
         </h2>
         <AdminReportsTable reports={(reports ?? []) as any} />
       </section>
 
       <section className="mb-14">
-        <h2 className="font-display text-xl text-forest mb-4">
+        <h2 className="font-display text-xl font-bold text-ink border-l-4 border-accent pl-3 mb-4">
           All posts ({posts?.length ?? 0})
         </h2>
         <AdminPostsTable posts={(posts ?? []) as any} />
       </section>
 
       <section>
-        <h2 className="font-display text-xl text-forest mb-4">
+        <h2 className="font-display text-xl font-bold text-ink border-l-4 border-accent pl-3 mb-4">
           Users ({profiles?.length ?? 0})
         </h2>
         <AdminUsersTable profiles={(profiles ?? []) as any} currentUserId={user.id} />

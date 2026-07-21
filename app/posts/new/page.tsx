@@ -109,10 +109,10 @@ export default function NewPostPage() {
 
   return (
     <div className="max-w-2xl mx-auto">
-      <h1 className="font-display text-3xl text-forest mb-2">
+      <h1 className="font-display text-3xl font-bold text-ink mb-2">
         Write a post
       </h1>
-      <p className="font-body text-ink/70 mb-8">
+      <p className="font-body text-grey mb-8">
         This will be published to the world immediately. Please write
         respectfully &mdash; posts can be removed if they break community
         guidelines.
@@ -120,7 +120,7 @@ export default function NewPostPage() {
 
       <form onSubmit={handleSubmit} className="space-y-5">
         <div>
-          <label className="block font-body text-sm text-forest mb-1">
+          <label className="block font-body text-sm text-ink mb-1">
             Title
           </label>
           <input
@@ -129,18 +129,18 @@ export default function NewPostPage() {
             maxLength={200}
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="w-full border border-forest/30 rounded-sm px-3 py-2 font-body focus:outline-none focus:ring-2 focus:ring-ochre"
+            className="w-full border border-border rounded-sm px-3 py-2 font-body focus:outline-none focus:ring-2 focus:ring-accent"
           />
         </div>
 
         <div>
-          <label className="block font-body text-sm text-forest mb-1">
+          <label className="block font-body text-sm text-ink mb-1">
             Category
           </label>
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            className="w-full border border-forest/30 rounded-sm px-3 py-2 font-body focus:outline-none focus:ring-2 focus:ring-ochre bg-white"
+            className="w-full border border-border rounded-sm px-3 py-2 font-body focus:outline-none focus:ring-2 focus:ring-accent bg-white"
           >
             {CATEGORIES.map((c) => (
               <option key={c.value} value={c.value}>
@@ -151,17 +151,17 @@ export default function NewPostPage() {
         </div>
 
         <div>
-          <label className="block font-body text-sm text-forest mb-1">
-            Cover photo <span className="text-forest/50">(optional)</span>
+          <label className="block font-body text-sm text-ink mb-1">
+            Cover photo <span className="text-grey">(optional)</span>
           </label>
           <input
             type="file"
             accept="image/*"
             onChange={handleImageChange}
-            className="w-full font-body text-sm file:mr-4 file:py-2 file:px-4 file:rounded-sm file:border-0 file:bg-forest file:text-ivory file:cursor-pointer hover:file:bg-forest-light"
+            className="w-full font-body text-sm file:mr-4 file:py-2 file:px-4 file:rounded-sm file:border-0 file:bg-ink file:text-paper file:cursor-pointer hover:file:bg-accent"
           />
           {imagePreview && (
-            <div className="w-full h-56 mt-3 rounded-sm overflow-hidden border border-forest/20">
+            <div className="w-full h-56 mt-3 overflow-hidden border border-border">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={imagePreview}
@@ -173,7 +173,7 @@ export default function NewPostPage() {
         </div>
 
         <div>
-          <label className="block font-body text-sm text-forest mb-1">
+          <label className="block font-body text-sm text-ink mb-1">
             Content
           </label>
           <textarea
@@ -182,19 +182,19 @@ export default function NewPostPage() {
             maxLength={20000}
             value={body}
             onChange={(e) => setBody(e.target.value)}
-            className="w-full border border-forest/30 rounded-sm px-3 py-2 font-body leading-relaxed focus:outline-none focus:ring-2 focus:ring-ochre"
+            className="w-full border border-border rounded-sm px-3 py-2 font-body leading-relaxed focus:outline-none focus:ring-2 focus:ring-accent"
           />
-          <div className="text-right font-meta text-xs text-forest/50 mt-1">
+          <div className="text-right font-meta text-xs text-grey mt-1">
             {body.length}/20000
           </div>
         </div>
 
-        {error && <p className="text-clay font-body text-sm">{error}</p>}
+        {error && <p className="text-accent font-body text-sm">{error}</p>}
 
         <button
           type="submit"
           disabled={loading}
-          className="bg-clay text-ivory px-6 py-3 rounded-sm hover:bg-forest transition-colors font-body disabled:opacity-60"
+          className="bg-accent text-paper px-6 py-3 rounded-sm hover:bg-accent-dark transition-colors font-body font-medium disabled:opacity-60"
         >
           {loading ? "Publishing…" : "Publish to Azande News"}
         </button>

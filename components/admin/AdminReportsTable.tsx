@@ -28,14 +28,14 @@ export default function AdminReportsTable({ reports }: { reports: Report[] }) {
 
   if (reports.length === 0) {
     return (
-      <p className="font-body text-ink/60 text-sm">
+      <p className="font-body text-grey text-sm">
         No open reports — nothing needs your attention right now.
       </p>
     );
   }
 
   return (
-    <div className="divide-y divide-forest/10">
+    <div className="divide-y divide-border">
       {reports.map((report) => (
         <div
           key={report.id}
@@ -44,21 +44,21 @@ export default function AdminReportsTable({ reports }: { reports: Report[] }) {
           <div>
             <Link
               href={`/posts/${report.post_id}`}
-              className="font-body font-medium text-forest hover:text-clay"
+              className="font-body font-medium text-ink hover:text-accent"
             >
               {report.posts?.title ?? "(post removed)"}
             </Link>
-            <p className="font-body text-sm text-ink/80 mt-1">
+            <p className="font-body text-sm text-grey-dark mt-1">
               &ldquo;{report.reason}&rdquo;
             </p>
-            <div className="font-meta text-xs text-forest/60 mt-1">
+            <div className="font-meta text-xs text-grey mt-1">
               Reported {new Date(report.created_at).toLocaleDateString()}
             </div>
           </div>
           <button
             onClick={() => resolve(report.id)}
             disabled={busyId === report.id}
-            className="font-body text-sm text-forest hover:underline disabled:opacity-50"
+            className="font-body text-sm text-ink hover:underline disabled:opacity-50"
           >
             Mark resolved
           </button>

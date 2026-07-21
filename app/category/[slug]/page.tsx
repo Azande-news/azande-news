@@ -30,18 +30,18 @@ export default async function CategoryPage({
 
   return (
     <div>
-      <div className="font-meta text-[11px] tracking-widest uppercase text-clay mb-2">
+      <div className="font-meta text-[11px] tracking-widest uppercase text-accent mb-2">
         Category
       </div>
-      <h1 className="font-display text-4xl text-forest mb-10">{label}</h1>
+      <h1 className="font-display text-4xl font-bold text-ink mb-10">{label}</h1>
 
       {allPosts.length === 0 && (
-        <p className="font-body text-ink/70">No posts in this category yet.</p>
+        <p className="font-body text-grey">No posts in this category yet.</p>
       )}
 
-      <div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-8">
         {allPosts.map((post) => (
-          <PostCard key={post.id} post={post} />
+          <PostCard key={post.id} post={post} variant="grid" />
         ))}
       </div>
     </div>

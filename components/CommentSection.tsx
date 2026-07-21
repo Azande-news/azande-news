@@ -80,8 +80,8 @@ export default function CommentSection({ postId }: { postId: string }) {
   }
 
   return (
-    <div className="mt-14 pt-8 border-t border-forest/15">
-      <h2 className="font-display text-2xl text-forest mb-6">
+    <div className="mt-14 pt-8 border-t border-border">
+      <h2 className="font-display text-2xl font-bold text-ink mb-6">
         {loadingList ? "Comments" : `Comments (${comments.length})`}
       </h2>
 
@@ -89,18 +89,18 @@ export default function CommentSection({ postId }: { postId: string }) {
         {comments.map((c) => (
           <div key={c.id} className="font-body">
             <div className="flex items-baseline justify-between">
-              <span className="text-sm font-medium text-forest">
+              <span className="text-sm font-semibold text-ink">
                 {c.profiles?.display_name ?? "Unknown"}
               </span>
-              <span className="font-meta text-xs text-forest/50">
+              <span className="font-meta text-xs text-grey">
                 {new Date(c.created_at).toLocaleDateString()}
               </span>
             </div>
-            <p className="text-ink/85 mt-1 whitespace-pre-wrap">{c.body}</p>
+            <p className="text-grey-dark mt-1 whitespace-pre-wrap">{c.body}</p>
             {userId === c.author_id && (
               <button
                 onClick={() => handleDelete(c.id)}
-                className="text-xs text-clay hover:underline mt-1"
+                className="text-xs text-accent hover:underline mt-1"
               >
                 Delete
               </button>
@@ -108,7 +108,7 @@ export default function CommentSection({ postId }: { postId: string }) {
           </div>
         ))}
         {!loadingList && comments.length === 0 && (
-          <p className="font-body text-ink/60 text-sm">
+          <p className="font-body text-grey text-sm">
             No comments yet — be the first to respond.
           </p>
         )}
@@ -122,20 +122,20 @@ export default function CommentSection({ postId }: { postId: string }) {
             rows={3}
             maxLength={2000}
             placeholder="Add a comment…"
-            className="w-full border border-forest/30 rounded-sm px-3 py-2 font-body focus:outline-none focus:ring-2 focus:ring-ochre"
+            className="w-full border border-border rounded-sm px-3 py-2 font-body focus:outline-none focus:ring-2 focus:ring-accent"
           />
-          {error && <p className="text-clay font-body text-sm">{error}</p>}
+          {error && <p className="text-accent font-body text-sm">{error}</p>}
           <button
             type="submit"
             disabled={submitting || body.trim().length === 0}
-            className="bg-forest text-ivory px-5 py-2 rounded-sm hover:bg-forest-light transition-colors font-body text-sm disabled:opacity-60"
+            className="bg-ink text-paper px-5 py-2 rounded-sm hover:bg-accent transition-colors font-body text-sm font-medium disabled:opacity-60"
           >
             {submitting ? "Posting…" : "Post comment"}
           </button>
         </form>
       ) : (
-        <p className="font-body text-sm text-ink/70">
-          <Link href="/login" className="text-clay hover:underline">
+        <p className="font-body text-sm text-grey">
+          <Link href="/login" className="text-accent hover:underline">
             Log in
           </Link>{" "}
           to join the discussion.

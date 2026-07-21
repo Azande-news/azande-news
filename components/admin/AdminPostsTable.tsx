@@ -36,11 +36,11 @@ export default function AdminPostsTable({ posts }: { posts: Post[] }) {
   }
 
   if (posts.length === 0) {
-    return <p className="font-body text-ink/60 text-sm">No posts yet.</p>;
+    return <p className="font-body text-grey text-sm">No posts yet.</p>;
   }
 
   return (
-    <div className="divide-y divide-forest/10">
+    <div className="divide-y divide-border">
       {posts.map((post) => (
         <div
           key={post.id}
@@ -49,17 +49,17 @@ export default function AdminPostsTable({ posts }: { posts: Post[] }) {
           <div>
             <Link
               href={`/posts/${post.id}`}
-              className="font-body font-medium text-forest hover:text-clay"
+              className="font-body font-medium text-ink hover:text-accent"
             >
               {post.title}
             </Link>
-            <div className="font-meta text-xs text-forest/60 mt-1">
+            <div className="font-meta text-xs text-grey mt-1">
               {CATEGORY_LABELS[post.category] ?? post.category} &middot; by{" "}
               {post.profiles?.display_name ?? "Unknown"} &middot;{" "}
               {new Date(post.created_at).toLocaleDateString()} &middot;{" "}
               <span
                 className={
-                  post.status === "published" ? "text-forest" : "text-clay"
+                  post.status === "published" ? "text-ink" : "text-accent"
                 }
               >
                 {post.status}
@@ -70,14 +70,14 @@ export default function AdminPostsTable({ posts }: { posts: Post[] }) {
             <button
               onClick={() => toggleStatus(post)}
               disabled={busyId === post.id}
-              className="text-forest hover:underline disabled:opacity-50"
+              className="text-ink hover:underline disabled:opacity-50"
             >
               {post.status === "published" ? "Remove from site" : "Restore"}
             </button>
             <button
               onClick={() => hardDelete(post.id)}
               disabled={busyId === post.id}
-              className="text-clay hover:underline disabled:opacity-50"
+              className="text-accent hover:underline disabled:opacity-50"
             >
               Delete permanently
             </button>

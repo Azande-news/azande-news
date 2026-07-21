@@ -22,7 +22,7 @@ export default function DeletePostButton({ postId }: { postId: string }) {
     return (
       <button
         onClick={() => setConfirming(true)}
-        className="font-body text-sm text-clay hover:underline"
+        className="font-body text-sm text-accent hover:underline"
       >
         Delete this post
       </button>
@@ -31,18 +31,18 @@ export default function DeletePostButton({ postId }: { postId: string }) {
 
   return (
     <div className="font-body text-sm">
-      <p className="mb-2 text-ink/80">Delete this post permanently?</p>
+      <p className="mb-2 text-grey-dark">Delete this post permanently?</p>
       <div className="flex gap-3">
         <button
           onClick={handleDelete}
           disabled={loading}
-          className="bg-clay text-ivory px-4 py-2 rounded-sm hover:bg-forest transition-colors disabled:opacity-60"
+          className="bg-accent text-paper px-4 py-2 rounded-sm hover:bg-accent-dark transition-colors disabled:opacity-60"
         >
           {loading ? "Deleting…" : "Yes, delete"}
         </button>
         <button
           onClick={() => setConfirming(false)}
-          className="px-4 py-2 rounded-sm border border-forest/30 hover:bg-forest/5"
+          className="px-4 py-2 rounded-sm border border-border hover:bg-offwhite"
         >
           Cancel
         </button>

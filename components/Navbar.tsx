@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import LogoutButton from "@/components/LogoutButton";
+import { CATEGORIES } from "@/lib/categories";
 
 export default async function Navbar() {
   const supabase = createClient();
@@ -19,52 +20,80 @@ export default async function Navbar() {
   }
 
   return (
-    <header className="border-b border-forest/15">
-      <div className="max-w-5xl mx-auto px-5 py-5 flex items-center justify-between">
-        <Link href="/" className="group">
-          <div className="font-meta text-[11px] tracking-[0.25em] text-clay uppercase">
-            Western Equatoria &middot; South Sudan &middot; Worldwide
-          </div>
-          <div className="font-display text-3xl sm:text-4xl font-medium text-forest -mt-0.5">
-            Azande News
-          </div>
-        </Link>
+    <header className="sticky top-0 z-50">
+      {/* Masthead */}
+      <div className="bg-ink text-paper">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
+          <Link href="/" className="flex items-baseline gap-2">
+            <span className="font-display text-xl sm:text-2xl font-bold tracking-tight">
+              Azande News
+            </span>
+            <span className="hidden sm:inline font-meta text-[10px] tracking-[0.2em] uppercase text-white/50">
+              Western Equatoria
+            </span>
+          </Link>
 
-        <nav className="flex items-center gap-4 font-body text-sm">
-          {user ? (
-            <>
-              {isAdmin && (
+          <nav className="flex items-center gap-3 text-sm font-medium">
+            {user ? (
+              <>
+                {isAdmin && (
+                  <Link
+                    href="/admin"
+                    className="hidden sm:inline text-white/80 hover:text-white transition-colors"
+                  >
+                    Admin
+                  </Link>
+                )}
                 <Link
-                  href="/admin"
-                  className="text-forest hover:text-clay transition-colors"
+                  href="/posts/new"
+                  className="bg-accent hover:bg-accent-light transition-colors px-3 py-1.5 rounded-sm"
                 >
-                  Admin
+                  Write a post
                 </Link>
-              )}
-              <Link
-                href="/posts/new"
-                className="bg-clay text-ivory px-4 py-2 rounded-sm hover:bg-forest transition-colors"
-              >
-                Write a post
-              </Link>
-              <LogoutButton />
-            </>
-          ) : (
-            <>
-              <Link href="/login" className="text-forest hover:text-clay transition-colors">
-                Log in
-              </Link>
-              <Link
-                href="/register"
-                className="bg-forest text-ivory px-4 py-2 rounded-sm hover:bg-forest-light transition-colors"
-              >
-                Join &mdash; it's free
-              </Link>
-            </>
-          )}
-        </nav>
+                <LogoutButton />
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/login"
+                  className="text-white/80 hover:text-white transition-colors"
+                >
+                  Log in
+                </Link>
+                <Link
+                  href="/register"
+                  className="bg-accent hover:bg-accent-light transition-colors px-3 py-1.5 rounded-sm"
+                >
+                  Join &mdash; it&apos;s free
+                </Link>
+              </>
+            )}
+          </nav>
+        </div>
       </div>
-      <div className="woven-divider" />
+
+      {/* Category strip */}
+      <div className="bg-paper border-b border-border">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <div className="flex items-center gap-6 overflow-x-auto scrollbar-none">
+            <Link
+              href="/"
+              className="shrink-0 py-3 text-sm font-semibold text-ink border-b-2 border-accent"
+            >
+              Home
+            </Link>
+            {CATEGORIES.map((c) => (
+              <Link
+                key={c.value}
+                href={`/category/${c.value}`}
+                className="shrink-0 py-3 text-sm font-medium text-grey hover:text-ink border-b-2 border-transparent hover:border-accent transition-colors"
+              >
+                {c.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </div>
     </header>
   );
 }

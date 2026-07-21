@@ -1,19 +1,13 @@
 import type { Metadata } from "next";
-import { Fraunces, Work_Sans, Space_Mono } from "next/font/google";
+import { Work_Sans, Space_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
-const fraunces = Fraunces({
-  subsets: ["latin"],
-  variable: "--font-fraunces",
-  weight: ["400", "500", "600", "700"],
-});
-
 const workSans = Work_Sans({
   subsets: ["latin"],
   variable: "--font-work-sans",
-  weight: ["400", "500", "600"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 const spaceMono = Space_Mono({
@@ -36,10 +30,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${fraunces.variable} ${workSans.variable} ${spaceMono.variable} font-body`}
+        className={`${workSans.variable} ${spaceMono.variable} font-body bg-paper`}
       >
         <Navbar />
-        <main className="max-w-5xl mx-auto px-5 py-10 min-h-[60vh]">
+        <main className="max-w-6xl mx-auto px-4 sm:px-6 py-8 min-h-[60vh]">
           {children}
         </main>
         <Footer />

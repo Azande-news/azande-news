@@ -49,7 +49,7 @@ export default function ReportButton({ postId }: { postId: string }) {
 
   if (done) {
     return (
-      <p className="font-body text-sm text-forest/70">
+      <p className="font-body text-sm text-grey">
         Thanks — an admin will review this.
       </p>
     );
@@ -59,7 +59,7 @@ export default function ReportButton({ postId }: { postId: string }) {
     return (
       <button
         onClick={() => setOpen(true)}
-        className="font-body text-sm text-forest/60 hover:text-clay hover:underline"
+        className="font-body text-sm text-grey hover:text-accent hover:underline"
       >
         Report this post
       </button>
@@ -68,7 +68,7 @@ export default function ReportButton({ postId }: { postId: string }) {
 
   return (
     <form onSubmit={handleSubmit} className="font-body text-sm space-y-2 max-w-sm">
-      <label className="block text-forest">
+      <label className="block text-ink">
         Why are you reporting this post?
       </label>
       <textarea
@@ -76,21 +76,21 @@ export default function ReportButton({ postId }: { postId: string }) {
         onChange={(e) => setReason(e.target.value)}
         rows={2}
         maxLength={500}
-        className="w-full border border-forest/30 rounded-sm px-3 py-2 focus:outline-none focus:ring-2 focus:ring-ochre"
+        className="w-full border border-border rounded-sm px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent"
       />
-      {error && <p className="text-clay">{error}</p>}
+      {error && <p className="text-accent">{error}</p>}
       <div className="flex gap-3">
         <button
           type="submit"
           disabled={submitting}
-          className="bg-clay text-ivory px-4 py-1.5 rounded-sm hover:bg-forest transition-colors disabled:opacity-60"
+          className="bg-accent text-paper px-4 py-1.5 rounded-sm hover:bg-accent-dark transition-colors disabled:opacity-60"
         >
           {submitting ? "Sending…" : "Submit report"}
         </button>
         <button
           type="button"
           onClick={() => setOpen(false)}
-          className="px-4 py-1.5 rounded-sm border border-forest/30 hover:bg-forest/5"
+          className="px-4 py-1.5 rounded-sm border border-border hover:bg-offwhite"
         >
           Cancel
         </button>

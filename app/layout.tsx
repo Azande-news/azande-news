@@ -17,28 +17,9 @@ const spaceMono = Space_Mono({
 });
 
 export const metadata: Metadata = {
-  title: {
-    default: "Azande News — by and for the Azande people, worldwide",
-    template: "%s · Azande News",
-  },
+  title: "Azande News — by and for the Azande people, worldwide",
   description:
     "A community news and information site for the Azande people of Western Equatoria, South Sudan, and the worldwide diaspora.",
-  metadataBase: new URL("https://azande-news.vercel.app"),
-  openGraph: {
-    title: "Azande News",
-    description:
-      "News, culture, and voices from the Azande people of Western Equatoria and the diaspora around the world.",
-    url: "https://azande-news.vercel.app",
-    siteName: "Azande News",
-    locale: "en_US",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Azande News",
-    description:
-      "News, culture, and voices from the Azande people of Western Equatoria and the diaspora around the world.",
-  },
 };
 
 export default function RootLayout({
@@ -60,4 +41,3 @@ export default function RootLayout({
     </html>
   );
 }
-

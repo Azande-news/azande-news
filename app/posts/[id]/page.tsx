@@ -1,4 +1,4 @@
-﻿import Link from "next/link";
+import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
@@ -20,25 +20,24 @@ export async function generateMetadata({
     .eq("id", params.id)
     .single();
 
-  if (!post) {
-    return { title: "Post not found" };
-  }
+  if (!post) return {};
 
-  const excerpt = post.body.replace(/\s+/g, " ").slice(0, 160);
+  const description = post.body.replace(/\s+/g, " ").slice(0, 160);
 
   return {
-    title: post.title,
-    description: excerpt,
+    title: `${post.title} — Azande News`,
+    description,
     openGraph: {
       title: post.title,
-      description: excerpt,
+      description,
+      images: post.cover_image_url ? [post.cover_image_url] : [],
       type: "article",
-      images: post.cover_image_url ? [post.cover_image_url] : undefined,
     },
     twitter: {
       card: "summary_large_image",
       title: post.title,
-      description: excerpt,
+      description,
+      images: post.cover_image_url ? [post.cover_image_url] : [],
     },
   };
 }
@@ -83,20 +82,20 @@ export default async function PostPage({ params }: { params: { id: string } }) {
 
   return (
     <article className="max-w-2xl mx-auto">
-      <div className="font-meta text-[11px] tracking-widest uppercase text-clay mb-3">
+      <div className="font-meta text-[11px] tracking-widest uppercase text-accent mb-3">
         <Link href={`/category/${post.category}`} className="hover:underline">
           {CATEGORY_LABELS[post.category] ?? post.category}
         </Link>
       </div>
-      <h1 className="font-display text-4xl sm:text-5xl font-medium text-forest leading-[1.05] mb-4">
+      <h1 className="font-display text-3xl sm:text-4xl font-bold text-ink leading-[1.1] mb-4">
         {post.title}
       </h1>
-      <div className="font-meta text-sm text-forest/60 mb-8">
+      <div className="font-meta text-sm text-grey mb-8">
         By {author?.display_name ?? "Unknown"} &middot; {date}
       </div>
 
       {post.cover_image_url && (
-        <div className="relative w-full h-72 sm:h-96 rounded-sm overflow-hidden mb-8">
+        <div className="relative w-full h-72 sm:h-96 overflow-hidden mb-8 bg-offwhite">
           <Image
             src={post.cover_image_url}
             alt=""
@@ -112,19 +111,12 @@ export default async function PostPage({ params }: { params: { id: string } }) {
         {post.body}
       </div>
 
-      <div className="mt-8 pt-6 border-t border-forest/15 flex items-center justify-between flex-wrap gap-3">
+      <div className="mt-8 pt-6 border-t border-border flex items-center justify-between flex-wrap gap-3">
         <ReportButton postId={post.id} />
         {canManage && <DeletePostButton postId={post.id} />}
-        {canManage && (
-          <Link href={`/posts/${post.id}/edit`} className="font-body text-sm text-accent hover:underline">
-            Edit post
-          </Link>
-        )}
       </div>
 
       <CommentSection postId={post.id} />
     </article>
   );
 }
-
-

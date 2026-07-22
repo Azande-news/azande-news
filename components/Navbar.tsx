@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { createClient } from "@/lib/supabase/server";
 import LogoutButton from "@/components/LogoutButton";
 import { CATEGORIES } from "@/lib/categories";
@@ -24,7 +25,8 @@ export default async function Navbar() {
       {/* Masthead */}
       <div className="bg-ink text-paper">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
-          <Link href="/" className="flex items-baseline gap-2">
+          <Link href="/" className="flex items-center gap-2">
+            <Image src="/logo.png" alt="Azande News" width={36} height={36} className="rounded-sm" priority />
             <span className="font-display text-xl sm:text-2xl font-bold tracking-tight">
               Azande News
             </span>
@@ -97,3 +99,4 @@ export default async function Navbar() {
     </header>
   );
 }
+

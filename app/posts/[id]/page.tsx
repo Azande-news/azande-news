@@ -5,6 +5,7 @@ import { createClient } from "@/lib/supabase/server";
 import DeletePostButton from "@/components/DeletePostButton";
 import CommentSection from "@/components/CommentSection";
 import ReportButton from "@/components/ReportButton";
+import ShareButtons from "@/components/ShareButtons";
 import { CATEGORY_LABELS } from "@/lib/categories";
 import type { Metadata } from "next";
 
@@ -116,7 +117,12 @@ export default async function PostPage({ params }: { params: { id: string } }) {
         {canManage && <DeletePostButton postId={post.id} />}
       </div>
 
+      <div className="mt-4 flex items-center justify-between flex-wrap gap-3">
+        <ShareButtons postId={post.id} postTitle={post.title} />
+      </div>
+
       <CommentSection postId={post.id} />
     </article>
   );
 }
+

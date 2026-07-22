@@ -34,6 +34,15 @@ export default function Footer() {
               <Link href="/search" className="hover:text-white transition-colors">
                 Search
               </Link>
+              <Link href="/privacy" className="hover:text-white transition-colors">
+                Privacy
+              </Link>
+              <Link href="/terms" className="hover:text-white transition-colors">
+                Terms
+              </Link>
+              <Link href="/editorial-standards" className="hover:text-white transition-colors">
+                Editorial Standards
+              </Link>
             </nav>
           </div>
 
@@ -58,4 +67,5 @@ export default function Footer() {
     </footer>
   );
 }
+
 

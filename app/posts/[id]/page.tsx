@@ -112,7 +112,7 @@ export default async function PostPage({ params }: { params: { id: string } }) {
       </div>
 
       <div className="mt-8 pt-6 border-t border-border flex items-center justify-between flex-wrap gap-3">
-        <ReportButton postId={post.id} />
+        <ReportButton postId={post.id} postTitle={post.title} />
         {canManage && <DeletePostButton postId={post.id} />}
       </div>
 

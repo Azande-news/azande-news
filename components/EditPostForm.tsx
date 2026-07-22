@@ -191,7 +191,7 @@ export default function EditPostForm({ post }: { post: Post }) {
           </div>
         </div>
 
-        {error && <p className="text-clay font-body text-sm">{error}</p>}
+        {error && <p className="text-accent font-body text-sm">{error}</p>}
 
         <div className="flex gap-3">
           <button
@@ -213,3 +213,5 @@ export default function EditPostForm({ post }: { post: Post }) {
     </div>
   );
 }
+
+

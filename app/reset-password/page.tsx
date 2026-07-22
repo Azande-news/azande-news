@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -16,9 +16,6 @@ export default function ResetPasswordPage() {
   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
-    // Supabase's password-recovery link signs the user in via a URL fragment.
-    // Listening for PASSWORD_RECOVERY confirms we're in a valid recovery session
-    // before showing the form, instead of trusting the URL blindly.
     const { data: listener } = supabase.auth.onAuthStateChange((event) => {
       if (event === "PASSWORD_RECOVERY") {
         setReady(true);
@@ -65,10 +62,10 @@ export default function ResetPasswordPage() {
   if (success) {
     return (
       <div className="max-w-md mx-auto text-center py-12">
-        <h1 className="font-display text-3xl text-forest mb-4">
+        <h1 className="font-display text-3xl font-bold text-ink mb-4">
           Password updated
         </h1>
-        <p className="font-body text-ink/80">
+        <p className="font-body text-grey">
           Redirecting you to log in…
         </p>
       </div>
@@ -78,7 +75,7 @@ export default function ResetPasswordPage() {
   if (!ready) {
     return (
       <div className="max-w-md mx-auto text-center py-12">
-        <p className="font-body text-ink/70">
+        <p className="font-body text-grey">
           Verifying your reset link…
         </p>
       </div>
@@ -87,13 +84,13 @@ export default function ResetPasswordPage() {
 
   return (
     <div className="max-w-md mx-auto">
-      <h1 className="font-display text-3xl text-forest mb-8">
+      <h1 className="font-display text-3xl font-bold text-ink mb-8">
         Set a new password
       </h1>
 
       <form onSubmit={handleSubmit} className="space-y-5">
         <div>
-          <label className="block font-body text-sm text-forest mb-1">
+          <label className="block font-body text-sm text-ink mb-1">
             New password
           </label>
           <input
@@ -102,12 +99,12 @@ export default function ResetPasswordPage() {
             minLength={8}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full border border-forest/30 rounded-sm px-3 py-2 font-body focus:outline-none focus:ring-2 focus:ring-ochre"
+            className="w-full border border-border rounded-sm px-3 py-2 font-body focus:outline-none focus:ring-2 focus:ring-accent"
           />
         </div>
 
         <div>
-          <label className="block font-body text-sm text-forest mb-1">
+          <label className="block font-body text-sm text-ink mb-1">
             Confirm new password
           </label>
           <input
@@ -116,16 +113,16 @@ export default function ResetPasswordPage() {
             minLength={8}
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
-            className="w-full border border-forest/30 rounded-sm px-3 py-2 font-body focus:outline-none focus:ring-2 focus:ring-ochre"
+            className="w-full border border-border rounded-sm px-3 py-2 font-body focus:outline-none focus:ring-2 focus:ring-accent"
           />
         </div>
 
-        {error && <p className="text-clay font-body text-sm">{error}</p>}
+        {error && <p className="text-accent font-body text-sm">{error}</p>}
 
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-forest text-ivory py-3 rounded-sm hover:bg-forest-light transition-colors font-body disabled:opacity-60"
+          className="w-full bg-ink text-paper py-3 rounded-sm hover:bg-accent transition-colors font-body font-medium disabled:opacity-60"
         >
           {loading ? "Updating…" : "Update password"}
         </button>

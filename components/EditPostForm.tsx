@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -142,7 +142,7 @@ export default function EditPostForm({ post }: { post: Post }) {
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            className="w-full border border-border rounded-sm px-3 py-2 font-body focus:outline-none focus:ring-2 focus:ring-accent bg-white"
+            className="w-full border border-border rounded-sm px-3 py-2 font-body focus:outline-none focus:ring-2 focus:ring-accent bg-paper text-ink"
           >
             {CATEGORIES.map((c) => (
               <option key={c.value} value={c.value}>
@@ -213,5 +213,6 @@ export default function EditPostForm({ post }: { post: Post }) {
     </div>
   );
 }
+
 
 

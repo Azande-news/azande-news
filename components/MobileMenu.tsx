@@ -37,7 +37,7 @@ export default function MobileMenu({
             onClick={() => setOpen(false)}
           />
           <div className="absolute left-0 top-0 bottom-0 w-72 bg-paper overflow-y-auto">
-            <div className="bg-ink text-paper h-14 flex items-center justify-between px-4">
+            <div className="bg-[#1A1A1A] text-white h-14 flex items-center justify-between px-4">
               <span className="font-display font-bold">Menu</span>
               <button onClick={() => setOpen(false)} aria-label="Close menu" className="p-1.5">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -81,7 +81,7 @@ export default function MobileMenu({
                     <Link
                       href="/posts/new"
                       onClick={() => setOpen(false)}
-                      className="bg-accent text-paper text-center px-4 py-2.5 rounded-sm text-sm font-medium"
+                      className="bg-accent text-white text-center px-4 py-2.5 rounded-sm text-sm font-medium"
                     >
                       Write a post
                     </Link>
@@ -98,7 +98,7 @@ export default function MobileMenu({
                     <Link
                       href="/register"
                       onClick={() => setOpen(false)}
-                      className="bg-accent text-paper text-center px-4 py-2.5 rounded-sm text-sm font-medium"
+                      className="bg-accent text-white text-center px-4 py-2.5 rounded-sm text-sm font-medium"
                     >
                       Join &mdash; it&apos;s free
                     </Link>
@@ -112,3 +112,4 @@ export default function MobileMenu({
     </>
   );
 }
+

@@ -23,7 +23,7 @@ export default async function Navbar() {
   return (
     <header className="sticky top-0 z-50">
       {/* Masthead */}
-      <div className="bg-ink text-paper">
+      <div className="bg-[#1A1A1A] text-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <Image src="/logo.png" alt="Azande News" width={36} height={36} className="rounded-sm" priority />
@@ -99,4 +99,5 @@ export default async function Navbar() {
     </header>
   );
 }
+
 

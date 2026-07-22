@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import Link from "next/link";
@@ -56,9 +56,14 @@ export default function LoginPage() {
         </div>
 
         <div>
-          <label className="block font-body text-sm text-ink mb-1">
-            Password
-          </label>
+          <div className="flex items-center justify-between mb-1">
+            <label className="block font-body text-sm text-ink">
+              Password
+            </label>
+            <Link href="/forgot-password" className="font-body text-xs text-accent hover:underline">
+              Forgot password?
+            </Link>
+          </div>
           <input
             type="password"
             required
@@ -88,3 +93,4 @@ export default function LoginPage() {
     </div>
   );
 }
+

@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
@@ -115,9 +115,16 @@ export default async function PostPage({ params }: { params: { id: string } }) {
       <div className="mt-8 pt-6 border-t border-forest/15 flex items-center justify-between flex-wrap gap-3">
         <ReportButton postId={post.id} />
         {canManage && <DeletePostButton postId={post.id} />}
+        {canManage && (
+          <Link href={`/posts/${post.id}/edit`} className="font-body text-sm text-accent hover:underline">
+            Edit post
+          </Link>
+        )}
       </div>
 
       <CommentSection postId={post.id} />
     </article>
   );
 }
+
+

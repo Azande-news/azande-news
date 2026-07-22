@@ -2,11 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  background-color: #FFFFFF;
-  color: #1A1A1A;
-}
-
 .prose-article p {
   margin-bottom: 1.25em;
   line-height: 1.75;
@@ -41,3 +36,4 @@ body {
     transition-duration: 0.01ms !important;
   }
 }
+

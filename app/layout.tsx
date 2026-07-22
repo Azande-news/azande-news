@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import BreakingBar from "@/components/BreakingBar";
 import Footer from "@/components/Footer";
+import DarkModeToggle from "@/components/DarkModeToggle";
 
 const workSans = Work_Sans({
   subsets: ["latin"],
@@ -25,6 +26,9 @@ export const metadata: Metadata = {
   description:
     "A community news and information site for the Azande people of Western Equatoria, South Sudan, and the worldwide diaspora.",
   metadataBase: new URL("https://azande-news.vercel.app"),
+  alternates: {
+    types: { "application/rss+xml": "/feed.xml" },
+  },
   openGraph: {
     title: "Azande News",
     description:
@@ -42,15 +46,29 @@ export const metadata: Metadata = {
   },
 };
 
+const themeInitScript = `
+(function() {
+  try {
+    var stored = localStorage.getItem("theme");
+    var theme = stored || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    if (theme === "dark") document.documentElement.classList.add("dark");
+  } catch (e) {}
+})();
+`;
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        <link rel="alternate" type="application/rss+xml" title="Azande News RSS Feed" href="/feed.xml" />
+      </head>
       <body
-        className={`${workSans.variable} ${spaceMono.variable} font-body bg-paper`}
+        className={`${workSans.variable} ${spaceMono.variable} font-body bg-paper dark:bg-ink text-ink dark:text-paper transition-colors`}
       >
         <Navbar />
         <BreakingBar />
@@ -58,6 +76,7 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
+        <DarkModeToggle />
       </body>
     </html>
   );

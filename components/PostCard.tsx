@@ -42,6 +42,19 @@ export default function PostCard({
     </div>
   );
 
+  const AuthorLink = ({ className = "" }: { className?: string }) => (
+    <div className={`font-meta text-xs text-grey ${className}`}>
+      By{" "}
+      {post.profiles?.username ? (
+        <Link href={`/author/${post.profiles.username}`} className="hover:text-accent hover:underline">
+          {post.profiles.display_name}
+        </Link>
+      ) : (
+        "Unknown"
+      )}
+    </div>
+  );
+
   if (v === "lead") {
     const excerpt = post.body.replace(/\s+/g, " ").slice(0, 220);
     return (
@@ -70,9 +83,7 @@ export default function PostCard({
             {post.body.length > excerpt.length ? "…" : ""}
           </p>
         </Link>
-        <div className="font-meta text-xs text-grey mt-3">
-          By {post.profiles?.display_name ?? "Unknown"}
-        </div>
+        <AuthorLink className="mt-3" />
       </article>
     );
   }
@@ -132,6 +143,7 @@ export default function PostCard({
           {post.body.length > excerpt.length ? "…" : ""}
         </p>
       </Link>
+      <AuthorLink className="mt-1.5" />
     </article>
   );
 }

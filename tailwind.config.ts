@@ -1,5 +1,4 @@
 import type { Config } from "tailwindcss";
-
 const config: Config = {
   darkMode: "class",
   content: [
@@ -9,14 +8,14 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        ink: "#1A1A1A",
-        paper: "#FFFFFF",
-        offwhite: "#F6F6F6",
-        border: "#E2E2E2",
+        ink: "var(--color-ink)",
+        paper: "var(--color-paper)",
+        offwhite: "var(--color-offwhite)",
+        border: "var(--color-border)",
         grey: {
-          DEFAULT: "#54595F",
-          light: "#6D7176",
-          dark: "#3B3E42",
+          DEFAULT: "var(--color-grey)",
+          light: "var(--color-grey-light)",
+          dark: "var(--color-grey-dark)",
         },
         accent: {
           DEFAULT: "#9E1B32",
@@ -33,5 +32,4 @@ const config: Config = {
   },
   plugins: [],
 };
-
 export default config;

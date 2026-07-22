@@ -68,7 +68,7 @@ export default function RootLayout({
         <link rel="alternate" type="application/rss+xml" title="Azande News RSS Feed" href="/feed.xml" />
       </head>
       <body
-        className={`${workSans.variable} ${spaceMono.variable} font-body bg-paper dark:bg-ink text-ink dark:text-paper transition-colors`}
+        className={`${workSans.variable} ${spaceMono.variable} font-body bg-paper text-ink transition-colors`}
       >
         <Navbar />
         <BreakingBar />

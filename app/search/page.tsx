@@ -19,7 +19,7 @@ export default async function SearchPage({
       .select(
         "id, title, body, category, created_at, cover_image_url, profiles(display_name, username)"
       )
-      .eq("status", "published")
+      .or(`status.eq.published,and(status.eq.scheduled,publish_at.lte.${new Date().toISOString()})`)
       .or(`title.ilike.%${q}%,body.ilike.%${q}%`)
       .order("created_at", { ascending: false })
       .limit(30);
@@ -76,3 +76,5 @@ export default async function SearchPage({
     </div>
   );
 }
+
+

@@ -6,7 +6,7 @@ export default async function TrendingWidget() {
   const { data: posts } = await supabase
     .from("posts")
     .select("id, title, views")
-    .eq("status", "published")
+    .or(`status.eq.published,and(status.eq.scheduled,publish_at.lte.${new Date().toISOString()})`)
     .order("views", { ascending: false })
     .limit(5);
 
@@ -28,3 +28,5 @@ export default async function TrendingWidget() {
     </div>
   );
 }
+
+

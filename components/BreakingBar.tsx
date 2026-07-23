@@ -7,7 +7,7 @@ export default async function BreakingBar() {
   const { data: latest } = await supabase
     .from("posts")
     .select("id, title, created_at")
-    .eq("status", "published")
+    .or(`status.eq.published,and(status.eq.scheduled,publish_at.lte.${new Date().toISOString()})`)
     .order("created_at", { ascending: false })
     .limit(1)
     .single();
@@ -35,3 +35,5 @@ export default async function BreakingBar() {
     </div>
   );
 }
+
+

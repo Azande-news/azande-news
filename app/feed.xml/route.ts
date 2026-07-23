@@ -18,7 +18,7 @@ export async function GET() {
   const { data: posts } = await supabase
     .from("posts")
     .select("id, title, body, category, created_at")
-    .eq("status", "published")
+    .or(`status.eq.published,and(status.eq.scheduled,publish_at.lte.${new Date().toISOString()})`)
     .order("created_at", { ascending: false })
     .limit(50);
 
@@ -52,3 +52,5 @@ export async function GET() {
     headers: { "Content-Type": "application/xml; charset=utf-8" },
   });
 }
+
+

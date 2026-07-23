@@ -1,4 +1,4 @@
-import DOMPurify from "isomorphic-dompurify";
+import sanitizeHtmlLib from "sanitize-html";
 
 export function stripHtml(html: string): string {
   return html
@@ -14,11 +14,14 @@ export function stripHtml(html: string): string {
 }
 
 export function sanitizeHtml(html: string): string {
-  return DOMPurify.sanitize(html, {
-    ALLOWED_TAGS: [
+  return sanitizeHtmlLib(html, {
+    allowedTags: [
       "p", "br", "strong", "em", "u", "s", "a", "ul", "ol", "li",
       "h2", "h3", "blockquote", "img", "code", "pre",
     ],
-    ALLOWED_ATTR: ["href", "src", "alt", "target", "rel"],
+    allowedAttributes: {
+      a: ["href", "target", "rel"],
+      img: ["src", "alt"],
+    },
   });
 }

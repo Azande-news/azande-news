@@ -1,4 +1,4 @@
-﻿import { redirect, notFound } from "next/navigation";
+import { redirect, notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import EditPostForm from "@/components/EditPostForm";
 
@@ -7,7 +7,7 @@ export default async function EditPostPage({ params }: { params: { id: string } 
 
   const { data: post } = await supabase
     .from("posts")
-    .select("id, title, body, category, cover_image_url, author_id")
+    .select("id, title, body, category, cover_image_url, author_id, status, publish_at")
     .eq("id", params.id)
     .single();
 
@@ -35,3 +35,4 @@ export default async function EditPostPage({ params }: { params: { id: string } 
 
   return <EditPostForm post={post} />;
 }
+

@@ -12,7 +12,16 @@ type Post = {
   status: string;
   category: string;
   created_at: string;
+  publish_at: string | null;
+  views: number;
   profiles: { display_name: string; username: string } | null;
+};
+
+const STATUS_LABELS: Record<string, string> = {
+  published: "Published",
+  draft: "Draft",
+  scheduled: "Scheduled",
+  removed: "Removed",
 };
 
 export default function AdminPostsTable({ posts }: { posts: Post[] }) {
@@ -24,6 +33,13 @@ export default function AdminPostsTable({ posts }: { posts: Post[] }) {
     setBusyId(post.id);
     const nextStatus = post.status === "published" ? "removed" : "published";
     await supabase.from("posts").update({ status: nextStatus }).eq("id", post.id);
+    setBusyId(null);
+    router.refresh();
+  }
+
+  async function publishNow(postId: string) {
+    setBusyId(postId);
+    await supabase.from("posts").update({ status: "published", publish_at: null }).eq("id", postId);
     setBusyId(null);
     router.refresh();
   }
@@ -42,38 +58,46 @@ export default function AdminPostsTable({ posts }: { posts: Post[] }) {
   return (
     <div className="divide-y divide-border">
       {posts.map((post) => (
-        <div
-          key={post.id}
-          className="py-4 flex flex-wrap items-center justify-between gap-3"
-        >
+        <div key={post.id} className="py-4 flex flex-wrap items-center justify-between gap-3">
           <div>
-            <Link
-              href={`/posts/${post.id}`}
-              className="font-body font-medium text-ink hover:text-accent"
-            >
+            <Link href={`/posts/${post.id}`} className="font-body font-medium text-ink hover:text-accent">
               {post.title}
             </Link>
             <div className="font-meta text-xs text-grey mt-1">
               {CATEGORY_LABELS[post.category] ?? post.category} &middot; by{" "}
               {post.profiles?.display_name ?? "Unknown"} &middot;{" "}
               {new Date(post.created_at).toLocaleDateString()} &middot;{" "}
-              <span
-                className={
-                  post.status === "published" ? "text-ink" : "text-accent"
-                }
-              >
-                {post.status}
+              {post.views} views &middot;{" "}
+              <span className={post.status === "published" ? "text-ink" : "text-accent"}>
+                {STATUS_LABELS[post.status] ?? post.status}
               </span>
+              {post.status === "scheduled" && post.publish_at && (
+                <> &middot; goes live {new Date(post.publish_at).toLocaleString()}</>
+              )}
             </div>
           </div>
           <div className="flex gap-3 font-body text-sm">
-            <button
-              onClick={() => toggleStatus(post)}
-              disabled={busyId === post.id}
-              className="text-ink hover:underline disabled:opacity-50"
-            >
-              {post.status === "published" ? "Remove from site" : "Restore"}
-            </button>
+            {(post.status === "draft" || post.status === "scheduled") && (
+              <button
+                onClick={() => publishNow(post.id)}
+                disabled={busyId === post.id}
+                className="text-accent hover:underline disabled:opacity-50"
+              >
+                Publish now
+              </button>
+            )}
+            <Link href={`/posts/${post.id}/edit`} className="text-ink hover:underline">
+              Edit
+            </Link>
+            {(post.status === "published" || post.status === "removed") && (
+              <button
+                onClick={() => toggleStatus(post)}
+                disabled={busyId === post.id}
+                className="text-ink hover:underline disabled:opacity-50"
+              >
+                {post.status === "published" ? "Remove from site" : "Restore"}
+              </button>
+            )}
             <button
               onClick={() => hardDelete(post.id)}
               disabled={busyId === post.id}

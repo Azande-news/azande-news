@@ -4,10 +4,15 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { CATEGORIES } from "@/lib/categories";
+import RichTextEditor from "@/components/RichTextEditor";
 
 const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
 
 type PublishMode = "now" | "draft" | "schedule";
+
+function plainTextLength(html: string) {
+  return html.replace(/<[^>]*>/g, "").trim().length;
+}
 
 export default function NewPostPage() {
   const router = useRouter();
@@ -47,7 +52,7 @@ export default function NewPostPage() {
       setError("Title is too short.");
       return;
     }
-    if (body.trim().length < 10) {
+    if (plainTextLength(body) < 10) {
       setError("Your post needs a bit more content.");
       return;
     }
@@ -90,7 +95,7 @@ export default function NewPostPage() {
       .from("posts")
       .insert({
         title: title.trim(),
-        body: body.trim(),
+        body,
         category,
         author_id: user.id,
         cover_image_url: coverImageUrl,
@@ -160,15 +165,7 @@ export default function NewPostPage() {
 
         <div>
           <label className="block font-body text-sm text-ink mb-1">Content</label>
-          <textarea
-            required
-            rows={12}
-            maxLength={20000}
-            value={body}
-            onChange={(e) => setBody(e.target.value)}
-            className="w-full border border-border rounded-sm px-3 py-2 font-body leading-relaxed focus:outline-none focus:ring-2 focus:ring-accent"
-          />
-          <div className="text-right font-meta text-xs text-grey mt-1">{body.length}/20000</div>
+          <RichTextEditor content={body} onChange={setBody} />
         </div>
 
         <div>

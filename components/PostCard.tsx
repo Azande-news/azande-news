@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { CATEGORY_LABELS } from "@/lib/categories";
+import { stripHtml } from "@/lib/html";
 
 type Post = {
   id: string;
@@ -56,7 +57,7 @@ export default function PostCard({
   );
 
   if (v === "lead") {
-    const excerpt = post.body.replace(/\s+/g, " ").slice(0, 220);
+    const excerpt = stripHtml(post.body).slice(0, 220);
     return (
       <article>
         {post.cover_image_url && (
@@ -117,7 +118,7 @@ export default function PostCard({
   }
 
   // grid (default card)
-  const excerpt = post.body.replace(/\s+/g, " ").slice(0, 110);
+  const excerpt = stripHtml(post.body).slice(0, 110);
   return (
     <article className="pb-2">
       {post.cover_image_url && (
@@ -147,3 +148,4 @@ export default function PostCard({
     </article>
   );
 }
+

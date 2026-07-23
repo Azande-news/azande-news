@@ -7,6 +7,7 @@ import CommentSection from "@/components/CommentSection";
 import ReportButton from "@/components/ReportButton";
 import ShareButtons from "@/components/ShareButtons";
 import ViewTracker from "@/components/ViewTracker";
+import { stripHtml, sanitizeHtml } from "@/lib/html";
 import { CATEGORY_LABELS } from "@/lib/categories";
 import type { Metadata } from "next";
 
@@ -24,7 +25,7 @@ export async function generateMetadata({
 
   if (!post) return {};
 
-  const description = post.body.replace(/\s+/g, " ").slice(0, 160);
+  const description = stripHtml(post.body).slice(0, 160);
 
   return {
     title: `${post.title} — Azande News`,
@@ -110,9 +111,7 @@ export default async function PostPage({ params }: { params: { id: string } }) {
         </div>
       )}
 
-      <div className="prose-article font-body text-lg text-ink/90 whitespace-pre-wrap">
-        {post.body}
-      </div>
+      <div className="prose-article font-body text-lg text-ink/90" dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.body) }} />
 
       <div className="mt-8 pt-6 border-t border-border flex items-center justify-between flex-wrap gap-3">
         <ReportButton postId={post.id} postTitle={post.title} />
@@ -127,5 +126,6 @@ export default async function PostPage({ params }: { params: { id: string } }) {
     </article>
   );
 }
+
 
 

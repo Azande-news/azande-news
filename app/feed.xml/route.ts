@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { CATEGORY_LABELS } from "@/lib/categories";
+import { stripHtml } from "@/lib/html";
 
 const BASE_URL = "https://azande-news.vercel.app";
 
@@ -24,7 +25,7 @@ export async function GET() {
 
   const items = (posts ?? [])
     .map((post) => {
-      const description = post.body.replace(/\s+/g, " ").slice(0, 300);
+      const description = stripHtml(post.body).slice(0, 300);
       return `
     <item>
       <title>${escapeXml(post.title)}</title>
@@ -52,5 +53,6 @@ export async function GET() {
     headers: { "Content-Type": "application/xml; charset=utf-8" },
   });
 }
+
 
 

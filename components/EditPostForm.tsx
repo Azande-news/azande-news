@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { CATEGORIES } from "@/lib/categories";
+import RichTextEditor from "@/components/RichTextEditor";
 
 const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
 
@@ -18,6 +19,10 @@ type Post = {
   status: string;
   publish_at: string | null;
 };
+
+function plainTextLength(html: string) {
+  return html.replace(/<[^>]*>/g, "").trim().length;
+}
 
 function toLocalInputValue(iso: string | null) {
   if (!iso) return "";
@@ -70,7 +75,7 @@ export default function EditPostForm({ post }: { post: Post }) {
       setError("Title is too short.");
       return;
     }
-    if (body.trim().length < 10) {
+    if (plainTextLength(body) < 10) {
       setError("Your post needs a bit more content.");
       return;
     }
@@ -113,7 +118,7 @@ export default function EditPostForm({ post }: { post: Post }) {
       .from("posts")
       .update({
         title: title.trim(),
-        body: body.trim(),
+        body,
         category,
         cover_image_url: coverImageUrl,
         status,
@@ -181,15 +186,7 @@ export default function EditPostForm({ post }: { post: Post }) {
 
         <div>
           <label className="block font-body text-sm text-ink mb-1">Content</label>
-          <textarea
-            required
-            rows={12}
-            maxLength={20000}
-            value={body}
-            onChange={(e) => setBody(e.target.value)}
-            className="w-full border border-border rounded-sm px-3 py-2 font-body leading-relaxed focus:outline-none focus:ring-2 focus:ring-accent"
-          />
-          <div className="text-right font-meta text-xs text-ink/50 mt-1">{body.length}/20000</div>
+          <RichTextEditor content={body} onChange={setBody} />
         </div>
 
         <div>

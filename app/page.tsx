@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import PostCard from "@/components/PostCard";
+import TrendingWidget from "@/components/TrendingWidget";
 import Link from "next/link";
 
 export const revalidate = 0;
@@ -68,6 +69,7 @@ export default async function HomePage() {
             {sidebar.map((post) => (
               <PostCard key={post.id} post={post} variant="list" />
             ))}
+            <TrendingWidget />
           </div>
         )}
       </div>
@@ -88,3 +90,4 @@ export default async function HomePage() {
     </div>
   );
 }
+

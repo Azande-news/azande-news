@@ -5,7 +5,9 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { CATEGORIES } from "@/lib/categories";
 
-const MAX_IMAGE_BYTES = 5 * 1024 * 1024; // 5MB
+const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
+
+type PublishMode = "now" | "draft" | "schedule";
 
 export default function NewPostPage() {
   const router = useRouter();
@@ -16,13 +18,14 @@ export default function NewPostPage() {
   const [body, setBody] = useState("");
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [publishMode, setPublishMode] = useState<PublishMode>("now");
+  const [scheduleDate, setScheduleDate] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
-
     if (!file.type.startsWith("image/")) {
       setError("Please choose an image file.");
       return;
@@ -31,7 +34,6 @@ export default function NewPostPage() {
       setError("Image is too large — please choose one under 5MB.");
       return;
     }
-
     setError(null);
     setImageFile(file);
     setImagePreview(URL.createObjectURL(file));
@@ -49,13 +51,18 @@ export default function NewPostPage() {
       setError("Your post needs a bit more content.");
       return;
     }
+    if (publishMode === "schedule" && !scheduleDate) {
+      setError("Please choose a date and time to schedule this post.");
+      return;
+    }
+    if (publishMode === "schedule" && new Date(scheduleDate).getTime() <= Date.now()) {
+      setError("Scheduled time must be in the future.");
+      return;
+    }
 
     setLoading(true);
 
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
+    const { data: { user } } = await supabase.auth.getUser();
     if (!user) {
       setError("You must be logged in to post.");
       setLoading(false);
@@ -63,26 +70,21 @@ export default function NewPostPage() {
     }
 
     let coverImageUrl: string | null = null;
-
     if (imageFile) {
       const ext = imageFile.name.split(".").pop();
       const path = `${user.id}/${crypto.randomUUID()}.${ext}`;
-
-      const { error: uploadError } = await supabase.storage
-        .from("post-images")
-        .upload(path, imageFile);
-
+      const { error: uploadError } = await supabase.storage.from("post-images").upload(path, imageFile);
       if (uploadError) {
         setError(`Image upload failed: ${uploadError.message}`);
         setLoading(false);
         return;
       }
-
-      const { data: publicUrlData } = supabase.storage
-        .from("post-images")
-        .getPublicUrl(path);
+      const { data: publicUrlData } = supabase.storage.from("post-images").getPublicUrl(path);
       coverImageUrl = publicUrlData.publicUrl;
     }
+
+    const status = publishMode === "now" ? "published" : publishMode === "draft" ? "draft" : "scheduled";
+    const publishAt = publishMode === "schedule" ? new Date(scheduleDate).toISOString() : null;
 
     const { data, error: insertError } = await supabase
       .from("posts")
@@ -92,6 +94,8 @@ export default function NewPostPage() {
         category,
         author_id: user.id,
         cover_image_url: coverImageUrl,
+        status,
+        publish_at: publishAt,
       })
       .select("id")
       .single();
@@ -103,26 +107,18 @@ export default function NewPostPage() {
       return;
     }
 
-    router.push(`/posts/${data.id}`);
+    router.push(status === "published" ? `/posts/${data.id}` : "/admin");
     router.refresh();
   }
 
   return (
     <div className="max-w-2xl mx-auto">
-      <h1 className="font-display text-3xl font-bold text-ink mb-2">
-        Write a post
-      </h1>
-      <p className="font-body text-grey mb-8">
-        This will be published to the world immediately. Please write
-        respectfully &mdash; posts can be removed if they break community
-        guidelines.
-      </p>
+      <h1 className="font-display text-3xl font-bold text-ink mb-2">Write a post</h1>
+      <p className="font-body text-grey mb-8">Publish immediately, save a draft, or schedule it for later.</p>
 
       <form onSubmit={handleSubmit} className="space-y-5">
         <div>
-          <label className="block font-body text-sm text-ink mb-1">
-            Title
-          </label>
+          <label className="block font-body text-sm text-ink mb-1">Title</label>
           <input
             type="text"
             required
@@ -134,26 +130,20 @@ export default function NewPostPage() {
         </div>
 
         <div>
-          <label className="block font-body text-sm text-ink mb-1">
-            Category
-          </label>
+          <label className="block font-body text-sm text-ink mb-1">Category</label>
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
             className="w-full border border-border rounded-sm px-3 py-2 font-body focus:outline-none focus:ring-2 focus:ring-accent bg-paper text-ink"
           >
             {CATEGORIES.map((c) => (
-              <option key={c.value} value={c.value}>
-                {c.label}
-              </option>
+              <option key={c.value} value={c.value}>{c.label}</option>
             ))}
           </select>
         </div>
 
         <div>
-          <label className="block font-body text-sm text-ink mb-1">
-            Cover photo <span className="text-grey">(optional)</span>
-          </label>
+          <label className="block font-body text-sm text-ink mb-1">Cover photo <span className="text-grey">(optional)</span></label>
           <input
             type="file"
             accept="image/*"
@@ -163,19 +153,13 @@ export default function NewPostPage() {
           {imagePreview && (
             <div className="w-full h-56 mt-3 overflow-hidden border border-border">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={imagePreview}
-                alt="Cover preview"
-                className="w-full h-full object-cover"
-              />
+              <img src={imagePreview} alt="Cover preview" className="w-full h-full object-cover" />
             </div>
           )}
         </div>
 
         <div>
-          <label className="block font-body text-sm text-ink mb-1">
-            Content
-          </label>
+          <label className="block font-body text-sm text-ink mb-1">Content</label>
           <textarea
             required
             rows={12}
@@ -184,9 +168,33 @@ export default function NewPostPage() {
             onChange={(e) => setBody(e.target.value)}
             className="w-full border border-border rounded-sm px-3 py-2 font-body leading-relaxed focus:outline-none focus:ring-2 focus:ring-accent"
           />
-          <div className="text-right font-meta text-xs text-grey mt-1">
-            {body.length}/20000
+          <div className="text-right font-meta text-xs text-grey mt-1">{body.length}/20000</div>
+        </div>
+
+        <div>
+          <label className="block font-body text-sm text-ink mb-2">Publishing</label>
+          <div className="flex flex-wrap gap-4 font-body text-sm text-ink mb-3">
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="publishMode" checked={publishMode === "now"} onChange={() => setPublishMode("now")} />
+              Publish now
+            </label>
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="publishMode" checked={publishMode === "draft"} onChange={() => setPublishMode("draft")} />
+              Save as draft
+            </label>
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="publishMode" checked={publishMode === "schedule"} onChange={() => setPublishMode("schedule")} />
+              Schedule
+            </label>
           </div>
+          {publishMode === "schedule" && (
+            <input
+              type="datetime-local"
+              value={scheduleDate}
+              onChange={(e) => setScheduleDate(e.target.value)}
+              className="border border-border rounded-sm px-3 py-2 font-body bg-paper text-ink focus:outline-none focus:ring-2 focus:ring-accent"
+            />
+          )}
         </div>
 
         {error && <p className="text-accent font-body text-sm">{error}</p>}
@@ -196,10 +204,9 @@ export default function NewPostPage() {
           disabled={loading}
           className="bg-accent text-paper px-6 py-3 rounded-sm hover:bg-accent-dark transition-colors font-body font-medium disabled:opacity-60"
         >
-          {loading ? "Publishing…" : "Publish to Azande News"}
+          {loading ? "Saving…" : publishMode === "now" ? "Publish to Azande News" : publishMode === "draft" ? "Save draft" : "Schedule post"}
         </button>
       </form>
     </div>
   );
 }
-

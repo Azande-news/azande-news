@@ -6,6 +6,7 @@ import DeletePostButton from "@/components/DeletePostButton";
 import CommentSection from "@/components/CommentSection";
 import ReportButton from "@/components/ReportButton";
 import ShareButtons from "@/components/ShareButtons";
+import ViewTracker from "@/components/ViewTracker";
 import { CATEGORY_LABELS } from "@/lib/categories";
 import type { Metadata } from "next";
 
@@ -83,6 +84,7 @@ export default async function PostPage({ params }: { params: { id: string } }) {
 
   return (
     <article className="max-w-2xl mx-auto">
+      <ViewTracker postId={post.id} />
       <div className="font-meta text-[11px] tracking-widest uppercase text-accent mb-3">
         <Link href={`/category/${post.category}`} className="hover:underline">
           {CATEGORY_LABELS[post.category] ?? post.category}
@@ -125,4 +127,5 @@ export default async function PostPage({ params }: { params: { id: string } }) {
     </article>
   );
 }
+
 

@@ -97,6 +97,12 @@ export default async function Navbar() {
             >
               The Azande People
             </Link>
+            <Link
+              href="/dictionary"
+              className="shrink-0 py-3 text-sm font-medium text-grey hover:text-ink border-b-2 border-transparent hover:border-accent transition-colors"
+            >
+              Dictionary
+            </Link>
             {CATEGORIES.map((c) => (
               <Link
                 key={c.value}
@@ -113,6 +119,7 @@ export default async function Navbar() {
     </header>
   );
 }
+
 
 
 

@@ -4,6 +4,7 @@ import AdminPostsTable from "@/components/admin/AdminPostsTable";
 import AdminUsersTable from "@/components/admin/AdminUsersTable";
 import AdminReportsTable from "@/components/admin/AdminReportsTable";
 import AdminAnalytics from "@/components/admin/AdminAnalytics";
+import AdminDictionaryTable from "@/components/admin/AdminDictionaryTable";
 
 export const revalidate = 0;
 
@@ -37,7 +38,7 @@ export default async function AdminPage() {
     );
   }
 
-  const [{ data: posts }, { data: profiles }, { data: reports }] =
+  const [{ data: posts }, { data: profiles }, { data: reports }, { data: dictionaryEntries }] =
     await Promise.all([
       supabase
         .from("posts")
@@ -51,6 +52,11 @@ export default async function AdminPage() {
         .from("reports")
         .select("id, reason, status, created_at, post_id, posts(title)")
         .eq("status", "open")
+        .order("created_at", { ascending: false }),
+      supabase
+        .from("dictionary_entries")
+        .select("id, zande_word, english_translation, notes, status, profiles(display_name, username)")
+        .neq("status", "approved")
         .order("created_at", { ascending: false }),
     ]);
 
@@ -79,6 +85,13 @@ export default async function AdminPage() {
 
       <section className="mb-14">
         <h2 className="font-display text-xl font-bold text-ink border-l-4 border-accent pl-3 mb-4">
+          Dictionary submissions ({dictionaryEntries?.length ?? 0})
+        </h2>
+        <AdminDictionaryTable entries={(dictionaryEntries ?? []) as any} />
+      </section>
+
+      <section className="mb-14">
+        <h2 className="font-display text-xl font-bold text-ink border-l-4 border-accent pl-3 mb-4">
           All posts ({posts?.length ?? 0})
         </h2>
         <AdminPostsTable posts={(posts ?? []) as any} />
@@ -93,6 +106,8 @@ export default async function AdminPage() {
     </div>
   );
 }
+
+
 
 
 

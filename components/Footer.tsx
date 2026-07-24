@@ -28,6 +28,9 @@ export default function Footer() {
               <Link href="/azande-people" className="hover:text-white transition-colors">
                 The Azande People
               </Link>
+              <Link href="/dictionary" className="hover:text-white transition-colors">
+                Dictionary
+              </Link>
               <Link href="/about" className="hover:text-white transition-colors">
                 About
               </Link>
@@ -70,6 +73,7 @@ export default function Footer() {
     </footer>
   );
 }
+
 
 
 

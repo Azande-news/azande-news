@@ -3,6 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import AdminPostsTable from "@/components/admin/AdminPostsTable";
 import AdminUsersTable from "@/components/admin/AdminUsersTable";
 import AdminReportsTable from "@/components/admin/AdminReportsTable";
+import AdminAnalytics from "@/components/admin/AdminAnalytics";
 
 export const revalidate = 0;
 
@@ -64,6 +65,13 @@ export default async function AdminPage() {
 
       <section className="mb-14">
         <h2 className="font-display text-xl font-bold text-ink border-l-4 border-accent pl-3 mb-4">
+          Overview
+        </h2>
+        <AdminAnalytics posts={(posts ?? []) as any} />
+      </section>
+
+      <section className="mb-14">
+        <h2 className="font-display text-xl font-bold text-ink border-l-4 border-accent pl-3 mb-4">
           Open reports
         </h2>
         <AdminReportsTable reports={(reports ?? []) as any} />
@@ -85,4 +93,5 @@ export default async function AdminPage() {
     </div>
   );
 }
+
 

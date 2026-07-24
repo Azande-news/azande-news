@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { CATEGORIES } from "@/lib/categories";
 import RichTextEditor from "@/components/RichTextEditor";
+import { censorText } from "@/lib/profanity";
 
 const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
 
@@ -88,18 +89,26 @@ export default function NewPostPage() {
       coverImageUrl = publicUrlData.publicUrl;
     }
 
+    const { count: publishedCount } = await supabase
+      .from("posts")
+      .select("id", { count: "exact", head: true })
+      .eq("author_id", user.id)
+      .in("status", ["published", "pending"]);
+
+    const isNewAuthor = (publishedCount ?? 0) < 3;
     const status = publishMode === "now" ? "published" : publishMode === "draft" ? "draft" : "scheduled";
+    const finalStatus = status === "published" && isNewAuthor ? "pending" : status;
     const publishAt = publishMode === "schedule" ? new Date(scheduleDate).toISOString() : null;
 
     const { data, error: insertError } = await supabase
       .from("posts")
       .insert({
-        title: title.trim(),
-        body,
+        title: censorText(title.trim()),
+        body: censorText(body),
         category,
         author_id: user.id,
         cover_image_url: coverImageUrl,
-        status,
+        status: finalStatus,
         publish_at: publishAt,
       })
       .select("id")
@@ -112,7 +121,7 @@ export default function NewPostPage() {
       return;
     }
 
-    router.push(status === "published" ? `/posts/${data.id}` : "/admin");
+    router.push(finalStatus === "published" ? `/posts/${data.id}` : "/admin");
     router.refresh();
   }
 
@@ -207,3 +216,4 @@ export default function NewPostPage() {
     </div>
   );
 }
+

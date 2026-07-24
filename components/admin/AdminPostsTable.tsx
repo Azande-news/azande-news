@@ -19,6 +19,7 @@ type Post = {
 
 const STATUS_LABELS: Record<string, string> = {
   published: "Published",
+  pending: "Pending review",
   draft: "Draft",
   scheduled: "Scheduled",
   removed: "Removed",
@@ -77,7 +78,7 @@ export default function AdminPostsTable({ posts }: { posts: Post[] }) {
             </div>
           </div>
           <div className="flex gap-3 font-body text-sm">
-            {(post.status === "draft" || post.status === "scheduled") && (
+            {(post.status === "draft" || post.status === "scheduled" || post.status === "pending") && (
               <button
                 onClick={() => publishNow(post.id)}
                 disabled={busyId === post.id}
@@ -111,3 +112,5 @@ export default function AdminPostsTable({ posts }: { posts: Post[] }) {
     </div>
   );
 }
+
+

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { censorText } from "@/lib/profanity";
 
 type Comment = {
   id: string;
@@ -60,7 +61,7 @@ export default function CommentSection({ postId }: { postId: string }) {
     const { error: insertError } = await supabase.from("comments").insert({
       post_id: postId,
       author_id: user.id,
-      body: body.trim(),
+      body: censorText(body.trim()),
     });
 
     setSubmitting(false);
@@ -144,3 +145,4 @@ export default function CommentSection({ postId }: { postId: string }) {
     </div>
   );
 }
+

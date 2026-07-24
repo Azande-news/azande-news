@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { CATEGORIES } from "@/lib/categories";
 import RichTextEditor from "@/components/RichTextEditor";
+import { censorText } from "@/lib/profanity";
 
 const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
 
@@ -117,8 +118,8 @@ export default function EditPostForm({ post }: { post: Post }) {
     const { error: updateError } = await supabase
       .from("posts")
       .update({
-        title: title.trim(),
-        body,
+        title: censorText(title.trim()),
+        body: censorText(body),
         category,
         cover_image_url: coverImageUrl,
         status,
@@ -237,3 +238,4 @@ export default function EditPostForm({ post }: { post: Post }) {
     </div>
   );
 }
+

@@ -15,9 +15,6 @@ Title: ${title}
 Body: ${body}`;
 
   try {
-    if (!apiKey) {
-      console.log("MODERATE-POST: no API key found in environment");
-    }
     const response = await fetch(
       "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent",
       {
@@ -33,8 +30,6 @@ Body: ${body}`;
     );
 
     if (!response.ok) {
-      const errText = await response.text();
-      console.log("MODERATE-POST: Gemini API error", response.status, errText);
       return NextResponse.json({ flagged: false, reason: null });
     }
 
@@ -47,10 +42,10 @@ Body: ${body}`;
       flagged: !!parsed.flagged,
       reason: parsed.reason || null,
     });
-  } catch (err) {
-    console.log("MODERATE-POST: caught exception", err);
+  } catch {
     return NextResponse.json({ flagged: false, reason: null });
   }
 }
+
 
 

@@ -25,6 +25,9 @@ export default function Footer() {
               ))}
             </nav>
             <nav className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-white/50">
+              <Link href="/azande-people" className="hover:text-white transition-colors">
+                The Azande People
+              </Link>
               <Link href="/about" className="hover:text-white transition-colors">
                 About
               </Link>
@@ -67,6 +70,7 @@ export default function Footer() {
     </footer>
   );
 }
+
 
 
 

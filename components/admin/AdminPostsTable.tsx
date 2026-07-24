@@ -14,6 +14,8 @@ type Post = {
   created_at: string;
   publish_at: string | null;
   views: number;
+  ai_flagged?: boolean;
+  ai_flag_reason?: string | null;
   profiles: { display_name: string; username: string } | null;
 };
 
@@ -76,6 +78,11 @@ export default function AdminPostsTable({ posts }: { posts: Post[] }) {
                 <> &middot; goes live {new Date(post.publish_at).toLocaleString()}</>
               )}
             </div>
+            {post.ai_flagged && (
+              <div className="font-meta text-xs text-accent mt-1">
+                AI flagged: {post.ai_flag_reason || "no reason given"}
+              </div>
+            )}
           </div>
           <div className="flex gap-3 font-body text-sm">
             {(post.status === "draft" || post.status === "scheduled" || post.status === "pending") && (
@@ -112,5 +119,6 @@ export default function AdminPostsTable({ posts }: { posts: Post[] }) {
     </div>
   );
 }
+
 
 

@@ -41,7 +41,7 @@ export default async function AdminPage() {
     await Promise.all([
       supabase
         .from("posts")
-        .select("id, title, status, category, created_at, publish_at, views, profiles(display_name, username)")
+        .select("id, title, status, category, created_at, publish_at, views, ai_flagged, ai_flag_reason, profiles(display_name, username)")
         .order("created_at", { ascending: false }),
       supabase
         .from("profiles")
@@ -93,5 +93,6 @@ export default async function AdminPage() {
     </div>
   );
 }
+
 
 

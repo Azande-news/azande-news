@@ -97,8 +97,28 @@ export default function NewPostPage() {
 
     const isNewAuthor = (publishedCount ?? 0) < 3;
     const status = publishMode === "now" ? "published" : publishMode === "draft" ? "draft" : "scheduled";
-    const finalStatus = status === "published" && isNewAuthor ? "pending" : status;
+    let finalStatus = status === "published" && isNewAuthor ? "pending" : status;
     const publishAt = publishMode === "schedule" ? new Date(scheduleDate).toISOString() : null;
+
+    let aiFlagged = false;
+    let aiFlagReason: string | null = null;
+    if (finalStatus === "published") {
+      try {
+        const modRes = await fetch("/api/moderate-post", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ title: title.trim(), body }),
+        });
+        const modData = await modRes.json();
+        if (modData.flagged) {
+          aiFlagged = true;
+          aiFlagReason = modData.reason;
+          finalStatus = "pending";
+        }
+      } catch {
+        // moderation check failed silently; post proceeds as normal
+      }
+    }
 
     const { data, error: insertError } = await supabase
       .from("posts")
@@ -110,6 +130,8 @@ export default function NewPostPage() {
         cover_image_url: coverImageUrl,
         status: finalStatus,
         publish_at: publishAt,
+        ai_flagged: aiFlagged,
+        ai_flag_reason: aiFlagReason,
       })
       .select("id")
       .single();
@@ -216,4 +238,5 @@ export default function NewPostPage() {
     </div>
   );
 }
+
 

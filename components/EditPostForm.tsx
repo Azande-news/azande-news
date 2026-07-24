@@ -112,8 +112,28 @@ export default function EditPostForm({ post }: { post: Post }) {
       coverImageUrl = publicUrlData.publicUrl;
     }
 
-    const status = publishMode === "now" ? "published" : publishMode === "draft" ? "draft" : "scheduled";
+    let status = publishMode === "now" ? "published" : publishMode === "draft" ? "draft" : "scheduled";
     const publishAt = publishMode === "schedule" ? new Date(scheduleDate).toISOString() : null;
+
+    let aiFlagged = false;
+    let aiFlagReason: string | null = null;
+    if (status === "published") {
+      try {
+        const modRes = await fetch("/api/moderate-post", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ title: title.trim(), body }),
+        });
+        const modData = await modRes.json();
+        if (modData.flagged) {
+          aiFlagged = true;
+          aiFlagReason = modData.reason;
+          status = "pending";
+        }
+      } catch {
+        // moderation check failed silently; post proceeds as normal
+      }
+    }
 
     const { error: updateError } = await supabase
       .from("posts")
@@ -123,6 +143,8 @@ export default function EditPostForm({ post }: { post: Post }) {
         category,
         cover_image_url: coverImageUrl,
         status,
+        ai_flagged: aiFlagged,
+        ai_flag_reason: aiFlagReason,
         publish_at: publishAt,
       })
       .eq("id", post.id);
@@ -238,4 +260,5 @@ export default function EditPostForm({ post }: { post: Post }) {
     </div>
   );
 }
+
 

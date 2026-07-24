@@ -32,7 +32,7 @@ export default async function Navbar() {
               Azande News
             </span>
             <span className="hidden sm:inline font-meta text-[10px] tracking-[0.2em] uppercase text-white/50">
-              Western Equatoria
+              DR Congo &middot; South Sudan &middot; CAR
             </span>
           </Link>
 
@@ -107,6 +107,7 @@ export default async function Navbar() {
     </header>
   );
 }
+
 
 
 

@@ -61,11 +61,12 @@ export default function Footer() {
           <span>
             &copy; {year} Azande News. By and for the Azande people, worldwide.
           </span>
-          <span>Western Equatoria &middot; South Sudan &middot; Diaspora</span>
+          <span>DR Congo &middot; South Sudan &middot; Central African Republic &middot; Diaspora</span>
         </div>
       </div>
     </footer>
   );
 }
+
 
 

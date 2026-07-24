@@ -6,6 +6,7 @@ import DeletePostButton from "@/components/DeletePostButton";
 import CommentSection from "@/components/CommentSection";
 import ReportButton from "@/components/ReportButton";
 import ShareButtons from "@/components/ShareButtons";
+import BookmarkButton from "@/components/BookmarkButton";
 import ViewTracker from "@/components/ViewTracker";
 import { stripHtml, sanitizeHtml } from "@/lib/html";
 import { CATEGORY_LABELS } from "@/lib/categories";
@@ -122,10 +123,15 @@ export default async function PostPage({ params }: { params: { id: string } }) {
         <ShareButtons postId={post.id} postTitle={post.title} />
       </div>
 
+      <div className="mt-4">
+        <BookmarkButton postId={post.id} />
+      </div>
+
       <CommentSection postId={post.id} />
     </article>
   );
 }
+
 
 
 

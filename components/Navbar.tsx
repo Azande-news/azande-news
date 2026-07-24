@@ -47,6 +47,12 @@ export default async function Navbar() {
                   </Link>
                 )}
                 <Link
+                  href="/bookmarks"
+                  className="hidden sm:inline text-white/80 hover:text-white transition-colors"
+                >
+                  Saved
+                </Link>
+                <Link
                   href="/posts/new"
                   className="bg-accent hover:bg-accent-light transition-colors px-3 py-1.5 rounded-sm"
                 >
@@ -99,5 +105,6 @@ export default async function Navbar() {
     </header>
   );
 }
+
 
 

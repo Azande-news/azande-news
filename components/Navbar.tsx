@@ -67,7 +67,7 @@ export default async function Navbar() {
 
       <div className="bg-paper border-b border-border">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between gap-4">
-          <div className="flex items-center gap-6 overflow-x-auto scrollbar-none">
+          <div className="flex items-center gap-6">
             <Link href="/" className="shrink-0 py-3 text-sm font-semibold text-ink border-b-2 border-accent">
               Home
             </Link>
@@ -85,3 +85,4 @@ export default async function Navbar() {
     </header>
   );
 }
+

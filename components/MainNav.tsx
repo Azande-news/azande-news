@@ -9,8 +9,8 @@ const SECTIONS: Record<Exclude<Section, null>, { label: string; links: { href: s
   news: {
     label: "News",
     links: [
-      { href: "/category/general", label: "General" },
-      { href: "/category/announcements", label: "Announcements" },
+      { href: "/category/general", label: "Local News" },
+      { href: "/category/announcements", label: "Notices" },
       { href: "/category/community", label: "Community" },
       { href: "/category/diaspora", label: "Diaspora" },
     ],
@@ -27,14 +27,14 @@ const SECTIONS: Record<Exclude<Section, null>, { label: string; links: { href: s
     label: "Language",
     links: [
       { href: "/category/language", label: "Zande Language" },
-      { href: "/dictionary", label: "Dictionary" },
+      { href: "/dictionary", label: "Zande Dictionary" },
     ],
   },
   more: {
     label: "Contribute",
     links: [
       { href: "/posts/new", label: "Write a Post" },
-      { href: "/dictionary", label: "Contribute a Word" },
+      { href: "/dictionary", label: "Contribute to Dictionary" },
     ],
   },
 };
@@ -95,5 +95,6 @@ export default function MainNav() {
     </div>
   );
 }
+
 
 

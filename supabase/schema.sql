@@ -36,7 +36,9 @@ create table if not exists public.posts (
   category text not null default 'general'
     check (category in ('general','culture','history','language','diaspora','community','announcements')),
   cover_image_url text,
-  status text not null default 'published' check (status in ('published','removed')),
+  status text not null default 'published' check (status in ('draft','scheduled','published','removed')),
+  publish_at timestamptz,
+  views integer not null default 0,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
@@ -194,3 +196,4 @@ create policy "Anyone can view post images"
 create policy "Logged-in users can upload post images"
   on storage.objects for insert
   with check (bucket_id = 'post-images' and auth.role() = 'authenticated');
+

@@ -72,6 +72,12 @@ export default async function Navbar() {
               Home
             </Link>
             <CategoriesDropdown />
+            <Link href="/category/announcements" className="shrink-0 py-3 text-sm font-medium text-grey hover:text-ink border-b-2 border-transparent hover:border-accent transition-colors">
+              Announcements
+            </Link>
+            <Link href="/category/diaspora" className="shrink-0 py-3 text-sm font-medium text-grey hover:text-ink border-b-2 border-transparent hover:border-accent transition-colors">
+              Diaspora
+            </Link>
             <Link href="/azande-people" className="shrink-0 py-3 text-sm font-medium text-grey hover:text-ink border-b-2 border-transparent hover:border-accent transition-colors">
               The Azande People
             </Link>
@@ -85,4 +91,5 @@ export default async function Navbar() {
     </header>
   );
 }
+
 

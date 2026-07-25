@@ -31,7 +31,7 @@ export default function CategoriesDropdown() {
       </button>
       {open && (
         <div className="absolute left-0 top-full bg-paper border border-border rounded-sm shadow-lg py-1 min-w-[180px] z-50">
-          {CATEGORIES.map((c) => (
+          {CATEGORIES.filter((c) => c.value !== "announcements" && c.value !== "diaspora").map((c) => (
             <Link
               key={c.value}
               href={`/category/${c.value}`}
@@ -46,3 +46,4 @@ export default function CategoriesDropdown() {
     </div>
   );
 }
+

@@ -47,7 +47,8 @@ export default function RegisterPage() {
     setLoading(false);
 
     if (signUpError) {
-      setError(signUpError.message);
+      setError(signUpError.message || "Something went wrong. Please try again.");
+      console.error("Signup error:", signUpError);
       return;
     }
 
@@ -156,3 +157,4 @@ export default function RegisterPage() {
     </div>
   );
 }
+

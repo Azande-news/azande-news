@@ -64,6 +64,8 @@ export default function RegisterPage() {
         <p className="font-body text-grey">
           We sent a confirmation link to <strong className="text-ink">{email}</strong>. Click it
           to activate your account, then come back and log in.
+          <br /><br />
+          <span className="text-sm">Don&apos;t see it? Please check your <strong>Spam</strong> or <strong>Junk</strong> folder — automated emails sometimes land there.</span>
         </p>
       </div>
     );
@@ -157,4 +159,5 @@ export default function RegisterPage() {
     </div>
   );
 }
+
 

@@ -8,6 +8,8 @@ import ReportButton from "@/components/ReportButton";
 import ShareButtons from "@/components/ShareButtons";
 import BookmarkButton from "@/components/BookmarkButton";
 import ViewTracker from "@/components/ViewTracker";
+import TrendingWidget from "@/components/TrendingWidget";
+import RelatedArticles from "@/components/RelatedArticles";
 import { stripHtml, sanitizeHtml } from "@/lib/html";
 import { CATEGORY_LABELS } from "@/lib/categories";
 import type { Metadata } from "next";
@@ -85,53 +87,76 @@ export default async function PostPage({ params }: { params: { id: string } }) {
   } | null;
 
   return (
-    <article className="max-w-2xl mx-auto">
-      <ViewTracker postId={post.id} />
-      <div className="font-meta text-[11px] tracking-widest uppercase text-accent mb-3">
-        <Link href={`/category/${post.category}`} className="hover:underline">
-          {CATEGORY_LABELS[post.category] ?? post.category}
-        </Link>
+    <div className="max-w-6xl mx-auto">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+        <article className="lg:col-span-2 min-w-0">
+          <ViewTracker postId={post.id} />
+          <div className="font-meta text-[11px] tracking-widest uppercase text-accent mb-3">
+            <Link href={`/category/${post.category}`} className="hover:underline">
+              {CATEGORY_LABELS[post.category] ?? post.category}
+            </Link>
+          </div>
+          <h1 className="font-display text-3xl sm:text-4xl font-bold text-ink leading-[1.1] mb-4">
+            {post.title}
+          </h1>
+          <div className="font-meta text-sm text-grey mb-8">
+            By {author?.display_name ?? "Unknown"} &middot; {date}
+          </div>
+
+          {post.cover_image_url && (
+            <div className="relative w-full h-72 sm:h-96 overflow-hidden mb-8 bg-offwhite">
+              <Image
+                src={post.cover_image_url}
+                alt=""
+                fill
+                className="object-cover"
+                sizes="800px"
+                priority
+              />
+            </div>
+          )}
+
+          <div className="prose-article font-body text-lg text-ink/90" dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.body) }} />
+
+          <div className="mt-8 pt-6 border-t border-border flex items-center justify-between flex-wrap gap-3">
+            <ReportButton postId={post.id} postTitle={post.title} />
+            {canManage && <DeletePostButton postId={post.id} />}
+          </div>
+
+          <div className="mt-4 flex items-center justify-between flex-wrap gap-3">
+            <ShareButtons postId={post.id} postTitle={post.title} />
+          </div>
+
+          <div className="mt-4">
+            <BookmarkButton postId={post.id} />
+          </div>
+
+          <CommentSection postId={post.id} />
+        </article>
+
+        <aside className="lg:border-l lg:border-border lg:pl-8">
+          <TrendingWidget />
+
+          <div className="mt-10 pt-6 border-t border-border">
+            <h2 className="font-meta text-[11px] tracking-wider uppercase text-grey mb-3">
+              Explore
+            </h2>
+            <div className="space-y-2 font-body text-sm">
+              <Link href="/azande-people" className="block text-ink hover:text-accent">
+                Azande Heritage &rarr;
+              </Link>
+              <Link href="/dictionary" className="block text-ink hover:text-accent">
+                Zande Dictionary &rarr;
+              </Link>
+              <Link href="/posts/new" className="block text-ink hover:text-accent">
+                Write a Post &rarr;
+              </Link>
+            </div>
+          </div>
+        </aside>
       </div>
-      <h1 className="font-display text-3xl sm:text-4xl font-bold text-ink leading-[1.1] mb-4">
-        {post.title}
-      </h1>
-      <div className="font-meta text-sm text-grey mb-8">
-        By {author?.display_name ?? "Unknown"} &middot; {date}
-      </div>
 
-      {post.cover_image_url && (
-        <div className="relative w-full h-72 sm:h-96 overflow-hidden mb-8 bg-offwhite">
-          <Image
-            src={post.cover_image_url}
-            alt=""
-            fill
-            className="object-cover"
-            sizes="800px"
-            priority
-          />
-        </div>
-      )}
-
-      <div className="prose-article font-body text-lg text-ink/90" dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.body) }} />
-
-      <div className="mt-8 pt-6 border-t border-border flex items-center justify-between flex-wrap gap-3">
-        <ReportButton postId={post.id} postTitle={post.title} />
-        {canManage && <DeletePostButton postId={post.id} />}
-      </div>
-
-      <div className="mt-4 flex items-center justify-between flex-wrap gap-3">
-        <ShareButtons postId={post.id} postTitle={post.title} />
-      </div>
-
-      <div className="mt-4">
-        <BookmarkButton postId={post.id} />
-      </div>
-
-      <CommentSection postId={post.id} />
-    </article>
+      <RelatedArticles category={post.category} excludeId={post.id} />
+    </div>
   );
 }
-
-
-
-

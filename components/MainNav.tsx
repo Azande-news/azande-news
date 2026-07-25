@@ -20,7 +20,7 @@ const SECTIONS: Record<Exclude<Section, null>, { label: string; links: { href: s
     links: [
       { href: "/category/culture", label: "Culture" },
       { href: "/category/history", label: "History" },
-      { href: "/azande-people", label: "The Azande People" },
+      { href: "/azande-people", label: "Heritage" },
     ],
   },
   language: {
@@ -95,4 +95,5 @@ export default function MainNav() {
     </div>
   );
 }
+
 

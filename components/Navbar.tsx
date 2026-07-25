@@ -3,7 +3,7 @@ import Image from "next/image";
 import { createClient } from "@/lib/supabase/server";
 import LogoutButton from "@/components/LogoutButton";
 import SearchBox from "@/components/SearchBox";
-import SiteMenu from "@/components/SiteMenu";
+import MainNav from "@/components/MainNav";
 
 export default async function Navbar() {
   const supabase = createClient();
@@ -32,27 +32,28 @@ export default async function Navbar() {
             </span>
           </Link>
 
-          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-            <SiteMenu user={!!user} isAdmin={isAdmin} />
+          <div className="flex items-center gap-3 sm:gap-4 shrink-0 text-sm font-medium">
             {user ? (
               <>
-                <Link
-                  href="/posts/new"
-                  className="hidden sm:inline bg-accent hover:bg-accent-light transition-colors px-3 py-1.5 rounded-sm text-sm font-medium"
-                >
+                {isAdmin && (
+                  <Link href="/admin" className="hidden sm:inline text-white/80 hover:text-white transition-colors">
+                    Admin
+                  </Link>
+                )}
+                <Link href="/bookmarks" className="hidden sm:inline text-white/80 hover:text-white transition-colors">
+                  Saved
+                </Link>
+                <Link href="/posts/new" className="bg-accent hover:bg-accent-light transition-colors px-3 py-1.5 rounded-sm">
                   Write a post
                 </Link>
                 <LogoutButton />
               </>
             ) : (
               <>
-                <Link href="/login" className="hidden sm:inline text-white/80 hover:text-white transition-colors text-sm font-medium">
+                <Link href="/login" className="hidden sm:inline text-white/80 hover:text-white transition-colors">
                   Log in
                 </Link>
-                <Link
-                  href="/register"
-                  className="bg-accent hover:bg-accent-light transition-colors px-3 py-1.5 rounded-sm text-sm font-medium"
-                >
+                <Link href="/register" className="bg-accent hover:bg-accent-light transition-colors px-3 py-1.5 rounded-sm">
                   Join
                 </Link>
               </>
@@ -61,7 +62,9 @@ export default async function Navbar() {
         </div>
       </div>
 
-      <div className="bg-paper border-b border-border">
+      <MainNav />
+
+      <div className="bg-offwhite border-b border-border">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-2.5">
           <SearchBox />
         </div>

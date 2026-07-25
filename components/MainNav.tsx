@@ -31,13 +31,10 @@ const SECTIONS: Record<Exclude<Section, null>, { label: string; links: { href: s
     ],
   },
   more: {
-    label: "More",
+    label: "Contribute",
     links: [
-      { href: "/about", label: "About" },
-      { href: "/contact", label: "Contact" },
-      { href: "/privacy", label: "Privacy" },
-      { href: "/terms", label: "Terms" },
-      { href: "/editorial-standards", label: "Editorial Standards" },
+      { href: "/posts/new", label: "Write a Post" },
+      { href: "/dictionary", label: "Contribute a Word" },
     ],
   },
 };
@@ -98,3 +95,4 @@ export default function MainNav() {
     </div>
   );
 }
+

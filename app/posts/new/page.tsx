@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
-import { CATEGORIES } from "@/lib/categories";
+import { CATEGORIES, CATEGORY_DESCRIPTIONS } from "@/lib/categories";
 import RichTextEditor from "@/components/RichTextEditor";
 import { censorText } from "@/lib/profanity";
 
@@ -13,6 +13,19 @@ type PublishMode = "now" | "draft" | "schedule";
 
 function plainTextLength(html: string) {
   return html.replace(/<[^>]*>/g, "").trim().length;
+}
+
+function stripHtmlTags(html: string) {
+  return html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+}
+
+function textToParagraphs(text: string) {
+  return text
+    .split(/\n+/)
+    .map((line) => line.trim())
+    .filter((line) => line.length > 0)
+    .map((line) => `<p>${line}</p>`)
+    .join("");
 }
 
 export default function NewPostPage() {
@@ -29,6 +42,11 @@ export default function NewPostPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const [suggestingCategory, setSuggestingCategory] = useState(false);
+  const [categoryNote, setCategoryNote] = useState<string | null>(null);
+  const [polishingTitle, setPolishingTitle] = useState(false);
+  const [polishingBody, setPolishingBody] = useState(false);
+
   function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -43,6 +61,73 @@ export default function NewPostPage() {
     setError(null);
     setImageFile(file);
     setImagePreview(URL.createObjectURL(file));
+  }
+
+  async function handleSuggestCategory() {
+    if (title.trim().length === 0 && plainTextLength(body) === 0) {
+      setCategoryNote("Write a title or some content first.");
+      return;
+    }
+    setSuggestingCategory(true);
+    setCategoryNote(null);
+    try {
+      const res = await fetch("/api/suggest-category", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title, body: stripHtmlTags(body) }),
+      });
+      const data = await res.json();
+      if (data.category) {
+        setCategory(data.category);
+        const match = CATEGORIES.find((c) => c.value === data.category);
+        setCategoryNote(`Suggested: ${match?.label ?? data.category}`);
+      } else {
+        setCategoryNote("Could not suggest a category — please choose one yourself.");
+      }
+    } catch {
+      setCategoryNote("Could not suggest a category — please choose one yourself.");
+    }
+    setSuggestingCategory(false);
+  }
+
+  async function handlePolishTitle() {
+    if (title.trim().length === 0) return;
+    setPolishingTitle(true);
+    try {
+      const res = await fetch("/api/polish-writing", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: title }),
+      });
+      const data = await res.json();
+      if (data.polished) setTitle(data.polished.trim());
+    } catch {
+      // silently ignore
+    }
+    setPolishingTitle(false);
+  }
+
+  async function handlePolishBody() {
+    const plain = stripHtmlTags(body);
+    if (plain.length === 0) return;
+    const confirmed = window.confirm(
+      "This will fix spelling and grammar, but any bold, headings, or lists you added will be removed. Continue?"
+    );
+    if (!confirmed) return;
+
+    setPolishingBody(true);
+    try {
+      const res = await fetch("/api/polish-writing", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: plain }),
+      });
+      const data = await res.json();
+      if (data.polished) setBody(textToParagraphs(data.polished));
+    } catch {
+      // silently ignore
+    }
+    setPolishingBody(false);
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -154,7 +239,12 @@ export default function NewPostPage() {
 
       <form onSubmit={handleSubmit} className="space-y-5">
         <div>
-          <label className="block font-body text-sm text-ink mb-1">Title</label>
+          <div className="flex items-center justify-between mb-1">
+            <label className="block font-body text-sm text-ink">Title</label>
+            <button type="button" onClick={handlePolishTitle} disabled={polishingTitle} className="text-xs text-accent hover:underline disabled:opacity-50">
+              {polishingTitle ? "Fixing..." : "Fix spelling & grammar"}
+            </button>
+          </div>
           <input
             type="text"
             required
@@ -166,16 +256,22 @@ export default function NewPostPage() {
         </div>
 
         <div>
-          <label className="block font-body text-sm text-ink mb-1">Category</label>
+          <div className="flex items-center justify-between mb-1">
+            <label className="block font-body text-sm text-ink">Category</label>
+            <button type="button" onClick={handleSuggestCategory} disabled={suggestingCategory} className="text-xs text-accent hover:underline disabled:opacity-50">
+              {suggestingCategory ? "Thinking..." : "Suggest a category for me"}
+            </button>
+          </div>
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
             className="w-full border border-border rounded-sm px-3 py-2 font-body focus:outline-none focus:ring-2 focus:ring-accent bg-paper text-ink"
           >
             {CATEGORIES.map((c) => (
-              <option key={c.value} value={c.value}>{c.label}</option>
+              <option key={c.value} value={c.value}>{c.label} — {c.description}</option>
             ))}
           </select>
+          {categoryNote && <p className="text-xs text-grey mt-1">{categoryNote}</p>}
         </div>
 
         <div>
@@ -195,7 +291,12 @@ export default function NewPostPage() {
         </div>
 
         <div>
-          <label className="block font-body text-sm text-ink mb-1">Content</label>
+          <div className="flex items-center justify-between mb-1">
+            <label className="block font-body text-sm text-ink">Content</label>
+            <button type="button" onClick={handlePolishBody} disabled={polishingBody} className="text-xs text-accent hover:underline disabled:opacity-50">
+              {polishingBody ? "Fixing..." : "Fix spelling & grammar"}
+            </button>
+          </div>
           <RichTextEditor content={body} onChange={setBody} />
         </div>
 
@@ -238,5 +339,3 @@ export default function NewPostPage() {
     </div>
   );
 }
-
-

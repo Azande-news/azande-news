@@ -21,6 +21,17 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  input, textarea, select {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+  }
+  input::placeholder, textarea::placeholder {
+    color: var(--color-grey);
+    opacity: 1;
+  }
+}
+
 .prose-article p {
   margin-bottom: 1.25em;
   line-height: 1.75;
@@ -55,5 +66,6 @@
     transition-duration: 0.01ms !important;
   }
 }
+
 
 

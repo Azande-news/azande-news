@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import PostCard from "@/components/PostCard";
+import StartMessageButton from "@/components/StartMessageButton";
 import type { Metadata } from "next";
 
 export async function generateMetadata({
@@ -47,6 +48,7 @@ export default async function AuthorPage({
   const authorPosts = (posts ?? []) as unknown as Array<
     Parameters<typeof PostCard>[0]["post"]
   >;
+  const { data: { user: currentUser } } = await supabase.auth.getUser();
 
   const joined = new Date(profile.created_at).toLocaleDateString(undefined, {
     year: "numeric",
@@ -67,6 +69,9 @@ export default async function AuthorPage({
             {profile.bio}
           </p>
         )}
+        <div className="mt-3">
+          <StartMessageButton otherUserId={profile.id} currentUserId={currentUser?.id ?? null} />
+        </div>
       </div>
 
       <h2 className="font-display text-lg font-bold text-ink border-l-4 border-accent pl-3 mb-6">
@@ -85,5 +90,7 @@ export default async function AuthorPage({
     </div>
   );
 }
+
+
 
 

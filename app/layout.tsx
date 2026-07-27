@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Work_Sans, Space_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import BreakingBar from "@/components/BreakingBar";
@@ -24,15 +26,16 @@ export const metadata: Metadata = {
     template: "%s · Azande News",
   },
   description:
-    "A community news and information site for the Azande people of Western Equatoria, South Sudan, and the worldwide diaspora.",
+    "A community news and information site for the Azande people of DR Congo, South Sudan, the Central African Republic, and the worldwide diaspora — news, culture, history, and the Zande language.",
   metadataBase: new URL("https://azande-news.vercel.app"),
+  keywords: ["Azande", "Zande", "South Sudan news", "DR Congo news", "Central African Republic", "Azande diaspora", "Zande language", "Zande dictionary", "Western Equatoria", "Yambio"],
   alternates: {
     types: { "application/rss+xml": "/feed.xml" },
   },
   openGraph: {
     title: "Azande News",
     description:
-      "News, culture, and voices from the Azande people of Western Equatoria and the diaspora around the world.",
+      "News, culture, and voices from the Azande people of DR Congo, South Sudan, the Central African Republic, and the diaspora around the world.",
     url: "https://azande-news.vercel.app",
     siteName: "Azande News",
     locale: "en_US",
@@ -42,7 +45,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Azande News",
     description:
-      "News, culture, and voices from the Azande people of Western Equatoria and the diaspora around the world.",
+      "News, culture, and voices from the Azande people of DR Congo, South Sudan, the Central African Republic, and the diaspora around the world.",
   },
 };
 
@@ -77,6 +80,8 @@ export default function RootLayout({
         </main>
         <Footer />
         <DarkModeToggle />
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

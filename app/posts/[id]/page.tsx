@@ -33,6 +33,7 @@ export async function generateMetadata({
   return {
     title: `${post.title} — Azande News`,
     description,
+    alternates: { canonical: `https://azande-news.vercel.app/posts/${params.id}` },
     openGraph: {
       title: post.title,
       description,
@@ -86,8 +87,38 @@ export default async function PostPage({ params }: { params: { id: string } }) {
     username: string;
   } | null;
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    headline: post.title,
+    datePublished: post.created_at,
+    dateModified: post.created_at,
+    author: {
+      "@type": "Person",
+      name: author?.display_name ?? "Azande News",
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "Azande News",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://azande-news.vercel.app/logo.png",
+      },
+    },
+    description: stripHtml(post.body).slice(0, 160),
+    image: post.cover_image_url ? [post.cover_image_url] : undefined,
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `https://azande-news.vercel.app/posts/${post.id}`,
+    },
+  };
+
   return (
     <div className="max-w-6xl mx-auto">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
         <article className="lg:col-span-2 min-w-0">
           <ViewTracker postId={post.id} />
@@ -107,7 +138,7 @@ export default async function PostPage({ params }: { params: { id: string } }) {
             <div className="relative w-full h-72 sm:h-96 overflow-hidden mb-8 bg-offwhite">
               <Image
                 src={post.cover_image_url}
-                alt=""
+                alt={post.title}
                 fill
                 className="object-cover"
                 sizes="800px"

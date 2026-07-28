@@ -182,12 +182,13 @@ export default function NewPostPage() {
 
     const isNewAuthor = (publishedCount ?? 0) < 3;
     const status = publishMode === "now" ? "published" : publishMode === "draft" ? "draft" : "scheduled";
-    let finalStatus = status === "published" && isNewAuthor ? "pending" : status;
+    let finalStatus = status;
     const publishAt = publishMode === "schedule" ? new Date(scheduleDate).toISOString() : null;
 
     let aiFlagged = false;
     let aiFlagReason: string | null = null;
-    if (finalStatus === "published") {
+    if (status === "published") {
+      let qualityOk = false;
       try {
         const modRes = await fetch("/api/moderate-post", {
           method: "POST",
@@ -195,13 +196,21 @@ export default function NewPostPage() {
           body: JSON.stringify({ title: title.trim(), body }),
         });
         const modData = await modRes.json();
+        qualityOk = !!modData.qualityOk;
         if (modData.flagged) {
           aiFlagged = true;
           aiFlagReason = modData.reason;
-          finalStatus = "pending";
         }
       } catch {
-        // moderation check failed silently; post proceeds as normal
+        // moderation check failed silently; treated as not quality-verified
+      }
+
+      if (aiFlagged) {
+        finalStatus = "pending";
+      } else if (isNewAuthor && !qualityOk) {
+        finalStatus = "pending";
+      } else {
+        finalStatus = "published";
       }
     }
 
@@ -339,3 +348,4 @@ export default function NewPostPage() {
     </div>
   );
 }
+

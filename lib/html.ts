@@ -22,6 +22,14 @@ export function sanitizeHtml(html: string): string {
     allowedAttributes: {
       a: ["href", "target", "rel"],
       img: ["src", "alt"],
+      p: ["style"],
+      h2: ["style"],
+      h3: ["style"],
+    },
+    allowedStyles: {
+      "*": {
+        "text-align": [/^left$/, /^center$/, /^right$/, /^justify$/],
+      },
     },
   });
 }

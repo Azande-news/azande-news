@@ -58,7 +58,8 @@ export default function NewsletterSignup() {
       >
         {loading ? "Joining…" : "Subscribe"}
       </button>
-      {error && <p className="text-accent-light text-xs sm:hidden">{error}</p>}
+      {error && <p className="text-accent-light text-xs mt-1">{error}</p>}
     </form>
   );
 }
+

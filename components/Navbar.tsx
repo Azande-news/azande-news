@@ -1,9 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
 import { createClient } from "@/lib/supabase/server";
-import LogoutButton from "@/components/LogoutButton";
 import SearchBox from "@/components/SearchBox";
 import MainNav from "@/components/MainNav";
+import AccountMenu from "@/components/AccountMenu";
 
 export default async function Navbar() {
   const supabase = createClient();
@@ -32,29 +32,17 @@ export default async function Navbar() {
             </span>
           </Link>
 
-          <div className="flex items-center gap-3 sm:gap-4 shrink-0 text-sm font-medium">
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0 text-sm font-medium">
             {user ? (
               <>
-                {isAdmin && (
-                  <Link href="/admin" className="hidden sm:inline text-white/80 hover:text-white transition-colors">
-                    Admin
-                  </Link>
-                )}
-                <Link href="/bookmarks" className="hidden sm:inline text-white/80 hover:text-white transition-colors">
-                  Saved
-                </Link>
-                <Link href="/messages" className="hidden sm:inline text-white/80 hover:text-white transition-colors">
-                  Messages
-                </Link>
-                
                 <Link href="/posts/new" className="bg-accent hover:bg-accent-light transition-colors px-3 py-1.5 rounded-sm">
                   Write a post
                 </Link>
-                <LogoutButton />
+                <AccountMenu isAdmin={isAdmin} />
               </>
             ) : (
               <>
-                <Link href="/login" className="hidden sm:inline text-white/80 hover:text-white transition-colors">
+                <Link href="/login" className="text-white/80 hover:text-white transition-colors">
                   Log in
                 </Link>
                 <Link href="/register" className="bg-accent hover:bg-accent-light transition-colors px-3 py-1.5 rounded-sm">
@@ -76,6 +64,3 @@ export default async function Navbar() {
     </header>
   );
 }
-
-
-

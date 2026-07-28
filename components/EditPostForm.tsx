@@ -125,6 +125,10 @@ export default function EditPostForm({ post }: { post: Post }) {
           body: JSON.stringify({ title: title.trim(), body }),
         });
         const modData = await modRes.json();
+        // Note: unlike new posts, edits do not get a "quality auto-publish" shortcut —
+        // there is no new-author trust gate on an edit to an already-approved post.
+        // Any flagged content sends it back to pending regardless of author trust,
+        // since an edit could introduce something the original approval never saw.
         if (modData.flagged) {
           aiFlagged = true;
           aiFlagReason = modData.reason;
@@ -260,5 +264,6 @@ export default function EditPostForm({ post }: { post: Post }) {
     </div>
   );
 }
+
 
 

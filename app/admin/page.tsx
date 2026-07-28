@@ -5,6 +5,7 @@ import AdminUsersTable from "@/components/admin/AdminUsersTable";
 import AdminReportsTable from "@/components/admin/AdminReportsTable";
 import AdminAnalytics from "@/components/admin/AdminAnalytics";
 import AdminDictionaryTable from "@/components/admin/AdminDictionaryTable";
+import AdminSubscribersTable from "@/components/admin/AdminSubscribersTable";
 
 export const revalidate = 0;
 
@@ -38,7 +39,7 @@ export default async function AdminPage() {
     );
   }
 
-  const [{ data: posts }, { data: profiles }, { data: reports }, { data: dictionaryEntries }] =
+  const [{ data: posts }, { data: profiles }, { data: reports }, { data: dictionaryEntries }, { data: subscribers }] =
     await Promise.all([
       supabase
         .from("posts")
@@ -57,6 +58,10 @@ export default async function AdminPage() {
         .from("dictionary_entries")
         .select("id, zande_word, english_translation, notes, status, profiles(display_name, username)")
         .neq("status", "approved")
+        .order("created_at", { ascending: false }),
+      supabase
+        .from("newsletter_subscribers")
+        .select("id, email, created_at")
         .order("created_at", { ascending: false }),
     ]);
 
@@ -97,6 +102,13 @@ export default async function AdminPage() {
         <AdminPostsTable posts={(posts ?? []) as any} />
       </section>
 
+      <section className="mb-14">
+        <h2 className="font-display text-xl font-bold text-ink border-l-4 border-accent pl-3 mb-4">
+          Newsletter subscribers ({subscribers?.length ?? 0})
+        </h2>
+        <AdminSubscribersTable subscribers={(subscribers ?? []) as any} />
+      </section>
+
       <section>
         <h2 className="font-display text-xl font-bold text-ink border-l-4 border-accent pl-3 mb-4">
           Users ({profiles?.length ?? 0})
@@ -106,6 +118,7 @@ export default async function AdminPage() {
     </div>
   );
 }
+
 
 
 

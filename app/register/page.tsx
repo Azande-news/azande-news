@@ -16,6 +16,7 @@ export default function RegisterPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  const [agreed, setAgreed] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -30,6 +31,10 @@ export default function RegisterPage() {
     }
     if (password.length < 8) {
       setError("Password must be at least 8 characters.");
+      return;
+    }
+    if (!agreed) {
+      setError("Please agree to the Terms of Use and Privacy Policy to continue.");
       return;
     }
 
@@ -139,11 +144,31 @@ export default function RegisterPage() {
           />
         </div>
 
+        <label className="flex items-start gap-2 cursor-pointer">
+          <input
+            type="checkbox"
+            checked={agreed}
+            onChange={(e) => setAgreed(e.target.checked)}
+            className="mt-1"
+          />
+          <span className="font-body text-sm text-grey">
+            I agree to the{" "}
+            <Link href="/terms" target="_blank" className="text-accent hover:underline">
+              Terms of Use
+            </Link>{" "}
+            and{" "}
+            <Link href="/privacy" target="_blank" className="text-accent hover:underline">
+              Privacy Policy
+            </Link>
+            .
+          </span>
+        </label>
+
         {error && <p className="text-accent font-body text-sm">{error}</p>}
 
         <button
           type="submit"
-          disabled={loading}
+          disabled={loading || !agreed}
           className="w-full bg-ink text-paper py-3 rounded-sm hover:bg-accent transition-colors font-body font-medium disabled:opacity-60"
         >
           {loading ? "Creating account…" : "Create free account"}
@@ -159,5 +184,6 @@ export default function RegisterPage() {
     </div>
   );
 }
+
 
 

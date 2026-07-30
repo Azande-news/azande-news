@@ -73,9 +73,12 @@ export default function RootLayout({
       <body
         className={`${workSans.variable} ${spaceMono.variable} font-body bg-paper text-ink transition-colors`}
       >
+        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] bg-accent text-white px-4 py-2 rounded-sm text-sm font-medium">
+          Skip to main content
+        </a>
         <Navbar />
         <BreakingBar />
-        <main className="max-w-6xl mx-auto px-4 sm:px-6 py-8 min-h-[60vh]">
+        <main id="main-content" className="max-w-6xl mx-auto px-4 sm:px-6 py-8 min-h-[60vh]">
           {children}
         </main>
         <Footer />
@@ -86,3 +89,5 @@ export default function RootLayout({
     </html>
   );
 }
+
+

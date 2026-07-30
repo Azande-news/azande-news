@@ -55,7 +55,7 @@ export default async function PostPage({ params }: { params: { id: string } }) {
   const { data: post } = await supabase
     .from("posts")
     .select(
-      "id, title, body, category, created_at, author_id, cover_image_url, profiles(display_name, username)"
+      "id, title, body, category, created_at, updated_at, author_id, cover_image_url, profiles(display_name, username)"
     )
     .eq("id", params.id)
     .single();
@@ -81,6 +81,11 @@ export default async function PostPage({ params }: { params: { id: string } }) {
     month: "long",
     day: "numeric",
   });
+
+  const wasEdited = post.updated_at && new Date(post.updated_at).getTime() - new Date(post.created_at).getTime() > 60000;
+  const updatedDate = wasEdited
+    ? new Date(post.updated_at).toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" })
+    : null;
 
   const author = post.profiles as unknown as {
     display_name: string;
@@ -132,6 +137,7 @@ export default async function PostPage({ params }: { params: { id: string } }) {
           </h1>
           <div className="font-meta text-sm text-grey mb-8">
             By {author?.display_name ?? "Unknown"} &middot; {date}
+            {wasEdited && <> &middot; Updated {updatedDate}</>}
           </div>
 
           {post.cover_image_url && (
@@ -191,4 +197,5 @@ export default async function PostPage({ params }: { params: { id: string } }) {
     </div>
   );
 }
+
 

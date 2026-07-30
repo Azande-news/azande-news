@@ -46,6 +46,9 @@ export default function AccountMenu({ isAdmin }: { isAdmin: boolean }) {
           <Link href="/settings/security" onClick={() => setOpen(false)} className="block px-4 py-2 text-sm text-ink hover:bg-offwhite transition-colors">
             Security
           </Link>
+          <Link href="/settings/account" onClick={() => setOpen(false)} className="block px-4 py-2 text-sm text-ink hover:bg-offwhite transition-colors">
+            Account
+          </Link>
           <div className="border-t border-border mt-1 pt-1">
             <div className="px-4 py-2">
               <LogoutButton />
@@ -56,4 +59,5 @@ export default function AccountMenu({ isAdmin }: { isAdmin: boolean }) {
     </div>
   );
 }
+
 

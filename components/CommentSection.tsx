@@ -14,7 +14,7 @@ type Comment = {
   profiles: { display_name: string } | null;
 };
 
-export default function CommentSection({ postId }: { postId: string }) {
+export default function CommentSection({ postId, isAdmin = false }: { postId: string; isAdmin?: boolean }) {
   const supabase = createClient();
   const router = useRouter();
 
@@ -111,7 +111,7 @@ export default function CommentSection({ postId }: { postId: string }) {
               </span>
             </div>
             <p className="text-grey-dark mt-1 whitespace-pre-wrap">{c.body}</p>
-            {userId === c.author_id && (
+            {(userId === c.author_id || isAdmin) && (
               <button
                 onClick={() => handleDelete(c.id)}
                 className="text-xs text-accent hover:underline mt-1"
@@ -158,5 +158,6 @@ export default function CommentSection({ postId }: { postId: string }) {
     </div>
   );
 }
+
 
 

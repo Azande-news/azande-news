@@ -162,7 +162,7 @@ export default async function PostPage({ params }: { params: { id: string } }) {
             <BookmarkButton postId={post.id} />
           </div>
 
-          <CommentSection postId={post.id} />
+          <CommentSection postId={post.id} isAdmin={canManage} />
         </article>
 
         <aside className="lg:border-l lg:border-border lg:pl-8">
@@ -191,3 +191,4 @@ export default async function PostPage({ params }: { params: { id: string } }) {
     </div>
   );
 }
+

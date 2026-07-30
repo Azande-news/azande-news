@@ -174,6 +174,19 @@ export default function NewPostPage() {
       coverImageUrl = publicUrlData.publicUrl;
     }
 
+    const tenMinutesAgo = new Date(Date.now() - 10 * 60 * 1000).toISOString();
+    const { count: recentCount } = await supabase
+      .from("posts")
+      .select("id", { count: "exact", head: true })
+      .eq("author_id", user.id)
+      .gte("created_at", tenMinutesAgo);
+
+    if ((recentCount ?? 0) >= 5) {
+      setError("You are posting too quickly. Please wait a few minutes and try again.");
+      setLoading(false);
+      return;
+    }
+
     const { count: publishedCount } = await supabase
       .from("posts")
       .select("id", { count: "exact", head: true })
@@ -348,4 +361,5 @@ export default function NewPostPage() {
     </div>
   );
 }
+
 

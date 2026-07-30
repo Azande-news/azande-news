@@ -54,6 +54,18 @@ export default function DictionaryPage() {
       return;
     }
 
+    const tenMinutesAgo = new Date(Date.now() - 10 * 60 * 1000).toISOString();
+    const { count: recentCount } = await supabase
+      .from("dictionary_entries")
+      .select("id", { count: "exact", head: true })
+      .eq("submitted_by", userId)
+      .gte("created_at", tenMinutesAgo);
+
+    if ((recentCount ?? 0) >= 10) {
+      setError("You are submitting words too quickly. Please wait a few minutes and try again.");
+      return;
+    }
+
     setSubmitting(true);
     const { error: insertError } = await supabase.from("dictionary_entries").insert({
       zande_word: censorText(zandeWord.trim()),
@@ -174,4 +186,5 @@ export default function DictionaryPage() {
     </div>
   );
 }
+
 

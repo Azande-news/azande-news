@@ -58,6 +58,19 @@ export default function CommentSection({ postId }: { postId: string }) {
       return;
     }
 
+    const twoMinutesAgo = new Date(Date.now() - 2 * 60 * 1000).toISOString();
+    const { count: recentCount } = await supabase
+      .from("comments")
+      .select("id", { count: "exact", head: true })
+      .eq("author_id", user.id)
+      .gte("created_at", twoMinutesAgo);
+
+    if ((recentCount ?? 0) >= 5) {
+      setError("You are commenting too quickly. Please wait a couple of minutes and try again.");
+      setSubmitting(false);
+      return;
+    }
+
     const { error: insertError } = await supabase.from("comments").insert({
       post_id: postId,
       author_id: user.id,
@@ -145,4 +158,5 @@ export default function CommentSection({ postId }: { postId: string }) {
     </div>
   );
 }
+
 

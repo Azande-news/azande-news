@@ -157,7 +157,14 @@ export default async function PostPage({ params }: { params: { id: string } }) {
 
           <div className="mt-8 pt-6 border-t border-border flex items-center justify-between flex-wrap gap-3">
             <ReportButton postId={post.id} postTitle={post.title} />
-            {canManage && <DeletePostButton postId={post.id} />}
+            {canManage && (
+              <>
+                <Link href={`/posts/${post.id}/edit`} className="text-sm font-medium text-ink hover:text-accent">
+                  Edit this post
+                </Link>
+                <DeletePostButton postId={post.id} />
+              </>
+            )}
           </div>
 
           <div className="mt-4 flex items-center justify-between flex-wrap gap-3">
@@ -197,5 +204,6 @@ export default async function PostPage({ params }: { params: { id: string } }) {
     </div>
   );
 }
+
 
 

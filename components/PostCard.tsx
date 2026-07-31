@@ -76,7 +76,7 @@ export default function PostCard({
         )}
         <Meta className="mb-2" />
         <Link href={`/posts/${post.id}`} className="group">
-          <h1 className="font-display text-3xl sm:text-4xl font-bold text-ink leading-[1.08] mb-3 group-hover:underline decoration-2 underline-offset-2">
+          <h1 className="font-display text-canon sm:text-canon-lg font-bold text-ink mb-3 group-hover:underline decoration-2 underline-offset-2">
             {post.title}
           </h1>
           <p className="font-body text-grey-dark text-base leading-relaxed">
@@ -108,7 +108,7 @@ export default function PostCard({
         <div className="min-w-0">
           <Meta className="mb-1" />
           <Link href={`/posts/${post.id}`} className="group">
-            <h3 className="font-display text-sm sm:text-base font-semibold text-ink leading-snug line-clamp-3 group-hover:underline">
+            <h3 className="font-display text-pica sm:text-double-pica font-semibold text-ink line-clamp-3 group-hover:underline">
               {post.title}
             </h3>
           </Link>
@@ -136,7 +136,7 @@ export default function PostCard({
       )}
       <Meta className="mb-1.5" />
       <Link href={`/posts/${post.id}`} className="group">
-        <h3 className="font-display text-lg font-bold text-ink leading-snug mb-1.5 line-clamp-2 group-hover:underline">
+        <h3 className="font-display text-trafalgar font-bold text-ink mb-1.5 line-clamp-2 group-hover:underline">
           {post.title}
         </h3>
         <p className="font-body text-sm text-grey leading-relaxed line-clamp-2">
@@ -148,4 +148,5 @@ export default function PostCard({
     </article>
   );
 }
+
 

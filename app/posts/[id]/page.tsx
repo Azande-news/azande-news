@@ -132,7 +132,7 @@ export default async function PostPage({ params }: { params: { id: string } }) {
               {CATEGORY_LABELS[post.category] ?? post.category}
             </Link>
           </div>
-          <h1 className="font-display text-3xl sm:text-4xl font-bold text-ink leading-[1.1] mb-4">
+          <h1 className="font-display text-canon sm:text-canon-lg font-bold text-ink mb-4">
             {post.title}
           </h1>
           <div className="font-meta text-sm text-grey mb-8">
@@ -204,6 +204,7 @@ export default async function PostPage({ params }: { params: { id: string } }) {
     </div>
   );
 }
+
 
 
 

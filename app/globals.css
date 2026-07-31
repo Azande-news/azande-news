@@ -30,6 +30,26 @@
     color: var(--color-grey);
     opacity: 1;
   }
+
+  /* BBC typography rule: bold text above 18px gets -0.03em tracking for legibility */
+  b, strong {
+    letter-spacing: -0.03em;
+  }
+  h1, h2, h3 {
+    letter-spacing: -0.03em;
+  }
+
+  /* BBC-style blockquote: Georgia italic for quoted material */
+  blockquote {
+    font-family: Georgia, "Times New Roman", serif;
+    font-style: italic;
+    font-size: 22px;
+    line-height: 28px;
+    border-left: 3px solid var(--color-ink);
+    padding-left: 1rem;
+    margin: 1.5rem 0;
+    color: var(--color-ink);
+  }
 }
 
 .prose-article p {
@@ -66,6 +86,7 @@
     transition-duration: 0.01ms !important;
   }
 }
+
 
 
 

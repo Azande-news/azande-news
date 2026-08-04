@@ -122,7 +122,7 @@ export default function EditPostForm({ post }: { post: Post }) {
         const modRes = await fetch("/api/moderate-post", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ title: title.trim(), body }),
+          body: JSON.stringify({ title: title.trim(), body, imageUrl: coverImageUrl }),
         });
         const modData = await modRes.json();
         // Note: unlike new posts, edits do not get a "quality auto-publish" shortcut —
@@ -264,6 +264,7 @@ export default function EditPostForm({ post }: { post: Post }) {
     </div>
   );
 }
+
 
 
 

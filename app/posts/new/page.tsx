@@ -206,7 +206,7 @@ export default function NewPostPage() {
         const modRes = await fetch("/api/moderate-post", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ title: title.trim(), body }),
+          body: JSON.stringify({ title: title.trim(), body, imageUrl: coverImageUrl }),
         });
         const modData = await modRes.json();
         qualityOk = !!modData.qualityOk;
@@ -361,5 +361,6 @@ export default function NewPostPage() {
     </div>
   );
 }
+
 
 

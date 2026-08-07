@@ -19,6 +19,11 @@ function stripHtmlTags(html: string) {
   return html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
 }
 
+function extractImageUrls(html: string): string[] {
+  const matches = [...html.matchAll(/<img[^>]+src="([^"]+)"/g)];
+  return matches.map((m) => m[1]);
+}
+
 function textToParagraphs(text: string) {
   return text
     .split(/\n+/)
@@ -206,7 +211,7 @@ export default function NewPostPage() {
         const modRes = await fetch("/api/moderate-post", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ title: title.trim(), body, imageUrl: coverImageUrl }),
+          body: JSON.stringify({ title: title.trim(), body, imageUrl: coverImageUrl, bodyImageUrls: extractImageUrls(body) }),
         });
         const modData = await modRes.json();
         qualityOk = !!modData.qualityOk;
@@ -361,6 +366,7 @@ export default function NewPostPage() {
     </div>
   );
 }
+
 
 
 

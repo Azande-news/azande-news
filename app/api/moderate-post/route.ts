@@ -14,19 +14,26 @@ async function fetchImageAsBase64(url: string): Promise<{ data: string; mimeType
   }
 }
 
+const MAX_IMAGES = 3;
+
 export async function POST(req: Request) {
-  const { title, body, imageUrl } = await req.json();
+  const { title, body, imageUrl, bodyImageUrls } = await req.json();
   const apiKey = process.env.GEMINI_API_KEY;
 
   if (!apiKey) {
     return NextResponse.json({ flagged: false, reason: null, qualityOk: false });
   }
 
-  const prompt = `You are a content moderation assistant for a community news site run by and for the Azande people. Review the following post title, body, and (if provided) an attached image, and answer two questions.
+  const allImageUrls: string[] = [
+    ...(imageUrl ? [imageUrl] : []),
+    ...(Array.isArray(bodyImageUrls) ? bodyImageUrls : []),
+  ].slice(0, MAX_IMAGES);
 
-1. Should it be FLAGGED? Flag it ONLY if the text OR the image contains: hate speech, harassment, targeted threats, obvious spam, sexually explicit or graphic violent content, or dangerous misinformation (e.g. false claims that could cause real-world harm). Do NOT flag it for containing strong opinions, criticism of public figures, political views, or ordinary news content or images.
+  const prompt = `You are a content moderation assistant for a community news site run by and for the Azande people. Review the following post title, body, and (if provided) up to ${MAX_IMAGES} attached images, and answer two questions.
 
-2. Is it QUALITY content? Answer true only if the text reads as genuine, coherent, on-topic community content — not gibberish, keyboard-mashing, an empty test post, or something with no real substance. A short but genuine, coherent post can still be quality:true. If there is no image, judge quality on text alone.
+1. Should it be FLAGGED? Flag it ONLY if the text OR any image contains: hate speech, harassment, targeted threats, obvious spam, sexually explicit or graphic violent content, or dangerous misinformation (e.g. false claims that could cause real-world harm). Do NOT flag it for containing strong opinions, criticism of public figures, political views, or ordinary news content or images.
+
+2. Is it QUALITY content? Answer true only if the text reads as genuine, coherent, on-topic community content — not gibberish, keyboard-mashing, an empty test post, or something with no real substance. A short but genuine, coherent post can still be quality:true. Judge quality on text primarily.
 
 Respond with ONLY a JSON object, no other text, in this exact format: {"flagged": true or false, "reason": "short explanation or empty string", "qualityOk": true or false}
 
@@ -36,8 +43,8 @@ Body: ${body}`;
 
   const parts: Array<Record<string, unknown>> = [{ text: prompt }];
 
-  if (imageUrl) {
-    const image = await fetchImageAsBase64(imageUrl);
+  for (const url of allImageUrls) {
+    const image = await fetchImageAsBase64(url);
     if (image) {
       parts.push({
         inline_data: {

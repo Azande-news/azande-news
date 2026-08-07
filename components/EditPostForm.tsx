@@ -25,6 +25,11 @@ function plainTextLength(html: string) {
   return html.replace(/<[^>]*>/g, "").trim().length;
 }
 
+function extractImageUrls(html: string): string[] {
+  const matches = [...html.matchAll(/<img[^>]+src="([^"]+)"/g)];
+  return matches.map((m) => m[1]);
+}
+
 function toLocalInputValue(iso: string | null) {
   if (!iso) return "";
   const d = new Date(iso);
@@ -122,7 +127,7 @@ export default function EditPostForm({ post }: { post: Post }) {
         const modRes = await fetch("/api/moderate-post", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ title: title.trim(), body, imageUrl: coverImageUrl }),
+          body: JSON.stringify({ title: title.trim(), body, imageUrl: coverImageUrl, bodyImageUrls: extractImageUrls(body) }),
         });
         const modData = await modRes.json();
         // Note: unlike new posts, edits do not get a "quality auto-publish" shortcut —
@@ -264,6 +269,7 @@ export default function EditPostForm({ post }: { post: Post }) {
     </div>
   );
 }
+
 
 
 

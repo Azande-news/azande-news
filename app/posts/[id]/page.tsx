@@ -82,6 +82,9 @@ export default async function PostPage({ params }: { params: { id: string } }) {
     day: "numeric",
   });
 
+  const wordCount = stripHtml(post.body).split(/\s+/).filter(Boolean).length;
+  const readingMinutes = Math.max(1, Math.round(wordCount / 200));
+
   const wasEdited = post.updated_at && new Date(post.updated_at).getTime() - new Date(post.created_at).getTime() > 60000;
   const updatedDate = wasEdited
     ? new Date(post.updated_at).toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" })
@@ -136,7 +139,7 @@ export default async function PostPage({ params }: { params: { id: string } }) {
             {post.title}
           </h1>
           <div className="font-meta text-sm text-grey mb-8">
-            By {author?.display_name ?? "Unknown"} &middot; {date}
+            By {author?.display_name ?? "Unknown"} &middot; {date} &middot; {readingMinutes} min read
             {wasEdited && <> &middot; Updated {updatedDate}</>}
           </div>
 
@@ -204,6 +207,7 @@ export default async function PostPage({ params }: { params: { id: string } }) {
     </div>
   );
 }
+
 
 
 

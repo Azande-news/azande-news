@@ -1,7 +1,9 @@
+import Link from "next/link";
+import Image from "next/image";
 import { createClient } from "@/lib/supabase/server";
 import SearchBox from "@/components/SearchBox";
 import MainNav from "@/components/MainNav";
-import CollapsibleTopBar from "@/components/CollapsibleTopBar";
+import AccountMenu from "@/components/AccountMenu";
 
 export default async function Navbar() {
   const supabase = createClient();
@@ -21,8 +23,39 @@ export default async function Navbar() {
 
   return (
     <header className="sticky top-0 z-50">
-      <CollapsibleTopBar isLoggedIn={!!user} isAdmin={isAdmin} />
+      <div className="bg-[#1A1A1A] text-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-3">
+          <Link href="/" className="flex items-center gap-2 min-w-0">
+            <Image src="/logo.png" alt="Azande News" width={36} height={36} className="rounded-sm shrink-0" priority />
+            <span className="font-display text-lg sm:text-2xl font-bold tracking-tight truncate">
+              Azande News
+            </span>
+          </Link>
+
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0 text-sm font-medium">
+            {user ? (
+              <>
+                <Link href="/posts/new" className="bg-accent hover:bg-accent-light transition-colors px-3 py-1.5 rounded-sm">
+                  Write a post
+                </Link>
+                <AccountMenu isAdmin={isAdmin} />
+              </>
+            ) : (
+              <>
+                <Link href="/login" className="text-white/80 hover:text-white transition-colors">
+                  Log in
+                </Link>
+                <Link href="/register" className="bg-accent hover:bg-accent-light transition-colors px-3 py-1.5 rounded-sm">
+                  Join
+                </Link>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+
       <MainNav />
+
       <div className="bg-offwhite border-b border-border">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-2.5">
           <SearchBox />

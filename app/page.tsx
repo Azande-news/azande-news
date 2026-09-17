@@ -1,7 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import PostCard from "@/components/PostCard";
 import TrendingWidget from "@/components/TrendingWidget";
-import ElsewhereStrip from "@/components/ElsewhereStrip";
 import Link from "next/link";
 import Image from "next/image";
 import { CATEGORY_LABELS } from "@/lib/categories";
@@ -75,8 +74,6 @@ export default async function HomePage() {
     [lead?.id, ...sidebar.map((p) => p.id)].filter(Boolean) as string[]
   );
 
-  // BBC-style "Features": longer analysis/opinion-length posts, visually
-  // distinguished with serif styling, pulled by word count.
   const features = allPosts
     .filter((p) => {
       if (usedIds.has(p.id)) return false;
@@ -86,8 +83,6 @@ export default async function HomePage() {
     .slice(0, MAX_FEATURES);
   features.forEach((p) => usedIds.add(p.id));
 
-  // BBC-style topic rows: a handful of the freshest posts per category,
-  // skipping anything already shown up in the lead/sidebar/features block.
   const topicRows: { value: string; label: string; posts: PostRow[] }[] = [];
   for (const value of TOPIC_ROW_ORDER) {
     if (topicRows.length >= MAX_TOPIC_ROWS) break;
@@ -104,6 +99,13 @@ export default async function HomePage() {
   }
 
   const leftoverPosts = allPosts.filter((p) => !usedIds.has(p.id));
+
+  const featuresGridClass =
+    features.length === 1
+      ? "grid grid-cols-1 max-w-2xl"
+      : features.length === 2
+      ? "grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-8"
+      : "grid grid-cols-1 sm:grid-cols-3 gap-x-8 gap-y-8";
 
   return (
     <div>
@@ -131,7 +133,7 @@ export default async function HomePage() {
           <h2 className="font-meta text-[11px] tracking-wider uppercase text-grey mb-6">
             Features &amp; Analysis
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-8 gap-y-8">
+          <div className={featuresGridClass}>
             {features.map((post) => {
               const excerpt = stripHtml(post.body).slice(0, 140);
               return (
@@ -196,8 +198,6 @@ export default async function HomePage() {
           </div>
         </div>
       )}
-
-      <ElsewhereStrip />
     </div>
   );
 }

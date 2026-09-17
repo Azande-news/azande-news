@@ -1,4 +1,5 @@
 export const CATEGORIES = [
+  { value: "live", label: "Live", description: "Rolling updates on a developing story" },
   { value: "general", label: "Local News", description: "Everyday happenings in your area" },
   { value: "culture", label: "Culture", description: "Traditions, food, celebrations, daily life" },
   { value: "history", label: "History", description: "Azande history and historical figures" },

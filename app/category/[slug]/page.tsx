@@ -53,7 +53,7 @@ export default async function CategoryPage({
       <div className="font-meta text-[11px] tracking-widest uppercase text-accent mb-2">
         Category
       </div>
-      <h1 className="font-display text-4xl font-bold text-ink mb-2">{label}</h1>
+      <h1 className="font-display text-canon sm:text-canon-lg font-bold text-ink mb-2">{label}</h1>
       {description && (
         <p className="font-body text-grey text-base mb-8 max-w-2xl">
           {description}

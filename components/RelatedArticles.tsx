@@ -1,6 +1,8 @@
 import { createClient } from "@/lib/supabase/server";
 import PostCard from "@/components/PostCard";
 
+type PostRow = Parameters<typeof PostCard>[0]["post"];
+
 export default async function RelatedArticles({
   category,
   excludeId,
@@ -21,15 +23,13 @@ export default async function RelatedArticles({
     .order("created_at", { ascending: false })
     .limit(3);
 
-  const related = (posts ?? []) as unknown as Array<
-    Parameters<typeof PostCard>[0]["post"]
-  >;
+  const related = (posts ?? []) as unknown as PostRow[];
 
   if (related.length === 0) return null;
 
   return (
     <div className="mt-14 pt-8 border-t border-border">
-      <h2 className="font-display text-lg font-bold text-ink border-l-4 border-accent pl-3 mb-6">
+      <h2 className="font-display text-trafalgar sm:text-trafalgar-lg font-bold text-ink border-l-4 border-accent pl-3 mb-6">
         More in this category
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-8 gap-y-8">
@@ -40,5 +40,3 @@ export default async function RelatedArticles({
     </div>
   );
 }
-
-

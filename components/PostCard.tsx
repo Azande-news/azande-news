@@ -105,7 +105,7 @@ export default function PostCard({
         <div className="min-w-0">
           <Meta className="mb-1" />
           <Link href={`/posts/${post.id}`} className="group">
-            <h3 className="font-display text-pica sm:text-double-pica font-semibold text-ink line-clamp-3 group-hover:underline">
+            <h3 className="font-display text-pica sm:text-double-pica font-bold text-ink line-clamp-3 group-hover:underline">
               {post.title}
             </h3>
           </Link>
@@ -132,7 +132,7 @@ export default function PostCard({
       )}
       <Meta className="mb-1.5" />
       <Link href={`/posts/${post.id}`} className="group">
-        <h3 className="font-display text-trafalgar font-bold text-ink mb-1.5 line-clamp-2 group-hover:underline">
+        <h3 className="font-display text-trafalgar sm:text-trafalgar-lg font-bold text-ink mb-1.5 line-clamp-2 group-hover:underline">
           {post.title}
         </h3>
         <p className="font-body text-sm text-grey leading-relaxed line-clamp-2">

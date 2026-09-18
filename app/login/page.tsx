@@ -99,14 +99,14 @@ export default function LoginPage() {
             required
             value={mfaCode}
             onChange={(e) => setMfaCode(e.target.value.replace(/\D/g, ""))}
-            className="w-full border border-border rounded-sm px-3 py-2 font-body text-center text-2xl tracking-[0.5em] focus:outline-none focus:ring-2 focus:ring-accent"
+            className="w-full border border-border px-3 py-2 font-body text-center text-2xl tracking-[0.5em] focus:outline-none focus:ring-2 focus:ring-accent"
             placeholder="000000"
           />
           {error && <p className="text-accent font-body text-sm">{error}</p>}
           <button
             type="submit"
             disabled={loading || mfaCode.length !== 6}
-            className="w-full bg-ink text-paper py-3 rounded-sm hover:bg-accent transition-colors font-body font-medium disabled:opacity-60"
+            className="w-full bg-ink text-paper py-3 hover:bg-black transition-colors font-meta text-brevier font-semibold disabled:opacity-60"
           >
             {loading ? "Verifying…" : "Verify"}
           </button>
@@ -128,7 +128,7 @@ export default function LoginPage() {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full border border-border rounded-sm px-3 py-2 font-body focus:outline-none focus:ring-2 focus:ring-accent"
+            className="w-full border border-border px-3 py-2 font-body focus:outline-none focus:ring-2 focus:ring-accent"
           />
         </div>
 
@@ -146,7 +146,7 @@ export default function LoginPage() {
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full border border-border rounded-sm px-3 py-2 font-body focus:outline-none focus:ring-2 focus:ring-accent"
+            className="w-full border border-border px-3 py-2 font-body focus:outline-none focus:ring-2 focus:ring-accent"
           />
         </div>
 
@@ -155,7 +155,7 @@ export default function LoginPage() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-ink text-paper py-3 rounded-sm hover:bg-accent transition-colors font-body font-medium disabled:opacity-60"
+          className="w-full bg-ink text-paper py-3 hover:bg-black transition-colors font-meta text-brevier font-semibold disabled:opacity-60"
         >
           {loading ? "Logging in…" : "Log in"}
         </button>
@@ -170,4 +170,5 @@ export default function LoginPage() {
     </div>
   );
 }
+
 

@@ -28,11 +28,9 @@ export default async function RelatedArticles({
   if (related.length === 0) return null;
 
   return (
-    <div className="mt-14 pt-8 border-t border-border">
-      <h2 className="font-display text-trafalgar sm:text-trafalgar-lg font-bold text-ink border-l-4 border-accent pl-3 mb-6">
-        More in this category
-      </h2>
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-8 gap-y-8">
+    <div className="mt-12 pt-6 block-rule">
+      <h2 className="section-label mb-5">More in this category</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-6 gap-y-8">
         {related.map((post) => (
           <PostCard key={post.id} post={post} variant="grid" />
         ))}

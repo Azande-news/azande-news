@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+
 const config: Config = {
   darkMode: "class",
   content: [
@@ -12,6 +13,7 @@ const config: Config = {
         paper: "var(--color-paper)",
         offwhite: "var(--color-offwhite)",
         border: "var(--color-border)",
+        rule: "var(--color-rule)",
         grey: {
           DEFAULT: "var(--color-grey)",
           light: "var(--color-grey-light)",
@@ -23,30 +25,53 @@ const config: Config = {
           light: "#B8324A",
         },
       },
+      // Editorial = serif (headlines + body). Chrome/labels = sans.
       fontFamily: {
-        display: ["var(--font-work-sans)", "Helvetica Neue", "Helvetica", "Arial", "system-ui", "sans-serif"],
-        body: ["var(--font-work-sans)", "Helvetica Neue", "Helvetica", "Arial", "system-ui", "sans-serif"],
-        meta: ["var(--font-work-sans)", "Helvetica Neue", "Helvetica", "Arial", "system-ui", "sans-serif"],
-        serif: ["var(--font-source-serif)", "Georgia", "Times New Roman", "serif"],
+        display: ["var(--font-serif)", "Georgia", "Times New Roman", "serif"],
+        body: ["var(--font-serif)", "Georgia", "Times New Roman", "serif"],
+        serif: ["var(--font-serif)", "Georgia", "Times New Roman", "serif"],
+        meta: ["var(--font-sans)", "Helvetica Neue", "Arial", "system-ui", "sans-serif"],
+        ui: ["var(--font-sans)", "Helvetica Neue", "Arial", "system-ui", "sans-serif"],
+        sans: ["var(--font-sans)", "Helvetica Neue", "Arial", "system-ui", "sans-serif"],
       },
+      // GEL type scale. Mobile size first; the -lg pairing is the sm:/lg: step.
       fontSize: {
-        // BBC-style type scale, mobile size shown; sm: prefix gives the desktop pairing
-        canon: ["32px", { lineHeight: "36px" }],
-        "canon-lg": ["44px", { lineHeight: "48px" }],
-        trafalgar: ["24px", { lineHeight: "28px" }],
-        "trafalgar-lg": ["32px", { lineHeight: "36px" }],
-        paragon: ["22px", { lineHeight: "26px" }],
-        "paragon-lg": ["28px", { lineHeight: "32px" }],
-        "double-pica": ["20px", { lineHeight: "24px" }],
-        "double-pica-lg": ["24px", { lineHeight: "28px" }],
+        canon: ["28px", { lineHeight: "32px", letterSpacing: "-0.02em" }],
+        "canon-lg": ["36px", { lineHeight: "40px", letterSpacing: "-0.02em" }],
+        trafalgar: ["22px", { lineHeight: "26px", letterSpacing: "-0.015em" }],
+        "trafalgar-lg": ["26px", { lineHeight: "30px", letterSpacing: "-0.015em" }],
+        paragon: ["20px", { lineHeight: "24px", letterSpacing: "-0.01em" }],
+        "paragon-lg": ["24px", { lineHeight: "28px", letterSpacing: "-0.01em" }],
+        "double-pica": ["18px", { lineHeight: "22px", letterSpacing: "-0.01em" }],
+        "double-pica-lg": ["20px", { lineHeight: "24px", letterSpacing: "-0.01em" }],
         "body-copy": ["16px", { lineHeight: "22px" }],
         pica: ["16px", { lineHeight: "20px" }],
         brevier: ["14px", { lineHeight: "18px" }],
-        "brevier-lg": ["13px", { lineHeight: "16px" }],
-        minion: ["12px", { lineHeight: "16px" }],
-        // Article reading copy — mirrors BBC's article body scale
-        read: ["17px", { lineHeight: "28px" }],
-        "read-lg": ["19px", { lineHeight: "31px" }],
+        "brevier-lg": ["15px", { lineHeight: "20px" }],
+        minion: ["13px", { lineHeight: "16px" }],
+        read: ["16px", { lineHeight: "24px" }],
+        "read-lg": ["18px", { lineHeight: "26px" }],
+      },
+      // Zero radius everywhere; rounded-full survives for avatars and live dots.
+      borderRadius: {
+        none: "0",
+        sm: "0",
+        DEFAULT: "0",
+        md: "0",
+        lg: "0",
+        xl: "0",
+      },
+      // No shadows anywhere; separation is hairlines + grey surface.
+      boxShadow: {
+        none: "none",
+        sm: "none",
+        DEFAULT: "none",
+        md: "none",
+        lg: "none",
+      },
+      maxWidth: {
+        shell: "1280px",
+        read: "39rem",
       },
     },
   },

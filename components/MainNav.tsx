@@ -39,24 +39,22 @@ export default function MainNav() {
   const isLiveActive = pathname?.startsWith("/live");
   const moreActive = MORE_LINKS.some((l) => pathname?.startsWith(l.href));
 
+  const base =
+    "shrink-0 py-3 px-3 font-meta text-brevier font-semibold whitespace-nowrap transition-colors border-b-4";
+  const on = "text-white border-white";
+  const off = "text-white/85 border-transparent hover:text-white hover:border-white/40";
+
   return (
-    <nav className="bg-paper border-b border-border">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="flex items-center gap-1 overflow-x-auto scrollbar-none">
-          <Link
-            href="/"
-            className={`shrink-0 py-3 px-3 text-sm font-semibold whitespace-nowrap transition-colors border-b-2 ${
-              isHomeActive ? "text-accent border-accent" : "text-ink border-transparent hover:bg-offwhite"
-            }`}
-          >
+    <nav className="bg-black">
+      <div className="max-w-shell mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center overflow-x-auto scrollbar-none">
+          <Link href="/" className={`${base} ${isHomeActive ? on : off}`}>
             Home
           </Link>
 
           <Link
             href="/live"
-            className={`shrink-0 py-3 px-3 text-sm font-bold whitespace-nowrap transition-colors flex items-center gap-1.5 border-b-2 text-accent hover:bg-offwhite ${
-              isLiveActive ? "border-accent" : "border-transparent"
-            }`}
+            className={`${base} flex items-center gap-1.5 ${isLiveActive ? on : off}`}
           >
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
@@ -65,42 +63,43 @@ export default function MainNav() {
             Live
           </Link>
 
-          {PRIMARY_LINKS.map((link) => {
-            const active = pathname?.startsWith(link.href);
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`shrink-0 py-3 px-3 text-sm font-semibold whitespace-nowrap transition-colors border-b-2 ${
-                  active ? "text-accent border-accent" : "text-ink border-transparent hover:bg-offwhite"
-                }`}
-              >
-                {link.label}
-              </Link>
-            );
-          })}
+          {PRIMARY_LINKS.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={`${base} ${pathname?.startsWith(link.href) ? on : off}`}
+            >
+              {link.label}
+            </Link>
+          ))}
 
           <div className="relative shrink-0" ref={moreRef}>
             <button
               onClick={() => setMoreOpen((v) => !v)}
-              className={`py-3 px-3 text-sm font-semibold whitespace-nowrap transition-colors flex items-center gap-1 border-b-2 ${
-                moreOpen || moreActive ? "text-accent border-accent" : "text-ink border-transparent hover:bg-offwhite"
-              }`}
+              className={`${base} flex items-center gap-1 ${moreOpen || moreActive ? on : off}`}
             >
               More
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={`transition-transform ${moreOpen ? "rotate-180" : ""}`}>
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                className={`transition-transform ${moreOpen ? "rotate-180" : ""}`}
+              >
                 <polyline points="6 9 12 15 18 9" />
               </svg>
             </button>
 
             {moreOpen && (
-              <div className="absolute left-0 top-full z-40 bg-paper border border-border shadow-md min-w-[200px] py-2">
+              <div className="absolute left-0 top-full z-40 bg-black border-t border-white/20 min-w-[220px] py-1">
                 {MORE_LINKS.map((link) => (
                   <Link
                     key={link.href}
                     href={link.href}
                     onClick={() => setMoreOpen(false)}
-                    className="block px-4 py-2 text-sm font-medium text-ink hover:bg-offwhite hover:text-accent transition-colors"
+                    className="block px-4 py-2.5 font-meta text-brevier font-medium text-white/85 hover:bg-white hover:text-black transition-colors"
                   >
                     {link.label}
                   </Link>

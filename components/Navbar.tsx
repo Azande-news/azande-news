@@ -23,20 +23,23 @@ export default async function Navbar() {
 
   return (
     <header className="sticky top-0 z-50">
-      <div className="bg-[#1A1A1A] text-white">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-3">
+      <div className="bg-black text-white border-b border-white/15">
+        <div className="max-w-shell mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3">
           <Link href="/" className="flex items-center gap-2 min-w-0">
-            <Image src="/logo.png" alt="Azande News" width={36} height={36} className="rounded-sm shrink-0" priority />
-            <span className="font-display text-lg sm:text-2xl font-bold tracking-tight truncate">
+            <Image src="/logo.png" alt="" width={32} height={32} className="shrink-0" priority />
+            <span className="font-meta text-lg sm:text-xl font-extrabold tracking-tight truncate">
               Azande News
             </span>
           </Link>
 
-          <div className="flex items-center gap-2 sm:gap-3 shrink-0 text-sm font-medium">
+          <div className="flex items-center gap-3 shrink-0 font-meta text-brevier font-semibold">
             <HeaderSearchToggle />
             {user ? (
               <>
-                <Link href="/posts/new" className="bg-accent hover:bg-accent-light transition-colors px-3 py-1.5 rounded-sm">
+                <Link
+                  href="/posts/new"
+                  className="hidden sm:inline-block border border-white/40 hover:bg-white hover:text-black transition-colors px-3 py-1.5"
+                >
                   Write a post
                 </Link>
                 <AccountMenu isAdmin={isAdmin} />
@@ -44,10 +47,13 @@ export default async function Navbar() {
             ) : (
               <>
                 <Link href="/login" className="text-white/80 hover:text-white transition-colors">
-                  Log in
+                  Sign in
                 </Link>
-                <Link href="/register" className="bg-accent hover:bg-accent-light transition-colors px-3 py-1.5 rounded-sm">
-                  Join
+                <Link
+                  href="/register"
+                  className="border border-white/40 hover:bg-white hover:text-black transition-colors px-3 py-1.5"
+                >
+                  Register
                 </Link>
               </>
             )}

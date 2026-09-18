@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Work_Sans, Space_Mono, Source_Serif_4 } from "next/font/google";
+import { Inter, Source_Serif_4 } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
@@ -8,23 +8,18 @@ import BreakingBar from "@/components/BreakingBar";
 import Footer from "@/components/Footer";
 import DarkModeToggle from "@/components/DarkModeToggle";
 
-const workSans = Work_Sans({
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-work-sans",
-  weight: ["400", "500", "600", "700", "800"],
-});
-
-const spaceMono = Space_Mono({
-  subsets: ["latin"],
-  variable: "--font-space-mono",
-  weight: ["400", "700"],
+  variable: "--font-sans",
+  display: "swap",
 });
 
 const sourceSerif = Source_Serif_4({
   subsets: ["latin"],
-  variable: "--font-source-serif",
-  weight: ["400", "600", "700"],
+  variable: "--font-serif",
+  weight: ["400", "500", "600", "700"],
   style: ["normal", "italic"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -78,14 +73,14 @@ export default function RootLayout({
         <link rel="alternate" type="application/rss+xml" title="Azande News RSS Feed" href="/feed.xml" />
       </head>
       <body
-        className={`${workSans.variable} ${spaceMono.variable} ${sourceSerif.variable} font-body bg-paper text-ink transition-colors`}
+        className={`${inter.variable} ${sourceSerif.variable} font-ui bg-paper text-ink`}
       >
-        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] bg-accent text-white px-4 py-2 rounded-sm text-sm font-medium">
+        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] bg-ink text-white px-4 py-2 text-sm font-medium">
           Skip to main content
         </a>
         <Navbar />
         <BreakingBar />
-        <main id="main-content" className="max-w-6xl mx-auto px-4 sm:px-6 py-8 min-h-[60vh]">
+        <main id="main-content" className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-6 min-h-[60vh]">
           {children}
         </main>
         <Footer />

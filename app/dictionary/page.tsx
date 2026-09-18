@@ -97,7 +97,7 @@ export default function DictionaryPage() {
   return (
     <div className="max-w-2xl mx-auto">
       <h1 className="font-display text-canon sm:text-canon-lg font-medium text-ink mb-2">Zande Dictionary</h1>
-      <p className="font-body text-grey mb-8">
+      <p className="font-body text-body-copy text-grey mb-8">
         A community-built dictionary of Zande words and their English translations. Every entry here has been
         reviewed by an admin before appearing publicly.
       </p>
@@ -107,7 +107,7 @@ export default function DictionaryPage() {
         value={q}
         onChange={(e) => setQ(e.target.value)}
         placeholder="Search words..."
-        className="w-full border border-border rounded-sm px-3 py-2 font-body mb-6 focus:outline-none focus:ring-2 focus:ring-accent bg-paper text-ink"
+        className="w-full border border-border px-3 py-2 font-body mb-6 focus:outline-none focus:ring-2 focus:ring-accent bg-paper text-ink"
       />
 
       {loadingList ? (
@@ -117,19 +117,19 @@ export default function DictionaryPage() {
           {entries.length === 0 ? "No words yet — be the first to contribute one below." : "No matches found."}
         </p>
       ) : (
-        <div className="divide-y divide-border mb-10">
+        <div className="divide-y divide-rule mb-10">
           {filtered.map((e) => (
             <div key={e.id} className="py-3">
-              <div className="font-display text-lg font-bold text-ink">{e.zande_word}</div>
-              <div className="font-body text-ink/80">{e.english_translation}</div>
+              <div className="font-display text-paragon font-medium text-ink">{e.zande_word}</div>
+              <div className="font-body text-body-copy text-ink/80">{e.english_translation}</div>
               {e.notes && <div className="font-body text-sm text-grey mt-1">{e.notes}</div>}
             </div>
           ))}
         </div>
       )}
 
-      <div className="border-t border-border pt-8">
-        <h2 className="font-display text-trafalgar font-medium text-ink mb-3">Add a word</h2>
+      <div className="pt-8 block-rule">
+        <h2 className="section-label mb-4">Add a word</h2>
         {userId ? (
           done ? (
             <p className="font-body text-sm text-grey">
@@ -146,7 +146,7 @@ export default function DictionaryPage() {
                   type="text"
                   value={zandeWord}
                   onChange={(e) => setZandeWord(e.target.value)}
-                  className="w-full border border-border rounded-sm px-3 py-2 font-body focus:outline-none focus:ring-2 focus:ring-accent bg-paper text-ink"
+                  className="w-full border border-border px-3 py-2 font-body focus:outline-none focus:ring-2 focus:ring-accent bg-paper text-ink"
                 />
               </div>
               <div>
@@ -155,7 +155,7 @@ export default function DictionaryPage() {
                   type="text"
                   value={englishTranslation}
                   onChange={(e) => setEnglishTranslation(e.target.value)}
-                  className="w-full border border-border rounded-sm px-3 py-2 font-body focus:outline-none focus:ring-2 focus:ring-accent bg-paper text-ink"
+                  className="w-full border border-border px-3 py-2 font-body focus:outline-none focus:ring-2 focus:ring-accent bg-paper text-ink"
                 />
               </div>
               <div>
@@ -164,14 +164,14 @@ export default function DictionaryPage() {
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
                   rows={2}
-                  className="w-full border border-border rounded-sm px-3 py-2 font-body focus:outline-none focus:ring-2 focus:ring-accent bg-paper text-ink"
+                  className="w-full border border-border px-3 py-2 font-body focus:outline-none focus:ring-2 focus:ring-accent bg-paper text-ink"
                 />
               </div>
               {error && <p className="text-accent font-body text-sm">{error}</p>}
               <button
                 type="submit"
                 disabled={submitting}
-                className="bg-ink text-white px-5 py-2.5 rounded-sm text-sm font-medium hover:bg-accent-light transition-colors disabled:opacity-60"
+                className="bg-ink text-paper px-5 py-2.5 font-meta text-brevier font-semibold hover:bg-black transition-colors disabled:opacity-60"
               >
                 {submitting ? "Submitting…" : "Submit word"}
               </button>
@@ -186,7 +186,3 @@ export default function DictionaryPage() {
     </div>
   );
 }
-
-
-
-

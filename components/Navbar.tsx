@@ -1,9 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
 import { createClient } from "@/lib/supabase/server";
-import SearchBox from "@/components/SearchBox";
 import MainNav from "@/components/MainNav";
 import AccountMenu from "@/components/AccountMenu";
+import HeaderSearchToggle from "@/components/HeaderSearchToggle";
 
 export default async function Navbar() {
   const supabase = createClient();
@@ -33,6 +33,7 @@ export default async function Navbar() {
           </Link>
 
           <div className="flex items-center gap-2 sm:gap-3 shrink-0 text-sm font-medium">
+            <HeaderSearchToggle />
             {user ? (
               <>
                 <Link href="/posts/new" className="bg-accent hover:bg-accent-light transition-colors px-3 py-1.5 rounded-sm">
@@ -55,12 +56,6 @@ export default async function Navbar() {
       </div>
 
       <MainNav />
-
-      <div className="bg-offwhite border-b border-border">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-2.5">
-          <SearchBox />
-        </div>
-      </div>
     </header>
   );
 }

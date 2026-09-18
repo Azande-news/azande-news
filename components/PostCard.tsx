@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { CATEGORY_LABELS } from "@/lib/categories";
 import { stripHtml } from "@/lib/html";
+import { formatSmartDate } from "@/lib/time";
 
 type Post = {
   id: string;
@@ -26,11 +27,7 @@ export default function PostCard({
 }) {
   const v: Variant = featured ? "lead" : variant;
 
-  const date = new Date(post.created_at).toLocaleDateString(undefined, {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  });
+  const date = formatSmartDate(post.created_at);
 
   const categoryLabel = CATEGORY_LABELS[post.category] ?? post.category;
 
@@ -117,7 +114,6 @@ export default function PostCard({
     );
   }
 
-  // grid (default card)
   const excerpt = stripHtml(post.body).slice(0, 110);
   return (
     <article className="pb-2">
@@ -148,5 +144,3 @@ export default function PostCard({
     </article>
   );
 }
-
-

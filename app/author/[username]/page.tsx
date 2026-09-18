@@ -58,7 +58,7 @@ export default async function AuthorPage({
   return (
     <div>
       <div className="max-w-2xl mb-12 pb-8 border-b border-border">
-        <h1 className="font-display text-3xl font-bold text-ink mb-1">
+        <h1 className="font-display text-canon sm:text-canon-lg font-medium text-ink mb-1">
           {profile.display_name}
         </h1>
         <div className="font-meta text-xs text-grey mb-4">
@@ -90,6 +90,7 @@ export default async function AuthorPage({
     </div>
   );
 }
+
 
 
 

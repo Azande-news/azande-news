@@ -261,7 +261,7 @@ export default function NewPostPage() {
 
   return (
     <div className="max-w-2xl mx-auto">
-      <h1 className="font-display text-3xl font-bold text-ink mb-2">Write a post</h1>
+      <h1 className="font-display text-canon sm:text-canon-lg font-medium text-ink mb-2">Write a post</h1>
       <p className="font-body text-grey mb-8">Publish immediately, save a draft, or schedule it for later.</p>
 
       <form onSubmit={handleSubmit} className="space-y-5">
@@ -366,6 +366,7 @@ export default function NewPostPage() {
     </div>
   );
 }
+
 
 
 

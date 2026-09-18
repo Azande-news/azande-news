@@ -27,7 +27,7 @@ export default async function AdminPage() {
   if (myProfile?.role !== "admin") {
     return (
       <div className="max-w-md mx-auto text-center py-16">
-        <h1 className="font-display text-3xl font-bold text-ink mb-4">
+        <h1 className="font-display text-canon sm:text-canon-lg font-medium text-ink mb-4">
           Admins only
         </h1>
         <p className="font-body text-grey">
@@ -67,7 +67,7 @@ export default async function AdminPage() {
 
   return (
     <div className="max-w-3xl mx-auto">
-      <h1 className="font-display text-3xl font-bold text-ink mb-1">
+      <h1 className="font-display text-canon sm:text-canon-lg font-medium text-ink mb-1">
         Admin dashboard
       </h1>
       <p className="font-body text-grey mb-12">
@@ -75,42 +75,42 @@ export default async function AdminPage() {
       </p>
 
       <section className="mb-14">
-        <h2 className="font-display text-xl font-bold text-ink border-l-4 border-accent pl-3 mb-4">
+        <h2 className="font-display text-trafalgar font-medium text-ink border-l-4 border-accent pl-3 mb-4">
           Overview
         </h2>
         <AdminAnalytics posts={(posts ?? []) as any} />
       </section>
 
       <section className="mb-14">
-        <h2 className="font-display text-xl font-bold text-ink border-l-4 border-accent pl-3 mb-4">
+        <h2 className="font-display text-trafalgar font-medium text-ink border-l-4 border-accent pl-3 mb-4">
           Open reports
         </h2>
         <AdminReportsTable reports={(reports ?? []) as any} />
       </section>
 
       <section className="mb-14">
-        <h2 className="font-display text-xl font-bold text-ink border-l-4 border-accent pl-3 mb-4">
+        <h2 className="font-display text-trafalgar font-medium text-ink border-l-4 border-accent pl-3 mb-4">
           Dictionary submissions ({dictionaryEntries?.length ?? 0})
         </h2>
         <AdminDictionaryTable entries={(dictionaryEntries ?? []) as any} />
       </section>
 
       <section className="mb-14">
-        <h2 className="font-display text-xl font-bold text-ink border-l-4 border-accent pl-3 mb-4">
+        <h2 className="font-display text-trafalgar font-medium text-ink border-l-4 border-accent pl-3 mb-4">
           All posts ({posts?.length ?? 0})
         </h2>
         <AdminPostsTable posts={(posts ?? []) as any} />
       </section>
 
       <section className="mb-14">
-        <h2 className="font-display text-xl font-bold text-ink border-l-4 border-accent pl-3 mb-4">
+        <h2 className="font-display text-trafalgar font-medium text-ink border-l-4 border-accent pl-3 mb-4">
           Newsletter subscribers ({subscribers?.length ?? 0})
         </h2>
         <AdminSubscribersTable subscribers={(subscribers ?? []) as any} />
       </section>
 
       <section>
-        <h2 className="font-display text-xl font-bold text-ink border-l-4 border-accent pl-3 mb-4">
+        <h2 className="font-display text-trafalgar font-medium text-ink border-l-4 border-accent pl-3 mb-4">
           Users ({profiles?.length ?? 0})
         </h2>
         <AdminUsersTable profiles={(profiles ?? []) as any} currentUserId={user.id} />
@@ -118,6 +118,7 @@ export default async function AdminPage() {
     </div>
   );
 }
+
 
 
 

@@ -29,7 +29,7 @@ export default function AdminAnalytics({ posts }: { posts: Post[] }) {
   const statCard = (label: string, value: number | string) => (
     <div className="border border-border rounded-sm p-4">
       <div className="font-meta text-[11px] tracking-wider uppercase text-grey mb-1">{label}</div>
-      <div className="font-display text-2xl font-bold text-ink">{value}</div>
+      <div className="font-display text-trafalgar sm:text-trafalgar-lg font-medium text-ink">{value}</div>
     </div>
   );
 
@@ -74,3 +74,4 @@ export default function AdminAnalytics({ posts }: { posts: Post[] }) {
     </div>
   );
 }
+

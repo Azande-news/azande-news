@@ -22,7 +22,7 @@ export default async function BookmarksPage() {
 
   return (
     <div className="max-w-3xl mx-auto">
-      <h1 className="font-display text-3xl font-bold text-ink mb-2">Saved for later</h1>
+      <h1 className="font-display text-canon sm:text-canon-lg font-medium text-ink mb-2">Saved for later</h1>
       <p className="font-body text-grey mb-8">Posts you have bookmarked to read later.</p>
 
       {posts.length === 0 ? (
@@ -41,3 +41,4 @@ export default async function BookmarksPage() {
     </div>
   );
 }
+

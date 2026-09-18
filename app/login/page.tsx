@@ -87,7 +87,7 @@ export default function LoginPage() {
   if (needsMfa) {
     return (
       <div className="max-w-md mx-auto">
-        <h1 className="font-display text-3xl font-bold text-ink mb-2">Enter your code</h1>
+        <h1 className="font-display text-canon sm:text-canon-lg font-medium text-ink mb-2">Enter your code</h1>
         <p className="font-body text-grey mb-8">
           Open your authenticator app and enter the 6-digit code for Azande News.
         </p>
@@ -117,7 +117,7 @@ export default function LoginPage() {
 
   return (
     <div className="max-w-md mx-auto">
-      <h1 className="font-display text-3xl font-bold text-ink mb-8">Log in</h1>
+      <h1 className="font-display text-canon sm:text-canon-lg font-medium text-ink mb-8">Log in</h1>
       <form onSubmit={handleSubmit} className="space-y-5">
         <div>
           <label className="block font-body text-sm text-ink mb-1">
@@ -170,3 +170,4 @@ export default function LoginPage() {
     </div>
   );
 }
+

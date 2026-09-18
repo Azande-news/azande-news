@@ -38,7 +38,7 @@ export default async function MessagesPage() {
 
   return (
     <div className="max-w-2xl mx-auto">
-      <h1 className="font-display text-3xl font-bold text-ink mb-8">Messages</h1>
+      <h1 className="font-display text-canon sm:text-canon-lg font-medium text-ink mb-8">Messages</h1>
 
       {pending.length > 0 && (
         <section className="mb-10">
@@ -109,4 +109,5 @@ export default async function MessagesPage() {
     </div>
   );
 }
+
 

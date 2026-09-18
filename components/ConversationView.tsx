@@ -107,7 +107,7 @@ export default function ConversationView({
   if (conversation.status === "pending" && conversation.requested_by !== currentUserId) {
     return (
       <div className="max-w-md mx-auto text-center py-16">
-        <h1 className="font-display text-2xl font-bold text-ink mb-3">
+        <h1 className="font-display text-trafalgar sm:text-trafalgar-lg font-medium text-ink mb-3">
           {otherPersonName} wants to message you
         </h1>
         <p className="font-body text-grey mb-6">
@@ -146,7 +146,7 @@ export default function ConversationView({
   return (
     <div className="max-w-2xl mx-auto flex flex-col h-[70vh]">
       <div className="flex items-center justify-between border-b border-border pb-3 mb-4">
-        <h1 className="font-display text-xl font-bold text-ink">{otherPersonName}</h1>
+        <h1 className="font-display text-trafalgar font-medium text-ink">{otherPersonName}</h1>
         <button onClick={block} className="text-xs text-accent hover:underline">
           Block
         </button>
@@ -194,3 +194,4 @@ export default function ConversationView({
     </div>
   );
 }
+

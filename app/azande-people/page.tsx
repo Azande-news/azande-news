@@ -20,7 +20,7 @@ export default function AzandePeoplePage() {
           </p>
         </div>
 
-        <h2 className="font-display text-2xl font-bold text-ink pt-4">Who Are the Azande?</h2>
+        <h2 className="font-display text-trafalgar sm:text-trafalgar-lg font-medium text-ink pt-4">Who Are the Azande?</h2>
         <p>
           The Azande (also spelled Zande, and referred to in the singular as a Zande person) are a Central African
           people whose name is widely translated as &ldquo;the people who possess much land,&rdquo; reflecting their
@@ -29,7 +29,7 @@ export default function AzandePeoplePage() {
           transnational ethnic groups in Central Africa.
         </p>
 
-        <h2 className="font-display text-2xl font-bold text-ink pt-4">Where the Azande Live Today</h2>
+        <h2 className="font-display text-trafalgar sm:text-trafalgar-lg font-medium text-ink pt-4">Where the Azande Live Today</h2>
         <p>
           <strong>Democratic Republic of the Congo</strong> &mdash; the largest Azande population, concentrated along
           the Uele River in the Bas-Uélé, Haut-Uélé, and Tshopo provinces, including areas around Isiro, Dungu, and
@@ -51,7 +51,7 @@ export default function AzandePeoplePage() {
           a precise, universally agreed figure.
         </p>
 
-        <h2 className="font-display text-2xl font-bold text-ink pt-4">Origins and the Rise of the Kingdom</h2>
+        <h2 className="font-display text-trafalgar sm:text-trafalgar-lg font-medium text-ink pt-4">Origins and the Rise of the Kingdom</h2>
         <p>
           The Azande identity as we know it today formed through the merging of two ruling lineages: the
           <strong> Avongara</strong> (also written Vungara) and the <strong>Bandia</strong>, beginning in the 18th
@@ -74,7 +74,7 @@ export default function AzandePeoplePage() {
           led to his defeat by Basanginonga, from whom the Avongara dynasty descended.
         </p>
 
-        <h2 className="font-display text-2xl font-bold text-ink pt-4">Clans and Social Structure</h2>
+        <h2 className="font-display text-trafalgar sm:text-trafalgar-lg font-medium text-ink pt-4">Clans and Social Structure</h2>
         <p>
           Traditional Zande society is organized into three broad tiers:
         </p>
@@ -105,7 +105,7 @@ export default function AzandePeoplePage() {
           family or community traces its clan and it is missing here, we welcome that correction.
         </p>
 
-        <h2 className="font-display text-2xl font-bold text-ink pt-4">King Gbudwe: The Last Independent King</h2>
+        <h2 className="font-display text-trafalgar sm:text-trafalgar-lg font-medium text-ink pt-4">King Gbudwe: The Last Independent King</h2>
         <p>
           The most thoroughly documented Azande ruler is <strong>King Gbudwe Bazingbi</strong> (circa 1835&ndash;1905),
           who ruled from roughly 1870 until his death in 1905, based near Yambio. Gbudwe led sustained resistance
@@ -132,7 +132,7 @@ export default function AzandePeoplePage() {
           restoring the monarchy after 117 years without a reigning king.
         </p>
 
-        <h2 className="font-display text-2xl font-bold text-ink pt-4">Way of Life</h2>
+        <h2 className="font-display text-trafalgar sm:text-trafalgar-lg font-medium text-ink pt-4">Way of Life</h2>
         <p>
           Traditionally, the Azande lived in widely scattered family homesteads rather than dense villages, with a
           household typically consisting of a man, his wife or wives, and their children. Chiefdoms were governed by
@@ -157,7 +157,7 @@ export default function AzandePeoplePage() {
           continue to shape culture and naming traditions.
         </p>
 
-        <h2 className="font-display text-2xl font-bold text-ink pt-4">Traditional Names</h2>
+        <h2 className="font-display text-trafalgar sm:text-trafalgar-lg font-medium text-ink pt-4">Traditional Names</h2>
         <p>
           Many Zande personal names carry meaning rather than being chosen arbitrarily. A significant tradition of
           <strong> theophoric names</strong> &mdash; names referencing Mbori, the Zande Supreme Being &mdash; has
@@ -181,7 +181,7 @@ export default function AzandePeoplePage() {
           the contribution.
         </p>
 
-        <h2 className="font-display text-2xl font-bold text-ink pt-4">Language</h2>
+        <h2 className="font-display text-trafalgar sm:text-trafalgar-lg font-medium text-ink pt-4">Language</h2>
         <p>
           The Azande speak <strong>Zande</strong> (also written Pa-Zande), part of the Ubangian branch of the
           Niger-Congo language family. It is the largest of the Zande languages, which also include closely related
@@ -189,7 +189,7 @@ export default function AzandePeoplePage() {
           from around one million to several million across the three countries where Azande live.
         </p>
 
-        <h2 className="font-display text-2xl font-bold text-ink pt-4">The Azande Today</h2>
+        <h2 className="font-display text-trafalgar sm:text-trafalgar-lg font-medium text-ink pt-4">The Azande Today</h2>
         <p>
           Azande communities today span South Sudan, DR Congo, and the Central African Republic, alongside a growing
           diaspora around the world. Despite colonial borders that formally divided the Azande over a century ago,
@@ -198,7 +198,7 @@ export default function AzandePeoplePage() {
           regardless of which country they live in, a shared space to read, write, and connect.
         </p>
 
-        <h2 className="font-display text-2xl font-bold text-ink pt-4">Sources</h2>
+        <h2 className="font-display text-trafalgar sm:text-trafalgar-lg font-medium text-ink pt-4">Sources</h2>
         <p className="text-sm text-grey">
           This page draws on historical and anthropological research, including the ethnographic work of Sir E.E.
           Evans-Pritchard (Azande History and Political Institutions; Notes on Zande Proper Names, 1972), Encyclopedia
@@ -210,5 +210,6 @@ export default function AzandePeoplePage() {
     </div>
   );
 }
+
 
 

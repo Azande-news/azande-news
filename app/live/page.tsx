@@ -27,7 +27,7 @@ export default async function LivePage() {
   if (entries.length === 0) {
     return (
       <div className="border border-dashed border-border p-10 text-center">
-        <p className="font-display text-xl font-bold text-ink mb-2">
+        <p className="font-display text-trafalgar font-medium text-ink mb-2">
           Nothing live right now.
         </p>
         <p className="font-body text-grey">
@@ -51,7 +51,7 @@ export default async function LivePage() {
           )}
           <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-accent" />
         </span>
-        <span className="font-meta text-[11px] font-bold tracking-widest uppercase text-accent">
+        <span className="section-label section-label-accent">
           Live
         </span>
       </div>
@@ -95,4 +95,5 @@ export default async function LivePage() {
     </div>
   );
 }
+
 

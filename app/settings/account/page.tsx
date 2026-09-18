@@ -43,7 +43,7 @@ export default function AccountSettingsPage() {
 
   return (
     <div className="max-w-md mx-auto">
-      <h1 className="font-display text-3xl font-bold text-ink mb-2">Account settings</h1>
+      <h1 className="font-display text-canon sm:text-canon-lg font-medium text-ink mb-2">Account settings</h1>
       <p className="font-body text-grey mb-8">
         Manage your Azande News account.
       </p>
@@ -101,3 +101,4 @@ export default function AccountSettingsPage() {
     </div>
   );
 }
+

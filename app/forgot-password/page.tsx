@@ -36,7 +36,7 @@ export default function ForgotPasswordPage() {
   if (sent) {
     return (
       <div className="max-w-md mx-auto text-center py-12">
-        <h1 className="font-display text-3xl font-bold text-ink mb-4">
+        <h1 className="font-display text-canon sm:text-canon-lg font-medium text-ink mb-4">
           Check your email
         </h1>
         <p className="font-body text-grey">
@@ -50,7 +50,7 @@ export default function ForgotPasswordPage() {
 
   return (
     <div className="max-w-md mx-auto">
-      <h1 className="font-display text-3xl font-bold text-ink mb-2">
+      <h1 className="font-display text-canon sm:text-canon-lg font-medium text-ink mb-2">
         Reset your password
       </h1>
       <p className="font-body text-grey mb-8">
@@ -91,3 +91,4 @@ export default function ForgotPasswordPage() {
     </div>
   );
 }
+

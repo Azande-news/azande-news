@@ -62,7 +62,7 @@ export default function ResetPasswordPage() {
   if (success) {
     return (
       <div className="max-w-md mx-auto text-center py-12">
-        <h1 className="font-display text-3xl font-bold text-ink mb-4">
+        <h1 className="font-display text-canon sm:text-canon-lg font-medium text-ink mb-4">
           Password updated
         </h1>
         <p className="font-body text-grey">
@@ -84,7 +84,7 @@ export default function ResetPasswordPage() {
 
   return (
     <div className="max-w-md mx-auto">
-      <h1 className="font-display text-3xl font-bold text-ink mb-8">
+      <h1 className="font-display text-canon sm:text-canon-lg font-medium text-ink mb-8">
         Set a new password
       </h1>
 
@@ -130,3 +130,4 @@ export default function ResetPasswordPage() {
     </div>
   );
 }
+

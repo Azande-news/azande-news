@@ -56,7 +56,7 @@ export default async function SearchPage({
 
       {q.length > 0 && (
         <>
-          <p className="font-meta text-xs uppercase tracking-wider text-grey mb-6">
+          <p className="section-label mb-6">
             {results.length} result{results.length === 1 ? "" : "s"} for &ldquo;{q}&rdquo;
           </p>
 
@@ -76,5 +76,6 @@ export default async function SearchPage({
     </div>
   );
 }
+
 
 

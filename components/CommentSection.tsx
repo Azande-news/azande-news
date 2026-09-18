@@ -95,7 +95,7 @@ export default function CommentSection({ postId, isAdmin = false }: { postId: st
 
   return (
     <div className="mt-14 pt-8 border-t border-border">
-      <h2 className="font-display text-2xl font-bold text-ink mb-6">
+      <h2 className="font-display text-trafalgar sm:text-trafalgar-lg font-medium text-ink mb-6">
         {loadingList ? "Comments" : `Comments (${comments.length})`}
       </h2>
 
@@ -158,6 +158,7 @@ export default function CommentSection({ postId, isAdmin = false }: { postId: st
     </div>
   );
 }
+
 
 
 

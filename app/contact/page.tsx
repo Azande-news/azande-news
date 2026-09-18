@@ -6,7 +6,7 @@ export const metadata = {
 export default function ContactPage() {
   return (
     <div className="max-w-2xl">
-      <h1 className="font-display text-3xl font-bold text-ink mb-6">
+      <h1 className="font-display text-canon sm:text-canon-lg font-medium text-ink mb-6">
         Contact
       </h1>
 
@@ -27,3 +27,4 @@ export default function ContactPage() {
     </div>
   );
 }
+

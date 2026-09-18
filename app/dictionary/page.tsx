@@ -96,7 +96,7 @@ export default function DictionaryPage() {
 
   return (
     <div className="max-w-2xl mx-auto">
-      <h1 className="font-display text-3xl font-bold text-ink mb-2">Zande Dictionary</h1>
+      <h1 className="font-display text-canon sm:text-canon-lg font-medium text-ink mb-2">Zande Dictionary</h1>
       <p className="font-body text-grey mb-8">
         A community-built dictionary of Zande words and their English translations. Every entry here has been
         reviewed by an admin before appearing publicly.
@@ -129,7 +129,7 @@ export default function DictionaryPage() {
       )}
 
       <div className="border-t border-border pt-8">
-        <h2 className="font-display text-xl font-bold text-ink mb-3">Add a word</h2>
+        <h2 className="font-display text-trafalgar font-medium text-ink mb-3">Add a word</h2>
         {userId ? (
           done ? (
             <p className="font-body text-sm text-grey">
@@ -186,5 +186,6 @@ export default function DictionaryPage() {
     </div>
   );
 }
+
 
 

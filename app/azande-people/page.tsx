@@ -3,15 +3,15 @@ export const metadata = { title: "The Azande People" };
 export default function AzandePeoplePage() {
   return (
     <div className="max-w-2xl mx-auto">
-      <h1 className="font-display text-3xl sm:text-4xl font-bold text-ink mb-2">The Azande People</h1>
-      <p className="font-body text-grey mb-10">
+      <h1 className="font-display text-canon sm:text-canon-lg font-medium text-ink mb-2">The Azande People</h1>
+      <p className="font-body text-body-copy text-grey mb-10">
         A deep look at the history, culture, and identity of the Azande &mdash; a people spread across three
         Central African nations, united by language, ancestry, and shared heritage.
       </p>
 
       <div className="prose-article font-body text-ink/90 space-y-5">
 
-        <div className="border border-border rounded-sm p-4 bg-offwhite">
+        <div className="border-l-4 border-accent p-4 bg-offwhite">
           <p className="text-sm text-grey">
             <strong className="text-ink">A note on accuracy:</strong> this page is compiled from historical and
             anthropological sources with care to represent facts rather than rumor or hearsay. If anything here is
@@ -210,6 +210,7 @@ export default function AzandePeoplePage() {
     </div>
   );
 }
+
 
 
 

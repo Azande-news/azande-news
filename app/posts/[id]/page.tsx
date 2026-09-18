@@ -78,11 +78,12 @@ export default async function PostPage({ params }: { params: { id: string } }) {
   }
 
   const date = formatSmartDate(post.created_at);
-
   const wordCount = stripHtml(post.body).split(/\s+/).filter(Boolean).length;
   const readingMinutes = Math.max(1, Math.round(wordCount / 200));
 
-  const wasEdited = post.updated_at && new Date(post.updated_at).getTime() - new Date(post.created_at).getTime() > 60000;
+  const wasEdited =
+    post.updated_at &&
+    new Date(post.updated_at).getTime() - new Date(post.created_at).getTime() > 60000;
   const updatedDate = wasEdited ? formatSmartDate(post.updated_at) : null;
 
   const author = post.profiles as unknown as {
@@ -97,7 +98,7 @@ export default async function PostPage({ params }: { params: { id: string } }) {
     "@type": "NewsArticle",
     headline: post.title,
     datePublished: post.created_at,
-    dateModified: post.created_at,
+    dateModified: post.updated_at ?? post.created_at,
     author: {
       "@type": "Person",
       name: author?.display_name ?? "Azande News",
@@ -119,59 +120,80 @@ export default async function PostPage({ params }: { params: { id: string } }) {
   };
 
   return (
-    <div className="max-w-6xl mx-auto">
+    <div>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-        <article className="lg:col-span-2 min-w-0">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-8 gap-y-10">
+        <article className="lg:col-span-8 min-w-0">
           <ViewTracker postId={post.id} />
-          <div className="font-meta text-[11px] tracking-widest uppercase text-accent mb-3">
-            <Link href={`/category/${post.category}`} className="hover:underline">
-              {categoryLabel}
-            </Link>
-          </div>
-          <h1 className="font-display text-canon sm:text-canon-lg font-bold text-ink mb-4">
-            {post.title}
-          </h1>
-          <div className="font-meta text-sm text-grey mb-8">
-            By {author?.display_name ?? "Unknown"} &middot; {date} &middot; {readingMinutes} min read
-            {wasEdited && <> &middot; Updated {updatedDate}</>}
+
+          <div className="max-w-read">
+            <h1 className="font-display text-canon sm:text-canon-lg font-medium text-ink mb-4">
+              {post.title}
+            </h1>
+
+            <div className="font-meta text-brevier text-grey pb-4 mb-6 border-b border-rule">
+              <div className="font-semibold text-ink">
+                {author?.display_name ?? "Unknown"}
+              </div>
+              <div className="mt-0.5">
+                {date}
+                <span className="mx-1.5 text-border">|</span>
+                {readingMinutes} min read
+                {wasEdited && (
+                  <>
+                    <span className="mx-1.5 text-border">|</span>
+                    Updated {updatedDate}
+                  </>
+                )}
+              </div>
+              <div className="mt-3">
+                <ShareButtons postId={post.id} postTitle={post.title} />
+              </div>
+            </div>
           </div>
 
           {post.cover_image_url && (
-            <div className="relative w-full h-72 sm:h-96 overflow-hidden mb-8 bg-offwhite">
-              <Image
-                src={post.cover_image_url}
-                alt={post.title}
-                fill
-                className="object-cover"
-                sizes="800px"
-                priority
-              />
-            </div>
+            <figure className="mb-8">
+              <div className="relative w-full aspect-[16/9] overflow-hidden bg-offwhite">
+                <Image
+                  src={post.cover_image_url}
+                  alt={post.title}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 720px"
+                  priority
+                />
+              </div>
+            </figure>
           )}
 
-          <div className="prose-article font-serif text-read sm:text-read-lg text-ink/90" dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.body) }} />
+          <div
+            className="prose-article max-w-read font-serif text-read sm:text-read-lg text-ink"
+            dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.body) }}
+          />
 
-          <div className="mt-10 pt-6 border-t border-border">
-            <span className="font-meta text-[11px] tracking-wider uppercase text-grey mr-3">
-              Related Topics
-            </span>
+          <div className="max-w-read mt-10 pt-6 block-rule">
+            <h2 className="section-label mb-3">Related topics</h2>
             <Link
               href={`/category/${post.category}`}
-              className="inline-block font-meta text-xs font-semibold uppercase tracking-wide bg-offwhite hover:bg-border text-ink px-3 py-1.5 rounded-full transition-colors"
+              className="inline-block font-meta text-brevier font-semibold bg-offwhite hover:bg-border text-ink px-3 py-2 transition-colors"
             >
               {categoryLabel}
             </Link>
           </div>
 
-          <div className="mt-6 pt-6 border-t border-border flex items-center justify-between flex-wrap gap-3">
+          <div className="max-w-read mt-8 pt-6 block-rule flex items-center gap-5 flex-wrap">
+            <BookmarkButton postId={post.id} />
             <ReportButton postId={post.id} postTitle={post.title} />
             {canManage && (
               <>
-                <Link href={`/posts/${post.id}/edit`} className="text-sm font-medium text-ink hover:text-accent">
+                <Link
+                  href={`/posts/${post.id}/edit`}
+                  className="font-meta text-brevier font-semibold text-ink hover:underline"
+                >
                   Edit this post
                 </Link>
                 <DeletePostButton postId={post.id} />
@@ -179,33 +201,34 @@ export default async function PostPage({ params }: { params: { id: string } }) {
             )}
           </div>
 
-          <div className="mt-4 flex items-center justify-between flex-wrap gap-3">
-            <ShareButtons postId={post.id} postTitle={post.title} />
+          <div className="max-w-read">
+            <CommentSection postId={post.id} isAdmin={canManage} />
           </div>
-
-          <div className="mt-4">
-            <BookmarkButton postId={post.id} />
-          </div>
-
-          <CommentSection postId={post.id} isAdmin={canManage} />
         </article>
 
-        <aside className="lg:border-l lg:border-border lg:pl-8">
+        <aside className="lg:col-span-4 lg:border-l lg:border-rule lg:pl-8">
           <TrendingWidget />
 
-          <div className="mt-10 pt-6 border-t border-border">
-            <h2 className="font-meta text-[11px] tracking-wider uppercase text-grey mb-3">
-              Explore
-            </h2>
-            <div className="space-y-2 font-body text-sm">
-              <Link href="/azande-people" className="block text-ink hover:text-accent">
-                Azande Heritage &rarr;
+          <div className="mt-10 pt-6 block-rule">
+            <h2 className="section-label mb-3">Explore</h2>
+            <div className="font-meta text-brevier-lg">
+              <Link
+                href="/azande-people"
+                className="block py-2.5 border-b border-rule text-ink hover:underline"
+              >
+                Azande Heritage
               </Link>
-              <Link href="/dictionary" className="block text-ink hover:text-accent">
-                Zande Dictionary &rarr;
+              <Link
+                href="/dictionary"
+                className="block py-2.5 border-b border-rule text-ink hover:underline"
+              >
+                Zande Dictionary
               </Link>
-              <Link href="/posts/new" className="block text-ink hover:text-accent">
-                Write a Post &rarr;
+              <Link
+                href="/posts/new"
+                className="block py-2.5 text-ink hover:underline"
+              >
+                Write a Post
               </Link>
             </div>
           </div>

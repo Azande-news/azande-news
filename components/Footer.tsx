@@ -28,11 +28,11 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-[#1A1A1A] text-white/70 mt-16">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10">
+    <footer className="bg-black text-white/70 mt-16 border-t-4 border-accent">
+      <div className="max-w-shell mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-8 mb-8 pb-8 border-b border-white/15">
           <div>
-            <div className="font-display text-lg font-bold text-white mb-2">
+            <div className="font-meta text-lg font-extrabold text-white mb-2">
               Azande News
             </div>
             <p className="text-sm text-white/50 max-w-xs mb-3">
@@ -40,7 +40,7 @@ export default function Footer() {
             </p>
             <div className="flex items-center gap-2">
               {SOCIAL_LINKS.map((social) => (
-                <a key={social.name} href={social.href} target="_blank" rel="noopener noreferrer" aria-label={`Azande News on ${social.name}`} className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 transition-colors">
+                <a key={social.name} href={social.href} target="_blank" rel="noopener noreferrer" aria-label={`Azande News on ${social.name}`} className="inline-flex items-center justify-center w-9 h-9 bg-white/10 hover:bg-white/20 transition-colors">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="text-white">
                     <path d={social.path} />
                   </svg>
@@ -50,7 +50,7 @@ export default function Footer() {
           </div>
 
           <div className="max-w-sm">
-            <div className="font-display text-sm font-bold text-white mb-2">
+            <div className="section-label text-white mb-2">
               Get the latest by email
             </div>
             <p className="text-sm text-white/50 mb-3">
@@ -76,3 +76,4 @@ export default function Footer() {
     </footer>
   );
 }
+

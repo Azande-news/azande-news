@@ -2,9 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import PostCard from "@/components/PostCard";
 import TrendingWidget from "@/components/TrendingWidget";
 import Link from "next/link";
-import Image from "next/image";
 import { CATEGORY_LABELS } from "@/lib/categories";
-import { stripHtml } from "@/lib/html";
 
 export const revalidate = 0;
 
@@ -18,11 +16,25 @@ const TOPIC_ROW_ORDER = [
   "announcements",
 ];
 const MAX_TOPIC_ROWS = 4;
-const POSTS_PER_TOPIC_ROW = 3;
-const FEATURES_MIN_WORDS = 600;
-const MAX_FEATURES = 3;
+const POSTS_PER_TOPIC_ROW = 4;
 
 type PostRow = Parameters<typeof PostCard>[0]["post"];
+
+function SectionHeader({ label, href }: { label: string; href?: string }) {
+  return (
+    <div className="flex items-baseline justify-between mb-5">
+      <h2 className="section-label">{label}</h2>
+      {href && (
+        <Link
+          href={href}
+          className="font-meta text-brevier font-semibold text-ink hover:underline shrink-0"
+        >
+          More {label.toLowerCase()} &rarr;
+        </Link>
+      )}
+    </div>
+  );
+}
 
 export default async function HomePage() {
   const supabase = createClient();
@@ -34,7 +46,7 @@ export default async function HomePage() {
     )
     .or(`status.eq.published,and(status.eq.scheduled,publish_at.lte.${new Date().toISOString()})`)
     .order("created_at", { ascending: false })
-    .limit(30);
+    .limit(40);
 
   const allPosts = (posts ?? []) as unknown as PostRow[];
 
@@ -50,16 +62,16 @@ export default async function HomePage() {
 
   if (allPosts.length === 0) {
     return (
-      <div className="border border-dashed border-border p-10 text-center">
-        <p className="font-display text-xl font-bold text-ink mb-3">
+      <div className="border border-border p-10 text-center">
+        <p className="font-display text-trafalgar font-medium text-ink mb-3">
           No posts yet &mdash; be the first.
         </p>
-        <p className="font-body text-grey mb-5">
+        <p className="font-body text-body-copy text-grey mb-5">
           This space is waiting for its first story.
         </p>
         <Link
           href="/register"
-          className="inline-block bg-accent text-paper px-5 py-2.5 rounded-sm hover:bg-accent-dark transition-colors font-body font-medium"
+          className="inline-block bg-ink text-paper px-5 py-2.5 font-meta text-brevier font-semibold"
         >
           Join and write the first post
         </Link>
@@ -68,20 +80,14 @@ export default async function HomePage() {
   }
 
   const [lead, ...rest] = allPosts;
-  const sidebar = rest.slice(0, 4);
+  const secondary = rest.slice(0, 2);
+  const sidebar = rest.slice(2, 6);
 
   const usedIds = new Set<string>(
-    [lead?.id, ...sidebar.map((p) => p.id)].filter(Boolean) as string[]
+    [lead?.id, ...secondary.map((p) => p.id), ...sidebar.map((p) => p.id)].filter(
+      Boolean
+    ) as string[]
   );
-
-  const features = allPosts
-    .filter((p) => {
-      if (usedIds.has(p.id)) return false;
-      const wordCount = stripHtml(p.body).split(/\s+/).filter(Boolean).length;
-      return wordCount >= FEATURES_MIN_WORDS;
-    })
-    .slice(0, MAX_FEATURES);
-  features.forEach((p) => usedIds.add(p.id));
 
   const topicRows: { value: string; label: string; posts: PostRow[] }[] = [];
   for (const value of TOPIC_ROW_ORDER) {
@@ -98,105 +104,56 @@ export default async function HomePage() {
     });
   }
 
-  const leftoverPosts = allPosts.filter((p) => !usedIds.has(p.id));
-
-  const featuresGridClass =
-    features.length === 1
-      ? "grid grid-cols-1 max-w-2xl"
-      : features.length === 2
-      ? "grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-8"
-      : "grid grid-cols-1 sm:grid-cols-3 gap-x-8 gap-y-8";
+  const leftoverPosts = allPosts.filter((p) => !usedIds.has(p.id)).slice(0, 8);
 
   return (
     <div>
-      {/* Lead + sidebar */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 pb-8 border-b border-border">
-        <div className="lg:col-span-2">
+      {/* Hero: lead + two secondary promos + sidebar rail */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-6 gap-y-8 pb-8">
+        <div className="lg:col-span-6">
           {lead && <PostCard post={lead} variant="lead" />}
         </div>
-        {sidebar.length > 0 && (
-          <div className="lg:border-l lg:border-border lg:pl-6">
-            <h2 className="font-meta text-[11px] tracking-wider uppercase text-grey mb-1">
-              More stories
-            </h2>
-            {sidebar.map((post) => (
-              <PostCard key={post.id} post={post} variant="list" />
-            ))}
-            <TrendingWidget />
-          </div>
-        )}
+
+        <div className="lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-x-6 gap-y-8">
+          {secondary.map((post) => (
+            <PostCard key={post.id} post={post} variant="grid" />
+          ))}
+        </div>
+
+        <div className="lg:col-span-3 lg:border-l lg:border-rule lg:pl-6">
+          {sidebar.length > 0 && (
+            <>
+              <h2 className="section-label mb-2">More stories</h2>
+              {sidebar.map((post) => (
+                <PostCard key={post.id} post={post} variant="list" />
+              ))}
+            </>
+          )}
+          <TrendingWidget />
+        </div>
       </div>
 
-      {/* Features row: analysis/long-read posts, serif-styled */}
-      {features.length > 0 && (
-        <div className="pt-10 border-t border-border">
-          <h2 className="font-meta text-[11px] tracking-wider uppercase text-grey mb-6">
-            Features &amp; Analysis
-          </h2>
-          <div className={featuresGridClass}>
-            {features.map((post) => {
-              const excerpt = stripHtml(post.body).slice(0, 140);
-              return (
-                <Link key={post.id} href={`/posts/${post.id}`} className="group block">
-                  {post.cover_image_url && (
-                    <div className="relative w-full h-40 overflow-hidden mb-3 bg-offwhite">
-                      <Image
-                        src={post.cover_image_url}
-                        alt=""
-                        fill
-                        className="object-cover"
-                        sizes="(max-width: 768px) 100vw, 360px"
-                      />
-                    </div>
-                  )}
-                  <h3 className="font-serif text-xl font-bold text-ink mb-1.5 leading-snug group-hover:underline">
-                    {post.title}
-                  </h3>
-                  <p className="font-serif italic text-sm text-grey-dark leading-relaxed line-clamp-2">
-                    {excerpt}
-                    {post.body.length > excerpt.length ? "…" : ""}
-                  </p>
-                </Link>
-              );
-            })}
-          </div>
-        </div>
-      )}
-
-      {/* Topic rows, BBC-style */}
+      {/* Section blocks */}
       {topicRows.map((row) => (
-        <div key={row.value} className="pt-10">
-          <div className="flex items-center justify-between mb-6 border-l-4 border-accent pl-3">
-            <h2 className="font-display text-lg font-bold text-ink">
-              {row.label}
-            </h2>
-            <Link
-              href={`/category/${row.value}`}
-              className="font-meta text-[11px] tracking-wider uppercase text-accent hover:underline shrink-0"
-            >
-              More {row.label} &rarr;
-            </Link>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-8">
+        <section key={row.value} className="pt-8 mt-4 block-rule">
+          <SectionHeader label={row.label} href={`/category/${row.value}`} />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-8">
             {row.posts.map((post) => (
               <PostCard key={post.id} post={post} variant="grid" />
             ))}
           </div>
-        </div>
+        </section>
       ))}
 
-      {/* Catch-all for anything not surfaced above */}
       {leftoverPosts.length > 0 && (
-        <div className="pt-10">
-          <h2 className="font-display text-lg font-bold text-ink border-l-4 border-accent pl-3 mb-6">
-            Latest
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-8">
+        <section className="pt-8 mt-4 block-rule">
+          <SectionHeader label="Latest" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-8">
             {leftoverPosts.map((post) => (
               <PostCard key={post.id} post={post} variant="grid" />
             ))}
           </div>
-        </div>
+        </section>
       )}
     </div>
   );

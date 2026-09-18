@@ -50,30 +50,31 @@ export default async function CategoryPage({
 
   return (
     <div>
-      <div className="font-meta text-[11px] tracking-widest uppercase text-accent mb-2">
-        Category
+      <div className="pb-6 mb-8 border-b-4 border-ink">
+        <h1 className="font-display text-canon sm:text-canon-lg font-medium text-ink">
+          {label}
+        </h1>
+        {description && (
+          <p className="font-body text-body-copy text-grey mt-2 max-w-read">
+            {description}
+          </p>
+        )}
       </div>
-      <h1 className="font-display text-canon sm:text-canon-lg font-bold text-ink mb-2">{label}</h1>
-      {description && (
-        <p className="font-body text-grey text-base mb-8 max-w-2xl">
-          {description}
+
+      {allPosts.length === 0 && (
+        <p className="font-body text-body-copy text-grey">
+          No posts in this category yet.
         </p>
       )}
 
-      {allPosts.length === 0 && (
-        <p className="font-body text-grey">No posts in this category yet.</p>
-      )}
-
       {lead && (
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 pb-8 border-b border-border">
-          <div className="lg:col-span-2">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-6 gap-y-8 pb-8">
+          <div className="lg:col-span-8">
             <PostCard post={lead} variant="lead" />
           </div>
           {sidebar.length > 0 && (
-            <div className="lg:border-l lg:border-border lg:pl-6">
-              <h2 className="font-meta text-[11px] tracking-wider uppercase text-grey mb-1">
-                More in {label}
-              </h2>
+            <div className="lg:col-span-4 lg:border-l lg:border-rule lg:pl-6">
+              <h2 className="section-label mb-2">More in {label}</h2>
               {sidebar.map((post) => (
                 <PostCard key={post.id} post={post} variant="list" />
               ))}
@@ -83,11 +84,14 @@ export default async function CategoryPage({
       )}
 
       {gridPosts.length > 0 && (
-        <div className="pt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-8">
-          {gridPosts.map((post) => (
-            <PostCard key={post.id} post={post} variant="grid" />
-          ))}
-        </div>
+        <section className="pt-8 mt-4 block-rule">
+          <h2 className="section-label mb-5">Latest</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-8">
+            {gridPosts.map((post) => (
+              <PostCard key={post.id} post={post} variant="grid" />
+            ))}
+          </div>
+        </section>
       )}
     </div>
   );

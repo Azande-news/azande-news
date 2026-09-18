@@ -21,13 +21,14 @@ export default async function BreakingBar() {
 
   return (
     <div className="bg-accent text-white">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-2 flex items-center gap-3">
-        <span className="font-meta text-[11px] font-bold tracking-wider uppercase shrink-0 border border-white/40 px-1.5 py-0.5">
+      <div className="max-w-shell mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex items-center gap-3">
+        <span className="font-meta text-minion font-extrabold tracking-[0.75px] uppercase shrink-0">
           Breaking
         </span>
+        <span className="w-px h-4 bg-white/40 shrink-0" />
         <Link
           href={`/posts/${latest.id}`}
-          className="text-sm font-medium hover:underline truncate"
+          className="font-meta text-brevier font-semibold hover:underline truncate"
         >
           {latest.title}
         </Link>
@@ -35,5 +36,3 @@ export default async function BreakingBar() {
     </div>
   );
 }
-
-

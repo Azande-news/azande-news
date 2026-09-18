@@ -358,7 +358,7 @@ export default function NewPostPage() {
         <button
           type="submit"
           disabled={loading}
-          className="bg-accent text-paper px-6 py-3 rounded-sm hover:bg-accent-dark transition-colors font-body font-medium disabled:opacity-60"
+          className="bg-ink text-paper px-6 py-3 rounded-sm hover:bg-accent-dark transition-colors font-body font-medium disabled:opacity-60"
         >
           {loading ? "Saving…" : publishMode === "now" ? "Publish to Azande News" : publishMode === "draft" ? "Save draft" : "Schedule post"}
         </button>
@@ -366,6 +366,7 @@ export default function NewPostPage() {
     </div>
   );
 }
+
 
 
 

@@ -253,7 +253,7 @@ export default function EditPostForm({ post }: { post: Post }) {
           <button
             type="submit"
             disabled={loading}
-            className="bg-accent text-white px-6 py-3 rounded-sm hover:opacity-90 transition-opacity font-body disabled:opacity-60"
+            className="bg-ink text-white px-6 py-3 rounded-sm hover:opacity-90 transition-opacity font-body disabled:opacity-60"
           >
             {loading ? "Saving…" : "Save changes"}
           </button>
@@ -269,6 +269,7 @@ export default function EditPostForm({ post }: { post: Post }) {
     </div>
   );
 }
+
 
 
 

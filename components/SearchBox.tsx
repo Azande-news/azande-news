@@ -24,10 +24,11 @@ export default function SearchBox() {
       />
       <button
         type="submit"
-        className="bg-accent text-white px-4 py-1.5 rounded-sm text-sm font-medium hover:bg-accent-light transition-colors shrink-0"
+        className="bg-ink text-white px-4 py-1.5 rounded-sm text-sm font-medium hover:bg-accent-light transition-colors shrink-0"
       >
         Search
       </button>
     </form>
   );
 }
+

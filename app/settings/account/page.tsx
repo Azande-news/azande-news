@@ -84,7 +84,7 @@ export default function AccountSettingsPage() {
               <button
                 onClick={handleDelete}
                 disabled={loading}
-                className="bg-accent text-white px-5 py-2.5 rounded-sm text-sm font-medium hover:bg-accent-light transition-colors disabled:opacity-60"
+                className="bg-ink text-white px-5 py-2.5 rounded-sm text-sm font-medium hover:bg-accent-light transition-colors disabled:opacity-60"
               >
                 {loading ? "Deleting…" : "Permanently delete my account"}
               </button>
@@ -101,4 +101,5 @@ export default function AccountSettingsPage() {
     </div>
   );
 }
+
 

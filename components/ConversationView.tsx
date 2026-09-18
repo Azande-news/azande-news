@@ -117,7 +117,7 @@ export default function ConversationView({
           <button
             onClick={accept}
             disabled={busy}
-            className="bg-accent text-white px-5 py-2.5 rounded-sm text-sm font-medium hover:bg-accent-light transition-colors disabled:opacity-60"
+            className="bg-ink text-white px-5 py-2.5 rounded-sm text-sm font-medium hover:bg-accent-light transition-colors disabled:opacity-60"
           >
             Accept
           </button>
@@ -186,7 +186,7 @@ export default function ConversationView({
         <button
           type="submit"
           disabled={sending || body.trim().length === 0}
-          className="bg-accent text-white px-4 py-2 rounded-sm text-sm font-medium hover:bg-accent-light transition-colors disabled:opacity-60"
+          className="bg-ink text-white px-4 py-2 rounded-sm text-sm font-medium hover:bg-accent-light transition-colors disabled:opacity-60"
         >
           Send
         </button>
@@ -194,4 +194,5 @@ export default function ConversationView({
     </div>
   );
 }
+
 

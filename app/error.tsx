@@ -1,7 +1,6 @@
 "use client";
 
-export default function Error({
-  error,
+export default function ErrorPage({
   reset,
 }: {
   error: Error & { digest?: string };
@@ -9,24 +8,20 @@ export default function Error({
 }) {
   return (
     <div className="max-w-md mx-auto text-center py-20">
-      <h1 className="font-display text-3xl text-forest mb-4">
+      <h1 className="font-display text-trafalgar sm:text-trafalgar-lg font-medium text-ink mb-4">
         Something went wrong
       </h1>
-      <p className="font-body text-ink/70 mb-8">
-        We hit an unexpected error loading this page. You can try again, or
-        head back to the front page.
+      <p className="font-body text-body-copy text-grey mb-8">
+        An unexpected error occurred. You can try again, or head back to the homepage.
       </p>
-      <div className="flex gap-3 justify-center">
+      <div className="flex items-center justify-center gap-3">
         <button
           onClick={reset}
-          className="bg-forest text-ivory px-5 py-2.5 rounded-sm hover:bg-forest-light transition-colors font-body"
+          className="bg-ink text-paper px-5 py-2.5 hover:bg-black transition-colors font-meta text-brevier font-semibold"
         >
           Try again
         </button>
-        <a
-          href="/"
-          className="border border-forest/30 px-5 py-2.5 rounded-sm hover:bg-forest/5 transition-colors font-body"
-        >
+        <a href="/" className="border border-border px-5 py-2.5 hover:bg-offwhite transition-colors font-meta text-brevier font-semibold text-ink">
           Go home
         </a>
       </div>

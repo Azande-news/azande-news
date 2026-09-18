@@ -96,7 +96,7 @@ export default function ReportButton({
         <button
           type="submit"
           disabled={submitting}
-          className="bg-clay text-ivory px-4 py-1.5 rounded-sm hover:bg-forest transition-colors disabled:opacity-60"
+          className="bg-accent text-white px-4 py-1.5 rounded-sm hover:bg-forest transition-colors disabled:opacity-60"
         >
           {submitting ? "Sending…" : "Submit report"}
         </button>
@@ -111,3 +111,4 @@ export default function ReportButton({
     </form>
   );
 }
+

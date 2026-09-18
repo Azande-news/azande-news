@@ -171,7 +171,7 @@ export default function DictionaryPage() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="bg-accent text-white px-5 py-2.5 rounded-sm text-sm font-medium hover:bg-accent-light transition-colors disabled:opacity-60"
+                className="bg-ink text-white px-5 py-2.5 rounded-sm text-sm font-medium hover:bg-accent-light transition-colors disabled:opacity-60"
               >
                 {submitting ? "Submitting…" : "Submit word"}
               </button>
@@ -186,6 +186,7 @@ export default function DictionaryPage() {
     </div>
   );
 }
+
 
 
 

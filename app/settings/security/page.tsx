@@ -117,7 +117,7 @@ export default function SecuritySettingsPage() {
       {!enrolling && factors.filter((f) => f.status === "verified").length === 0 && (
         <button
           onClick={startEnroll}
-          className="bg-accent text-white px-5 py-2.5 rounded-sm text-sm font-medium hover:bg-accent-light transition-colors"
+          className="bg-ink text-white px-5 py-2.5 rounded-sm text-sm font-medium hover:bg-accent-light transition-colors"
         >
           Set up two-factor authentication
         </button>
@@ -160,4 +160,5 @@ export default function SecuritySettingsPage() {
     </div>
   );
 }
+
 

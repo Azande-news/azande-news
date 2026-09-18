@@ -24,10 +24,10 @@ const config: Config = {
         },
       },
       fontFamily: {
-        display: ["Helvetica Neue", "Helvetica", "Arial", "system-ui", "sans-serif"],
-        body: ["Helvetica Neue", "Helvetica", "Arial", "system-ui", "sans-serif"],
-        meta: ["Helvetica Neue", "Helvetica", "Arial", "system-ui", "sans-serif"],
-        serif: ["Georgia", "Times New Roman", "serif"],
+        display: ["var(--font-work-sans)", "Helvetica Neue", "Helvetica", "Arial", "system-ui", "sans-serif"],
+        body: ["var(--font-work-sans)", "Helvetica Neue", "Helvetica", "Arial", "system-ui", "sans-serif"],
+        meta: ["var(--font-work-sans)", "Helvetica Neue", "Helvetica", "Arial", "system-ui", "sans-serif"],
+        serif: ["var(--font-source-serif)", "Georgia", "Times New Roman", "serif"],
       },
       fontSize: {
         // BBC-style type scale, mobile size shown; sm: prefix gives the desktop pairing
@@ -44,6 +44,9 @@ const config: Config = {
         brevier: ["14px", { lineHeight: "18px" }],
         "brevier-lg": ["13px", { lineHeight: "16px" }],
         minion: ["12px", { lineHeight: "16px" }],
+        // Article reading copy — mirrors BBC's article body scale
+        read: ["17px", { lineHeight: "28px" }],
+        "read-lg": ["19px", { lineHeight: "31px" }],
       },
     },
   },

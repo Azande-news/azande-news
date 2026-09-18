@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Work_Sans, Space_Mono } from "next/font/google";
+import { Work_Sans, Space_Mono, Source_Serif_4 } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
@@ -18,6 +18,13 @@ const spaceMono = Space_Mono({
   subsets: ["latin"],
   variable: "--font-space-mono",
   weight: ["400", "700"],
+});
+
+const sourceSerif = Source_Serif_4({
+  subsets: ["latin"],
+  variable: "--font-source-serif",
+  weight: ["400", "600", "700"],
+  style: ["normal", "italic"],
 });
 
 export const metadata: Metadata = {
@@ -71,7 +78,7 @@ export default function RootLayout({
         <link rel="alternate" type="application/rss+xml" title="Azande News RSS Feed" href="/feed.xml" />
       </head>
       <body
-        className={`${workSans.variable} ${spaceMono.variable} font-body bg-paper text-ink transition-colors`}
+        className={`${workSans.variable} ${spaceMono.variable} ${sourceSerif.variable} font-body bg-paper text-ink transition-colors`}
       >
         <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] bg-accent text-white px-4 py-2 rounded-sm text-sm font-medium">
           Skip to main content
@@ -89,7 +96,3 @@ export default function RootLayout({
     </html>
   );
 }
-
-
-
-

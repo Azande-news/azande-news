@@ -12,6 +12,7 @@ import TrendingWidget from "@/components/TrendingWidget";
 import RelatedArticles from "@/components/RelatedArticles";
 import { stripHtml, sanitizeHtml } from "@/lib/html";
 import { CATEGORY_LABELS } from "@/lib/categories";
+import { formatSmartDate } from "@/lib/time";
 import type { Metadata } from "next";
 
 export async function generateMetadata({
@@ -76,24 +77,20 @@ export default async function PostPage({ params }: { params: { id: string } }) {
     canManage = user.id === post.author_id || profile?.role === "admin";
   }
 
-  const date = new Date(post.created_at).toLocaleDateString(undefined, {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
+  const date = formatSmartDate(post.created_at);
 
   const wordCount = stripHtml(post.body).split(/\s+/).filter(Boolean).length;
   const readingMinutes = Math.max(1, Math.round(wordCount / 200));
 
   const wasEdited = post.updated_at && new Date(post.updated_at).getTime() - new Date(post.created_at).getTime() > 60000;
-  const updatedDate = wasEdited
-    ? new Date(post.updated_at).toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" })
-    : null;
+  const updatedDate = wasEdited ? formatSmartDate(post.updated_at) : null;
 
   const author = post.profiles as unknown as {
     display_name: string;
     username: string;
   } | null;
+
+  const categoryLabel = CATEGORY_LABELS[post.category] ?? post.category;
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -132,7 +129,7 @@ export default async function PostPage({ params }: { params: { id: string } }) {
           <ViewTracker postId={post.id} />
           <div className="font-meta text-[11px] tracking-widest uppercase text-accent mb-3">
             <Link href={`/category/${post.category}`} className="hover:underline">
-              {CATEGORY_LABELS[post.category] ?? post.category}
+              {categoryLabel}
             </Link>
           </div>
           <h1 className="font-display text-canon sm:text-canon-lg font-bold text-ink mb-4">
@@ -156,9 +153,21 @@ export default async function PostPage({ params }: { params: { id: string } }) {
             </div>
           )}
 
-          <div className="prose-article font-body text-lg text-ink/90" dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.body) }} />
+          <div className="prose-article font-serif text-read sm:text-read-lg text-ink/90" dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.body) }} />
 
-          <div className="mt-8 pt-6 border-t border-border flex items-center justify-between flex-wrap gap-3">
+          <div className="mt-10 pt-6 border-t border-border">
+            <span className="font-meta text-[11px] tracking-wider uppercase text-grey mr-3">
+              Related Topics
+            </span>
+            <Link
+              href={`/category/${post.category}`}
+              className="inline-block font-meta text-xs font-semibold uppercase tracking-wide bg-offwhite hover:bg-border text-ink px-3 py-1.5 rounded-full transition-colors"
+            >
+              {categoryLabel}
+            </Link>
+          </div>
+
+          <div className="mt-6 pt-6 border-t border-border flex items-center justify-between flex-wrap gap-3">
             <ReportButton postId={post.id} postTitle={post.title} />
             {canManage && (
               <>
@@ -207,8 +216,3 @@ export default async function PostPage({ params }: { params: { id: string } }) {
     </div>
   );
 }
-
-
-
-
-

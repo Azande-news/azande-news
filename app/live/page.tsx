@@ -85,7 +85,7 @@ export default async function LivePage() {
                 {entry.title}
               </h2>
               <div
-                className="prose-article font-body text-ink/90"
+                className="prose-article font-serif text-ink/90"
                 dangerouslySetInnerHTML={{ __html: sanitizeHtml(entry.body) }}
               />
             </li>

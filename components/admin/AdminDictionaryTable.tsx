@@ -44,7 +44,7 @@ export default function AdminDictionaryTable({ entries }: { entries: Entry[] }) 
   }
 
   return (
-    <div className="divide-y divide-border">
+    <div className="divide-y divide-rule">
       {entries.map((e) => (
         <div key={e.id} className="py-4 flex flex-wrap items-center justify-between gap-3">
           <div>
@@ -76,3 +76,4 @@ export default function AdminDictionaryTable({ entries }: { entries: Entry[] }) 
     </div>
   );
 }
+

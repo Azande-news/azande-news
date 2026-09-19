@@ -32,7 +32,7 @@ export default function AdminUsersTable({
   }
 
   return (
-    <div className="divide-y divide-border">
+    <div className="divide-y divide-rule">
       {profiles.map((profile) => (
         <div
           key={profile.id}
@@ -60,3 +60,4 @@ export default function AdminUsersTable({
     </div>
   );
 }
+

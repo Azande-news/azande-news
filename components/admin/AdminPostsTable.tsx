@@ -59,7 +59,7 @@ export default function AdminPostsTable({ posts }: { posts: Post[] }) {
   }
 
   return (
-    <div className="divide-y divide-border">
+    <div className="divide-y divide-rule">
       {posts.map((post) => (
         <div key={post.id} className="py-4 flex flex-wrap items-center justify-between gap-3">
           <div>
@@ -119,6 +119,7 @@ export default function AdminPostsTable({ posts }: { posts: Post[] }) {
     </div>
   );
 }
+
 
 
 

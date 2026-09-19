@@ -35,7 +35,7 @@ export default function AdminReportsTable({ reports }: { reports: Report[] }) {
   }
 
   return (
-    <div className="divide-y divide-border">
+    <div className="divide-y divide-rule">
       {reports.map((report) => (
         <div
           key={report.id}
@@ -67,3 +67,4 @@ export default function AdminReportsTable({ reports }: { reports: Report[] }) {
     </div>
   );
 }
+

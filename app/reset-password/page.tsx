@@ -99,7 +99,7 @@ export default function ResetPasswordPage() {
             minLength={8}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full border border-border rounded-sm px-3 py-2 font-body focus:outline-none focus:ring-2 focus:ring-accent"
+            className="w-full border border-border px-3 py-2 font-body focus:outline-none focus:ring-2 focus:ring-accent"
           />
         </div>
 
@@ -113,7 +113,7 @@ export default function ResetPasswordPage() {
             minLength={8}
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
-            className="w-full border border-border rounded-sm px-3 py-2 font-body focus:outline-none focus:ring-2 focus:ring-accent"
+            className="w-full border border-border px-3 py-2 font-body focus:outline-none focus:ring-2 focus:ring-accent"
           />
         </div>
 
@@ -122,7 +122,7 @@ export default function ResetPasswordPage() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-ink text-paper py-3 rounded-sm hover:bg-accent transition-colors font-body font-medium disabled:opacity-60"
+          className="w-full bg-ink text-paper py-3 hover:bg-black transition-colors font-meta text-brevier font-semibold disabled:opacity-60"
         >
           {loading ? "Updating…" : "Update password"}
         </button>
@@ -130,4 +130,5 @@ export default function ResetPasswordPage() {
     </div>
   );
 }
+
 

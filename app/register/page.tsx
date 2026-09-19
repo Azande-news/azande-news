@@ -97,7 +97,7 @@ export default function RegisterPage() {
             maxLength={60}
             value={displayName}
             onChange={(e) => setDisplayName(e.target.value)}
-            className="w-full border border-border rounded-sm px-3 py-2 font-body focus:outline-none focus:ring-2 focus:ring-accent"
+            className="w-full border border-border px-3 py-2 font-body focus:outline-none focus:ring-2 focus:ring-accent"
             placeholder="e.g. Nzoya Gbudue"
           />
         </div>
@@ -111,7 +111,7 @@ export default function RegisterPage() {
             required
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            className="w-full border border-border rounded-sm px-3 py-2 font-body focus:outline-none focus:ring-2 focus:ring-accent"
+            className="w-full border border-border px-3 py-2 font-body focus:outline-none focus:ring-2 focus:ring-accent"
             placeholder="lowercase, no spaces"
           />
         </div>
@@ -125,7 +125,7 @@ export default function RegisterPage() {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full border border-border rounded-sm px-3 py-2 font-body focus:outline-none focus:ring-2 focus:ring-accent"
+            className="w-full border border-border px-3 py-2 font-body focus:outline-none focus:ring-2 focus:ring-accent"
           />
         </div>
 
@@ -139,7 +139,7 @@ export default function RegisterPage() {
             minLength={8}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full border border-border rounded-sm px-3 py-2 font-body focus:outline-none focus:ring-2 focus:ring-accent"
+            className="w-full border border-border px-3 py-2 font-body focus:outline-none focus:ring-2 focus:ring-accent"
             placeholder="At least 8 characters"
           />
         </div>
@@ -169,7 +169,7 @@ export default function RegisterPage() {
         <button
           type="submit"
           disabled={loading || !agreed}
-          className="w-full bg-ink text-paper py-3 rounded-sm hover:bg-accent transition-colors font-body font-medium disabled:opacity-60"
+          className="w-full bg-ink text-paper py-3 hover:bg-black transition-colors font-meta text-brevier font-semibold disabled:opacity-60"
         >
           {loading ? "Creating account…" : "Create free account"}
         </button>
@@ -184,6 +184,7 @@ export default function RegisterPage() {
     </div>
   );
 }
+
 
 
 

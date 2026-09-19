@@ -96,7 +96,7 @@ export default function SecuritySettingsPage() {
       </p>
 
       {factors.filter((f) => f.status === "verified").length > 0 && (
-        <div className="mb-8 border border-border rounded-sm divide-y divide-border">
+        <div className="mb-8 border border-border divide-y divide-border">
           {factors.filter((f) => f.status === "verified").map((f) => (
             <div key={f.id} className="p-4 flex items-center justify-between">
               <span className="font-body text-sm text-ink">Authenticator app enabled</span>
@@ -109,7 +109,7 @@ export default function SecuritySettingsPage() {
       )}
 
       {done && (
-        <p className="font-body text-sm text-ink bg-offwhite border border-border rounded-sm p-4 mb-6">
+        <p className="font-body text-sm text-ink bg-offwhite border border-border p-4 mb-6">
           Two-factor authentication is now enabled. You will be asked for a code the next time you log in.
         </p>
       )}
@@ -117,14 +117,14 @@ export default function SecuritySettingsPage() {
       {!enrolling && factors.filter((f) => f.status === "verified").length === 0 && (
         <button
           onClick={startEnroll}
-          className="bg-ink text-white px-5 py-2.5 rounded-sm text-sm font-medium hover:bg-accent-light transition-colors"
+          className="bg-ink text-white px-5 py-2.5 text-sm font-medium hover:bg-black transition-colors"
         >
           Set up two-factor authentication
         </button>
       )}
 
       {enrolling && qrCode && (
-        <div className="border border-border rounded-sm p-5">
+        <div className="border border-border p-5">
           <p className="font-body text-sm text-ink mb-4">
             Scan this QR code with your authenticator app, then enter the 6-digit code it shows.
           </p>
@@ -143,14 +143,14 @@ export default function SecuritySettingsPage() {
               required
               value={verifyCode}
               onChange={(e) => setVerifyCode(e.target.value.replace(/\D/g, ""))}
-              className="w-full border border-border rounded-sm px-3 py-2 font-body text-center text-2xl tracking-[0.5em] focus:outline-none focus:ring-2 focus:ring-accent bg-paper text-ink"
+              className="w-full border border-border px-3 py-2 font-body text-center text-2xl tracking-[0.5em] focus:outline-none focus:ring-2 focus:ring-accent bg-paper text-ink"
               placeholder="000000"
             />
             {error && <p className="text-accent font-body text-sm">{error}</p>}
             <button
               type="submit"
               disabled={verifyCode.length !== 6}
-              className="w-full bg-ink text-paper py-3 rounded-sm hover:bg-accent transition-colors font-body font-medium disabled:opacity-60"
+              className="w-full bg-ink text-paper py-3 hover:bg-black transition-colors font-meta text-brevier font-semibold disabled:opacity-60"
             >
               Confirm and enable
             </button>
@@ -160,5 +160,6 @@ export default function SecuritySettingsPage() {
     </div>
   );
 }
+
 
 

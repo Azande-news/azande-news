@@ -26,7 +26,7 @@ export default async function Navbar() {
       <div className="bg-black text-white border-b border-white/15">
         <div className="max-w-shell mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3">
           <Link href="/" className="flex items-center gap-2 min-w-0">
-            <Image src="/logo.png" alt="" width={32} height={32} className="shrink-0" priority />
+            <Image src="/logo.png" alt="Azande News" width={32} height={32} className="shrink-0" priority />
             <span className="font-meta text-lg sm:text-xl font-extrabold tracking-tight truncate">
               Azande News
             </span>
@@ -65,3 +65,4 @@ export default async function Navbar() {
     </header>
   );
 }
+

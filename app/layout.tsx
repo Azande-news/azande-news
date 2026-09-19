@@ -80,7 +80,7 @@ export default function RootLayout({
         </a>
         <Navbar />
         <BreakingBar />
-        <main id="main-content" className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-6 min-h-[60vh]">
+        <main id="main-content" className="max-w-shell mx-auto px-4 sm:px-6 lg:px-8 py-6 min-h-[60vh]">
           {children}
         </main>
         <Footer />
@@ -91,3 +91,4 @@ export default function RootLayout({
     </html>
   );
 }
+

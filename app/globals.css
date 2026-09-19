@@ -43,7 +43,7 @@
     font-family: var(--font-serif), Georgia, "Times New Roman", serif;
     font-size: 20px;
     line-height: 28px;
-    border-left: 4px solid #9E1B32;
+    border-left: 4px solid #B80000;
     padding-left: 1rem;
     margin: 1.75rem 0;
     color: var(--color-ink);
@@ -61,7 +61,7 @@
     color: var(--color-ink);
   }
   .section-label-accent {
-    color: #9E1B32;
+    color: #B80000;
   }
   /* Hairline that opens a content block. */
   .block-rule {
@@ -114,3 +114,4 @@
     transition-duration: 0.01ms !important;
   }
 }
+

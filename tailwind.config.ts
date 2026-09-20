@@ -8,6 +8,12 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      screens: {
+        sm: "400px",
+        md: "600px",
+        lg: "900px",
+        xl: "1008px",
+      },
       colors: {
         ink: "var(--color-ink)",
         paper: "var(--color-paper)",
@@ -78,6 +84,7 @@ const config: Config = {
   plugins: [],
 };
 export default config;
+
 
 
 

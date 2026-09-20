@@ -123,7 +123,7 @@ export default function CommentSection({ postId, isAdmin = false }: { postId: st
         ))}
         {!loadingList && comments.length === 0 && (
           <p className="font-body text-grey text-sm">
-            No comments yet — be the first to respond.
+            No comments yet. Be the first to respond.
           </p>
         )}
       </div>
@@ -158,6 +158,7 @@ export default function CommentSection({ postId, isAdmin = false }: { postId: st
     </div>
   );
 }
+
 
 
 

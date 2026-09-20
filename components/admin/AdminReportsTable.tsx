@@ -29,7 +29,7 @@ export default function AdminReportsTable({ reports }: { reports: Report[] }) {
   if (reports.length === 0) {
     return (
       <p className="font-body text-grey text-sm">
-        No open reports — nothing needs your attention right now.
+        No open reports. Nothing needs your attention right now.
       </p>
     );
   }
@@ -67,4 +67,5 @@ export default function AdminReportsTable({ reports }: { reports: Report[] }) {
     </div>
   );
 }
+
 

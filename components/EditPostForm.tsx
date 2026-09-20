@@ -65,7 +65,7 @@ export default function EditPostForm({ post }: { post: Post }) {
       return;
     }
     if (file.size > MAX_IMAGE_BYTES) {
-      setError("Image is too large — please choose one under 5MB.");
+      setError("Image is too large. Please choose one under 5MB.");
       return;
     }
     setError(null);
@@ -98,7 +98,7 @@ export default function EditPostForm({ post }: { post: Post }) {
 
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) {
-      setError("Your session expired — please log in again.");
+      setError("Your session expired. Please log in again.");
       setLoading(false);
       return;
     }
@@ -269,6 +269,7 @@ export default function EditPostForm({ post }: { post: Post }) {
     </div>
   );
 }
+
 
 
 

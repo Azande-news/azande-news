@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Contact — Azande News",
+  title: "Contact",
   description: "Get in touch with Azande News.",
 };
 
@@ -27,4 +27,5 @@ export default function ContactPage() {
     </div>
   );
 }
+
 

@@ -36,7 +36,7 @@ export default function NewsletterSignup() {
   if (done) {
     return (
       <p className="font-body text-sm text-white/70">
-        Thanks — you&apos;re on the list.
+        Thanks. You&apos;re on the list.
       </p>
     );
   }
@@ -62,4 +62,5 @@ export default function NewsletterSignup() {
     </form>
   );
 }
+
 

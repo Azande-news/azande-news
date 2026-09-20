@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "About — Azande News",
+  title: "About",
   description:
     "Azande News is a community-run news and information project for the Azande people of Western Equatoria, South Sudan, and the worldwide diaspora.",
 };
@@ -43,3 +43,4 @@ export default function AboutPage() {
     </div>
   );
 }
+

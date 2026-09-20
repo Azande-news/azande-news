@@ -60,7 +60,7 @@ export default function NewPostPage() {
       return;
     }
     if (file.size > MAX_IMAGE_BYTES) {
-      setError("Image is too large — please choose one under 5MB.");
+      setError("Image is too large. Please choose one under 5MB.");
       return;
     }
     setError(null);
@@ -87,10 +87,10 @@ export default function NewPostPage() {
         const match = CATEGORIES.find((c) => c.value === data.category);
         setCategoryNote(`Suggested: ${match?.label ?? data.category}`);
       } else {
-        setCategoryNote("Could not suggest a category — please choose one yourself.");
+        setCategoryNote("Could not suggest a category. Please choose one yourself.");
       }
     } catch {
-      setCategoryNote("Could not suggest a category — please choose one yourself.");
+      setCategoryNote("Could not suggest a category. Please choose one yourself.");
     }
     setSuggestingCategory(false);
   }
@@ -295,7 +295,7 @@ export default function NewPostPage() {
             className="w-full border border-border rounded-sm px-3 py-2 font-body focus:outline-none focus:ring-2 focus:ring-accent bg-paper text-ink"
           >
             {CATEGORIES.map((c) => (
-              <option key={c.value} value={c.value}>{c.label} — {c.description}</option>
+              <option key={c.value} value={c.value}>{c.label}: {c.description}</option>
             ))}
           </select>
           {categoryNote && <p className="text-xs text-grey mt-1">{categoryNote}</p>}
@@ -366,6 +366,7 @@ export default function NewPostPage() {
     </div>
   );
 }
+
 
 
 

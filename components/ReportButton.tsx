@@ -63,7 +63,7 @@ export default function ReportButton({
   if (done) {
     return (
       <p className="font-body text-sm text-grey">
-        Thanks — an admin will review this.
+        Thanks. An admin will review this.
       </p>
     );
   }
@@ -111,3 +111,4 @@ export default function ReportButton({
     </form>
   );
 }
+

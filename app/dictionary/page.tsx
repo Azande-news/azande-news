@@ -114,7 +114,7 @@ export default function DictionaryPage() {
         <p className="font-body text-grey text-sm">Loading…</p>
       ) : filtered.length === 0 ? (
         <p className="font-body text-grey text-sm mb-10">
-          {entries.length === 0 ? "No words yet — be the first to contribute one below." : "No matches found."}
+          {entries.length === 0 ? "No words yet. Be the first to contribute one below." : "No matches found."}
         </p>
       ) : (
         <div className="divide-y divide-rule mb-10">
@@ -133,7 +133,7 @@ export default function DictionaryPage() {
         {userId ? (
           done ? (
             <p className="font-body text-sm text-grey">
-              Thank you — your word has been submitted and will appear once an admin reviews it.{" "}
+              Thank you. Your word has been submitted and will appear once an admin reviews it.{" "}
               <button onClick={() => setDone(false)} className="text-accent hover:underline">
                 Add another
               </button>
@@ -159,7 +159,7 @@ export default function DictionaryPage() {
                 />
               </div>
               <div>
-                <label className="block font-body text-sm text-ink mb-1">Notes <span className="text-grey">(optional — usage, context, dialect)</span></label>
+                <label className="block font-body text-sm text-ink mb-1">Notes <span className="text-grey">(optional: usage, context, dialect)</span></label>
                 <textarea
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
@@ -186,3 +186,4 @@ export default function DictionaryPage() {
     </div>
   );
 }
+

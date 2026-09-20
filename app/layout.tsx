@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import type { Viewport } from "next";
 import { Inter, Source_Serif_4 } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -22,6 +23,13 @@ const sourceSerif = Source_Serif_4({
   display: "swap",
 });
 
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#FFFFFF" },
+    { media: "(prefers-color-scheme: dark)", color: "#000000" },
+  ],
+};
+
 export const metadata: Metadata = {
   title: {
     default: "Azande News - by and for the Azande people, worldwide",
@@ -32,6 +40,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://azande-news.vercel.app"),
   keywords: ["Azande", "Zande", "South Sudan news", "DR Congo news", "Central African Republic", "Azande diaspora", "Zande language", "Zande dictionary", "Western Equatoria", "Yambio"],
   alternates: {
+    canonical: "/",
     types: { "application/rss+xml": "/feed.xml" },
   },
   openGraph: {
@@ -71,6 +80,7 @@ export default function RootLayout({
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
         <link rel="alternate" type="application/rss+xml" title="Azande News RSS Feed" href="/feed.xml" />
+        <link rel="apple-touch-icon" href="/icon.png" />
       </head>
       <body
         className={`${inter.variable} ${sourceSerif.variable} font-ui bg-paper text-ink`}
@@ -91,5 +101,6 @@ export default function RootLayout({
     </html>
   );
 }
+
 
 

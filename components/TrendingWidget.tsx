@@ -18,7 +18,7 @@ export default async function TrendingWidget() {
       <ol>
         {posts.map((post, i) => (
           <li key={post.id} className="flex gap-3 py-3 border-b border-rule last:border-b-0">
-            <span className="font-meta text-[28px] font-bold text-border shrink-0 leading-none w-8">
+            <span className="font-meta text-canon font-bold text-border shrink-0 leading-none w-8">
               {i + 1}
             </span>
             <Link
@@ -33,3 +33,4 @@ export default async function TrendingWidget() {
     </div>
   );
 }
+

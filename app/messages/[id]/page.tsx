@@ -24,10 +24,13 @@ export default async function ConversationPage({ params }: { params: { id: strin
     .single();
 
   return (
-    <ConversationView
+    <>
+      <h1 className="sr-only">Conversation with {otherProfile?.display_name ?? "Unknown"}</h1>
+      <ConversationView
       conversation={conversation}
       currentUserId={user.id}
       otherPersonName={otherProfile?.display_name ?? "Unknown"}
     />
+    </>
   );
 }

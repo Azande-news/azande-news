@@ -33,6 +33,12 @@ export default async function EditPostPage({ params }: { params: { id: string } 
     redirect(`/posts/${params.id}`);
   }
 
-  return <EditPostForm post={post} />;
+  return (
+    <>
+      <h1 className="sr-only">Edit: {post.title}</h1>
+      <EditPostForm post={post} />
+    </>
+  );
 }
+
 

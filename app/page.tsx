@@ -108,6 +108,7 @@ export default async function HomePage() {
 
   return (
     <div>
+      <h1 className="sr-only">Azande News</h1>
       {/* Hero: lead + two secondary promos + sidebar rail */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-6 gap-y-8 pb-8">
         <div className="lg:col-span-6">
@@ -158,3 +159,4 @@ export default async function HomePage() {
     </div>
   );
 }
+

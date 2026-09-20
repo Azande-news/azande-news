@@ -29,6 +29,7 @@ export default async function SearchPage({
 
   return (
     <div>
+      <h1 className="font-display text-canon sm:text-canon-lg font-medium text-ink mb-6">Search</h1>
       <form action="/search" className="mb-8">
         <div className="flex gap-2 max-w-xl">
           <input
@@ -76,3 +77,4 @@ export default async function SearchPage({
     </div>
   );
 }
+

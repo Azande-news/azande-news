@@ -20,9 +20,9 @@ const config: Config = {
           dark: "var(--color-grey-dark)",
         },
         accent: {
-          DEFAULT: "#B80000",
-          dark: "#8C0000",
-          light: "#D40000",
+          DEFAULT: "#BB1919",
+          dark: "#8A1414",
+          light: "#D2232A",
         },
       },
       // Editorial = serif (headlines + body). Chrome/labels = sans.
@@ -78,6 +78,8 @@ const config: Config = {
   plugins: [],
 };
 export default config;
+
+
 
 
 

@@ -32,7 +32,7 @@ export async function generateMetadata({
   const description = stripHtml(post.body).slice(0, 160);
 
   return {
-    title: `${post.title} — Azande News`,
+    title: `${post.title} - Azande News`,
     description,
     alternates: { canonical: `https://azande-news.vercel.app/posts/${params.id}` },
     openGraph: {
@@ -239,3 +239,4 @@ export default async function PostPage({ params }: { params: { id: string } }) {
     </div>
   );
 }
+

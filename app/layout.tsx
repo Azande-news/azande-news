@@ -24,11 +24,11 @@ const sourceSerif = Source_Serif_4({
 
 export const metadata: Metadata = {
   title: {
-    default: "Azande News — by and for the Azande people, worldwide",
-    template: "%s · Azande News",
+    default: "Azande News - by and for the Azande people, worldwide",
+    template: "%s - Azande News",
   },
   description:
-    "A community news and information site for the Azande people of DR Congo, South Sudan, the Central African Republic, and the worldwide diaspora — news, culture, history, and the Zande language.",
+    "A community news and information site for the Azande people of DR Congo, South Sudan, the Central African Republic, and the worldwide diaspora - news, culture, history, and the Zande language.",
   metadataBase: new URL("https://azande-news.vercel.app"),
   keywords: ["Azande", "Zande", "South Sudan news", "DR Congo news", "Central African Republic", "Azande diaspora", "Zande language", "Zande dictionary", "Western Equatoria", "Yambio"],
   alternates: {
@@ -91,4 +91,5 @@ export default function RootLayout({
     </html>
   );
 }
+
 

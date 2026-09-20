@@ -37,7 +37,7 @@ const config: Config = {
       // GEL type scale. Mobile size first; the -lg pairing is the sm:/lg: step.
       fontSize: {
         canon: ["28px", { lineHeight: "32px", letterSpacing: "-0.02em" }],
-        "canon-lg": ["36px", { lineHeight: "40px", letterSpacing: "-0.02em" }],
+        "canon-lg": ["34px", { lineHeight: "38px", letterSpacing: "-0.02em" }],
         trafalgar: ["22px", { lineHeight: "26px", letterSpacing: "-0.015em" }],
         "trafalgar-lg": ["26px", { lineHeight: "30px", letterSpacing: "-0.015em" }],
         paragon: ["20px", { lineHeight: "24px", letterSpacing: "-0.01em" }],
@@ -78,6 +78,7 @@ const config: Config = {
   plugins: [],
 };
 export default config;
+
 
 
 

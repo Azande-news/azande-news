@@ -1,11 +1,11 @@
 :root {
-  --color-ink: #000000;
+  --color-ink: #202224;
   --color-paper: #FFFFFF;
   --color-offwhite: #F6F6F6;
-  --color-border: #D5D5D5;
-  --color-rule: #E4E4E4;
-  --color-grey: #3F3F42;
-  --color-grey-light: #6A6A6E;
+  --color-border: #B1B4B6;
+  --color-rule: #E6E8EA;
+  --color-grey: #54595F;
+  --color-grey-light: #6F777B;
   --color-grey-dark: #1A1A1A;
 }
 
@@ -38,6 +38,10 @@
   h1, h2, h3 {
     font-family: var(--font-serif), Georgia, serif;
     font-weight: 500;
+  }
+  /* BBC rule: bold inline text tightens slightly for legibility. */
+  b, strong {
+    letter-spacing: -0.01em;
   }
   blockquote {
     font-family: var(--font-serif), Georgia, "Times New Roman", serif;
@@ -114,4 +118,5 @@
     transition-duration: 0.01ms !important;
   }
 }
+
 

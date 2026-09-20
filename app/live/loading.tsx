@@ -1,6 +1,6 @@
 export default function LiveLoading() {
   return (
-    <div className="max-w-3xl mx-auto animate-pulse">
+    <div className="max-w-read animate-pulse">
       <div className="h-4 w-16 bg-offwhite mb-8" />
       <div className="space-y-8">
         {Array.from({ length: 4 }).map((_, i) => (
@@ -10,4 +10,3 @@ export default function LiveLoading() {
     </div>
   );
 }
-

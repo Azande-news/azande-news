@@ -37,11 +37,11 @@ export default async function SearchPage({
             defaultValue={q}
             placeholder="Search Azande News..."
             autoFocus
-            className="flex-1 border border-border rounded-sm px-4 py-2.5 text-sm focus:outline-none focus:border-accent"
+            className="flex-1 border border-border px-4 py-2.5 font-body text-body-copy focus:outline-none focus:border-ink"
           />
           <button
             type="submit"
-            className="bg-ink text-paper px-5 py-2.5 rounded-sm text-sm font-medium hover:bg-accent transition-colors"
+            className="bg-ink text-paper px-5 py-2.5 font-meta text-brevier font-semibold hover:bg-accent transition-colors"
           >
             Search
           </button>
@@ -49,7 +49,7 @@ export default async function SearchPage({
       </form>
 
       {q.length === 0 && (
-        <p className="font-body text-grey">
+        <p className="font-body text-body-copy text-grey">
           Type a keyword above to search articles by title or content.
         </p>
       )}
@@ -61,7 +61,7 @@ export default async function SearchPage({
           </p>
 
           {results.length === 0 ? (
-            <p className="font-body text-grey">
+            <p className="font-body text-body-copy text-grey">
               No articles matched your search. Try a different keyword.
             </p>
           ) : (
@@ -76,6 +76,3 @@ export default async function SearchPage({
     </div>
   );
 }
-
-
-

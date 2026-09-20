@@ -6,12 +6,12 @@ export const metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="max-w-2xl">
+    <div className="max-w-read">
       <h1 className="font-display text-canon sm:text-canon-lg font-medium text-ink mb-6">
         About Azande News
       </h1>
 
-      <div className="font-body text-grey-dark space-y-5 leading-relaxed">
+      <div className="font-body text-body-copy text-grey-dark space-y-5">
         <p>
           Azande News is a community-run project built to give the Azande
           people of Western Equatoria, South Sudan, and the worldwide
@@ -34,7 +34,7 @@ export default function AboutPage() {
         <p>
           Have a story to tell, a correction to flag, or an idea for the
           site? Get in touch through the{" "}
-          <a href="/contact" className="text-accent hover:underline">
+          <a href="/contact" className="text-ink underline underline-offset-2 hover:no-underline">
             contact page
           </a>
           .
@@ -43,4 +43,3 @@ export default function AboutPage() {
     </div>
   );
 }
-

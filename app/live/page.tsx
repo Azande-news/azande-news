@@ -14,9 +14,7 @@ export default async function LivePage() {
 
   const { data: posts } = await supabase
     .from("posts")
-    .select(
-      "id, title, body, created_at, profiles(display_name, username)"
-    )
+    .select("id, title, body, created_at, profiles(display_name, username)")
     .eq("category", "live")
     .or(`status.eq.published,and(status.eq.scheduled,publish_at.lte.${new Date().toISOString()})`)
     .order("created_at", { ascending: false })
@@ -26,11 +24,11 @@ export default async function LivePage() {
 
   if (entries.length === 0) {
     return (
-      <div className="border border-dashed border-border p-10 text-center">
+      <div className="border border-border p-10 text-center">
         <p className="font-display text-trafalgar font-medium text-ink mb-2">
           Nothing live right now.
         </p>
-        <p className="font-body text-grey">
+        <p className="font-body text-body-copy text-grey">
           Check back when a story is developing.
         </p>
       </div>
@@ -43,7 +41,7 @@ export default async function LivePage() {
   const isActive = hoursSinceLatest <= 6;
 
   return (
-    <div className="max-w-3xl mx-auto">
+    <div className="max-w-read">
       <div className="flex items-center gap-2 mb-2">
         <span className="relative flex h-2.5 w-2.5">
           {isActive && (
@@ -51,15 +49,13 @@ export default async function LivePage() {
           )}
           <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-accent" />
         </span>
-        <span className="section-label section-label-accent">
-          Live
-        </span>
+        <span className="section-label section-label-accent">Live</span>
       </div>
-      <h1 className="font-display text-canon font-bold text-ink mb-8">
+      <h1 className="font-display text-canon font-medium text-ink mb-8">
         Latest updates
       </h1>
 
-      <ol className="relative border-l-2 border-border pl-6 space-y-10">
+      <ol className="relative border-l-2 border-rule pl-6 space-y-10">
         {entries.map((entry) => {
           const author = entry.profiles as unknown as {
             display_name: string;
@@ -77,15 +73,15 @@ export default async function LivePage() {
           return (
             <li key={entry.id} className="relative">
               <span className="absolute -left-[31px] top-1 w-3 h-3 rounded-full bg-accent border-2 border-paper" />
-              <div className="font-meta text-xs text-grey mb-1">
+              <div className="font-meta text-minion text-grey mb-1">
                 {time} &middot; {date}
                 {author?.display_name && <> &middot; {author.display_name}</>}
               </div>
-              <h2 className="font-display text-trafalgar font-bold text-ink mb-2">
+              <h2 className="font-display text-trafalgar font-medium text-ink mb-2">
                 {entry.title}
               </h2>
               <div
-                className="prose-article font-serif text-read sm:text-read-lg text-ink/90"
+                className="prose-article font-serif text-read sm:text-read-lg text-ink"
                 dangerouslySetInnerHTML={{ __html: sanitizeHtml(entry.body) }}
               />
             </li>
@@ -95,5 +91,3 @@ export default async function LivePage() {
     </div>
   );
 }
-
-

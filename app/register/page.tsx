@@ -97,7 +97,7 @@ export default function RegisterPage() {
             maxLength={60}
             value={displayName}
             onChange={(e) => setDisplayName(e.target.value)}
-            className="w-full border border-border px-3 py-2 font-body focus:outline-none focus:ring-2 focus:ring-accent"
+            className="w-full border border-border px-3 py-2 font-body focus:outline-none focus:ring-0 focus:border-ink"
             placeholder="e.g. Nzoya Gbudue"
           />
         </div>
@@ -111,7 +111,7 @@ export default function RegisterPage() {
             required
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            className="w-full border border-border px-3 py-2 font-body focus:outline-none focus:ring-2 focus:ring-accent"
+            className="w-full border border-border px-3 py-2 font-body focus:outline-none focus:ring-0 focus:border-ink"
             placeholder="lowercase, no spaces"
           />
         </div>
@@ -125,7 +125,7 @@ export default function RegisterPage() {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full border border-border px-3 py-2 font-body focus:outline-none focus:ring-2 focus:ring-accent"
+            className="w-full border border-border px-3 py-2 font-body focus:outline-none focus:ring-0 focus:border-ink"
           />
         </div>
 
@@ -139,7 +139,7 @@ export default function RegisterPage() {
             minLength={8}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full border border-border px-3 py-2 font-body focus:outline-none focus:ring-2 focus:ring-accent"
+            className="w-full border border-border px-3 py-2 font-body focus:outline-none focus:ring-0 focus:border-ink"
             placeholder="At least 8 characters"
           />
         </div>
@@ -153,11 +153,11 @@ export default function RegisterPage() {
           />
           <span className="font-body text-sm text-grey">
             I agree to the{" "}
-            <Link href="/terms" target="_blank" className="text-accent hover:underline">
+            <Link href="/terms" target="_blank" className="text-ink underline underline-offset-2 hover:no-underline">
               Terms of Use
             </Link>{" "}
             and{" "}
-            <Link href="/privacy" target="_blank" className="text-accent hover:underline">
+            <Link href="/privacy" target="_blank" className="text-ink underline underline-offset-2 hover:no-underline">
               Privacy Policy
             </Link>
             .
@@ -177,13 +177,14 @@ export default function RegisterPage() {
 
       <p className="font-body text-sm text-grey mt-6">
         Already have an account?{" "}
-        <Link href="/login" className="text-accent hover:underline">
+        <Link href="/login" className="text-ink underline underline-offset-2 hover:no-underline">
           Log in
         </Link>
       </p>
     </div>
   );
 }
+
 
 
 

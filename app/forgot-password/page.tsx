@@ -68,7 +68,7 @@ export default function ForgotPasswordPage() {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full border border-border px-3 py-2 font-body focus:outline-none focus:ring-2 focus:ring-accent"
+            className="w-full border border-border px-3 py-2 font-body focus:outline-none focus:ring-0 focus:border-ink"
           />
         </div>
 
@@ -84,12 +84,13 @@ export default function ForgotPasswordPage() {
       </form>
 
       <p className="font-body text-sm text-grey mt-6">
-        <Link href="/login" className="text-accent hover:underline">
+        <Link href="/login" className="text-ink underline underline-offset-2 hover:no-underline">
           Back to log in
         </Link>
       </p>
     </div>
   );
 }
+
 
 

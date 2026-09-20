@@ -99,7 +99,7 @@ export default function LoginPage() {
             required
             value={mfaCode}
             onChange={(e) => setMfaCode(e.target.value.replace(/\D/g, ""))}
-            className="w-full border border-border px-3 py-2 font-body text-center text-2xl tracking-[0.5em] focus:outline-none focus:ring-2 focus:ring-accent"
+            className="w-full border border-border px-3 py-2 font-body text-center text-2xl tracking-[0.5em] focus:outline-none focus:ring-0 focus:border-ink"
             placeholder="000000"
           />
           {error && <p className="text-accent font-body text-sm">{error}</p>}
@@ -128,7 +128,7 @@ export default function LoginPage() {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full border border-border px-3 py-2 font-body focus:outline-none focus:ring-2 focus:ring-accent"
+            className="w-full border border-border px-3 py-2 font-body focus:outline-none focus:ring-0 focus:border-ink"
           />
         </div>
 
@@ -137,7 +137,7 @@ export default function LoginPage() {
             <label className="block font-body text-sm text-ink">
               Password
             </label>
-            <Link href="/forgot-password" className="font-body text-xs text-accent hover:underline">
+            <Link href="/forgot-password" className="font-body text-xs text-ink underline underline-offset-2 hover:no-underline">
               Forgot password?
             </Link>
           </div>
@@ -146,7 +146,7 @@ export default function LoginPage() {
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full border border-border px-3 py-2 font-body focus:outline-none focus:ring-2 focus:ring-accent"
+            className="w-full border border-border px-3 py-2 font-body focus:outline-none focus:ring-0 focus:border-ink"
           />
         </div>
 
@@ -163,12 +163,13 @@ export default function LoginPage() {
 
       <p className="font-body text-sm text-grey mt-6">
         New here?{" "}
-        <Link href="/register" className="text-accent hover:underline">
+        <Link href="/register" className="text-ink underline underline-offset-2 hover:no-underline">
           Create a free account
         </Link>
       </p>
     </div>
   );
 }
+
 
 

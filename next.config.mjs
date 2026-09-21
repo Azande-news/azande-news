@@ -30,6 +30,10 @@ const nextConfig = {
             value: "camera=(), microphone=(), geolocation=()",
           },
           {
+            key: "Content-Security-Policy",
+            value: "default-src 'self'; script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.supabase.co; connect-src 'self' https://*.supabase.co https://vitals.vercel-insights.com; font-src 'self' data:; frame-ancestors 'none';",
+          },
+          {
             key: "Strict-Transport-Security",
             value: "max-age=63072000; includeSubDomains; preload",
           },
@@ -40,3 +44,5 @@ const nextConfig = {
 };
 
 export default nextConfig;
+
+

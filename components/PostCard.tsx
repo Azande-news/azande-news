@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { CATEGORY_LABELS } from "@/lib/categories";
 import { stripHtml } from "@/lib/html";
-import { formatSmartDate } from "@/lib/time";
+import SmartTime from "@/components/SmartTime";
 
 type Post = {
   id: string;
@@ -26,12 +26,11 @@ export default function PostCard({
   featured?: boolean;
 }) {
   const v: Variant = featured ? "lead" : variant;
-  const date = formatSmartDate(post.created_at);
   const categoryLabel = CATEGORY_LABELS[post.category] ?? post.category;
 
   const Meta = ({ className = "" }: { className?: string }) => (
     <div className={`font-meta text-minion text-grey ${className}`}>
-      <span>{date}</span>
+      <span><SmartTime iso={post.created_at} /></span>
       <span className="mx-1.5 text-border">|</span>
       <Link href={`/category/${post.category}`} className="hover:underline">
         {categoryLabel}
@@ -141,3 +140,5 @@ export default function PostCard({
     </article>
   );
 }
+
+

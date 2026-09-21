@@ -12,7 +12,7 @@ import TrendingWidget from "@/components/TrendingWidget";
 import RelatedArticles from "@/components/RelatedArticles";
 import { stripHtml, sanitizeHtml } from "@/lib/html";
 import { CATEGORY_LABELS } from "@/lib/categories";
-import { formatSmartDate } from "@/lib/time";
+import SmartTime from "@/components/SmartTime";
 import type { Metadata } from "next";
 
 export async function generateMetadata({
@@ -77,14 +77,13 @@ export default async function PostPage({ params }: { params: { id: string } }) {
     canManage = user.id === post.author_id || profile?.role === "admin";
   }
 
-  const date = formatSmartDate(post.created_at);
   const wordCount = stripHtml(post.body).split(/\s+/).filter(Boolean).length;
   const readingMinutes = Math.max(1, Math.round(wordCount / 200));
 
   const wasEdited =
     post.updated_at &&
     new Date(post.updated_at).getTime() - new Date(post.created_at).getTime() > 60000;
-  const updatedDate = wasEdited ? formatSmartDate(post.updated_at) : null;
+  const updatedDate = wasEdited ? post.updated_at : null;
 
   const author = post.profiles as unknown as {
     display_name: string;
@@ -139,13 +138,13 @@ export default async function PostPage({ params }: { params: { id: string } }) {
                 {author?.display_name ?? "Unknown"}
               </div>
               <div className="mt-0.5">
-                {date}
+                <SmartTime iso={post.created_at} />
                 <span className="mx-1.5 text-border">|</span>
                 {readingMinutes} min read
                 {wasEdited && (
                   <>
                     <span className="mx-1.5 text-border">|</span>
-                    Updated {updatedDate}
+                    Updated <SmartTime iso={updatedDate} />
                   </>
                 )}
               </div>
@@ -239,4 +238,6 @@ export default async function PostPage({ params }: { params: { id: string } }) {
     </div>
   );
 }
+
+
 

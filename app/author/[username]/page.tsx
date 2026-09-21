@@ -62,7 +62,7 @@ export default async function AuthorPage({
           {profile.display_name}
         </h1>
         <div className="font-meta text-xs text-grey mb-4">
-          @{profile.username} &middot; Member since {joined}
+          @{profile.username} &middot; Member since <time dateTime={profile.created_at}>{joined}</time>
         </div>
         {profile.bio && (
           <p className="font-body text-grey-dark leading-relaxed">
@@ -90,6 +90,7 @@ export default async function AuthorPage({
     </div>
   );
 }
+
 
 
 

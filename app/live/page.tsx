@@ -74,7 +74,7 @@ export default async function LivePage() {
             <li key={entry.id} className="relative">
               <span className="absolute -left-[31px] top-1 w-3 h-3 rounded-full bg-accent border-2 border-paper" />
               <div className="font-meta text-minion text-grey mb-1">
-                {time} &middot; {date}
+                <time dateTime={entry.created_at}>{time} &middot; {date}</time>
                 {author?.display_name && <> &middot; {author.display_name}</>}
               </div>
               <h2 className="font-display text-trafalgar font-medium text-ink mb-2">
@@ -91,3 +91,4 @@ export default async function LivePage() {
     </div>
   );
 }
+

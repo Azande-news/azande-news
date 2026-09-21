@@ -51,9 +51,11 @@ export const metadata: Metadata = {
     siteName: "Azande News",
     locale: "en_US",
     type: "website",
+    images: ["/logo.png"],
   },
   twitter: {
     card: "summary_large_image",
+    images: ["/logo.png"],
     title: "Azande News",
     description:
       "News, culture, and voices from the Azande people of DR Congo, South Sudan, the Central African Republic, and the diaspora around the world.",
@@ -81,6 +83,18 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
         <link rel="alternate" type="application/rss+xml" title="Azande News RSS Feed" href="/feed.xml" />
         <link rel="apple-touch-icon" href="/icon.png" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "NewsMediaOrganization",
+              name: "Azande News",
+              url: "https://azande-news.vercel.app",
+              logo: "https://azande-news.vercel.app/logo.png",
+            }),
+          }}
+        />
       </head>
       <body
         className={`${inter.variable} ${sourceSerif.variable} font-ui bg-paper text-ink`}
@@ -101,6 +115,8 @@ export default function RootLayout({
     </html>
   );
 }
+
+
 
 
 

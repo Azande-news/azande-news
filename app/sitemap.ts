@@ -4,6 +4,8 @@ import { CATEGORIES } from "@/lib/categories";
 
 const BASE_URL = "https://azande-news.vercel.app";
 
+const BUILD_TIME = new Date();
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const supabase = createClient();
 
@@ -21,17 +23,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const categoryEntries: MetadataRoute.Sitemap = CATEGORIES.map((c) => ({
     url: `${BASE_URL}/category/${c.value}`,
+    lastModified: BUILD_TIME,
     changeFrequency: "daily",
     priority: 0.6,
   }));
 
   const staticEntries: MetadataRoute.Sitemap = [
-    { url: BASE_URL, changeFrequency: "daily", priority: 1.0 },
-    { url: `${BASE_URL}/about`, changeFrequency: "monthly", priority: 0.5 },
-    { url: `${BASE_URL}/contact`, changeFrequency: "monthly", priority: 0.5 },
+    { url: BASE_URL, lastModified: BUILD_TIME, changeFrequency: "daily", priority: 1.0 },
+    { url: `${BASE_URL}/about`, lastModified: BUILD_TIME, changeFrequency: "monthly", priority: 0.5 },
+    { url: `${BASE_URL}/contact`, lastModified: BUILD_TIME, changeFrequency: "monthly", priority: 0.5 },
   ];
 
   return [...staticEntries, ...categoryEntries, ...postEntries];
 }
-
-

@@ -56,7 +56,7 @@ export default async function PostPage({ params }: { params: { id: string } }) {
   const { data: post } = await supabase
     .from("posts")
     .select(
-      "id, title, body, category, created_at, updated_at, author_id, cover_image_url, profiles(display_name, username)"
+      "id, title, body, category, created_at, updated_at, author_id, cover_image_url, image_caption, image_credit, profiles(display_name, username)"
     )
     .eq("id", params.id)
     .single();
@@ -135,7 +135,7 @@ export default async function PostPage({ params }: { params: { id: string } }) {
 
             <div className="font-meta text-brevier text-grey pb-4 mb-6 border-b border-rule">
               <div className="font-semibold text-ink">
-                {author?.display_name ?? "Unknown"}
+                By {author?.display_name ?? "Azande News"}
               </div>
               <div className="mt-0.5">
                 <SmartTime iso={post.created_at} />
@@ -166,6 +166,14 @@ export default async function PostPage({ params }: { params: { id: string } }) {
                   priority
                 />
               </div>
+              {(post.image_caption || post.image_credit) && (
+                <figcaption className="mt-2 font-meta text-brevier text-grey">
+                  {post.image_caption && <span className="italic">{post.image_caption}</span>}
+                  {post.image_credit && (
+                    <span className="block mt-0.5 text-minion">Image source, {post.image_credit}</span>
+                  )}
+                </figcaption>
+              )}
             </figure>
           )}
 
@@ -238,6 +246,9 @@ export default async function PostPage({ params }: { params: { id: string } }) {
     </div>
   );
 }
+
+
+
 
 
 

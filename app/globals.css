@@ -58,7 +58,7 @@
   /* The uppercase label that sits above every content block. */
   .section-label {
     font-family: var(--font-sans), Helvetica, Arial, sans-serif;
-    font-size: 15px;
+    font-size: 12px;
     font-weight: 800;
     letter-spacing: 0.75px;
     text-transform: uppercase;
@@ -78,9 +78,10 @@
   line-height: 1.5;
 }
 .prose-article h2 {
-  font-size: 20px;
-  line-height: 24px;
-  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
   margin: 2rem 0 0.75rem;
 }
 .prose-article a {
@@ -118,6 +119,8 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+
 
 
 

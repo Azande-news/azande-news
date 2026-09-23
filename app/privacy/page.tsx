@@ -1,9 +1,9 @@
-export const metadata = { title: "Privacy Policy" };
+export const metadata = { title: "Privacy policy" };
 
 export default function PrivacyPage() {
   return (
     <div className="max-w-2xl mx-auto">
-      <h1 className="font-display text-canon sm:text-canon-lg font-medium text-ink mb-6">Privacy Policy</h1>
+      <h1 className="font-display text-canon sm:text-canon-lg font-medium text-ink mb-6">Privacy policy</h1>
       <div className="prose-article font-body text-ink/90 space-y-5">
         <p>Last updated: July 2026</p>
         <p>
@@ -15,13 +15,11 @@ export default function PrivacyPage() {
         <h2 className="font-display text-trafalgar font-medium text-ink pt-2">What we collect</h2>
         <p>
           Account holders provide an email address and a display name. Newsletter subscribers
-          provide an email address. We do not collect payment information, government identifiers,
-          or sensitive personal data.
+          provide an email address. We do not collect payment information, government identifiers or sensitive personal data.
         </p>
         <h2 className="font-display text-trafalgar font-medium text-ink pt-2">How we use it</h2>
         <p>
-          We use your email to manage your account, send newsletter updates you have opted into,
-          and respond to reports or contact requests. We do not sell or share your personal
+          We use your email to manage your account, send newsletter updates you have opted into and respond to reports or contact requests. We do not sell or share your personal
           information with third parties for advertising purposes.
         </p>
         <h2 className="font-display text-trafalgar font-medium text-ink pt-2">Your choices</h2>
@@ -37,4 +35,7 @@ export default function PrivacyPage() {
     </div>
   );
 }
+
+
+
 

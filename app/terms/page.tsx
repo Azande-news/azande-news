@@ -1,25 +1,24 @@
-export const metadata = { title: "Terms of Use" };
+export const metadata = { title: "Terms of use" };
 
 export default function TermsPage() {
   return (
     <div className="max-w-2xl mx-auto">
-      <h1 className="font-display text-canon sm:text-canon-lg font-medium text-ink mb-6">Terms of Use</h1>
+      <h1 className="font-display text-canon sm:text-canon-lg font-medium text-ink mb-6">Terms of use</h1>
       <div className="prose-article font-body text-ink/90 space-y-5">
         <p>Last updated: July 2026</p>
         <p>
-          By using Azande News, you agree to these terms. This is a community platform for news,
-          culture, history, and language relevant to the Azande people of Western Equatoria and
+          By using Azande News, you agree to these terms. This is a community platform for news, culture, history and language relevant to the Azande people of Western Equatoria and
           the worldwide diaspora.
         </p>
         <h2 className="font-display text-trafalgar font-medium text-ink pt-2">Content</h2>
         <p>
           Registered users may publish posts. You retain ownership of what you write, but by
-          posting you grant Azande News a license to display it on the site. You are responsible
+          posting you grant Azande News a licence to display it on the site. You are responsible
           for the accuracy and legality of content you submit.
         </p>
         <h2 className="font-display text-trafalgar font-medium text-ink pt-2">Conduct</h2>
         <p>
-          Do not post content that is defamatory, harassing, hateful, or that infringes on
+          Do not post content that is defamatory, harassing, hateful or that infringes on
           others&apos; rights. Posts that violate these terms may be removed, and accounts may be
           suspended, at the discretion of Azande News moderators.
         </p>
@@ -37,4 +36,7 @@ export default function TermsPage() {
     </div>
   );
 }
+
+
+
 

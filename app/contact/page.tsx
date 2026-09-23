@@ -12,7 +12,7 @@ export default function ContactPage() {
 
       <div className="font-body text-grey-dark space-y-5 leading-relaxed">
         <p>
-          Have a tip, a correction, or a question about Azande News? Reach
+          Have a tip, a correction or a question about Azande News? Reach
           out by email:
         </p>
         <p>
@@ -27,5 +27,7 @@ export default function ContactPage() {
     </div>
   );
 }
+
+
 
 

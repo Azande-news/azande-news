@@ -3,7 +3,7 @@ export const metadata = { title: "The Azande People" };
 export default function AzandePeoplePage() {
   return (
     <div className="max-w-2xl mx-auto">
-      <h1 className="font-display text-canon sm:text-canon-lg font-medium text-ink mb-2">The Azande People</h1>
+      <h1 className="font-display text-canon sm:text-canon-lg font-medium text-ink mb-2">The Azande people</h1>
       <p className="font-body text-body-copy text-grey mb-10">
         A deep look at the history, culture and identity of the Azande &mdash; a people spread across three
         Central African nations, united by language, ancestry and shared heritage.
@@ -20,7 +20,7 @@ export default function AzandePeoplePage() {
           </p>
         </div>
 
-        <h2 className="font-display text-trafalgar sm:text-trafalgar-lg font-medium text-ink pt-4">Who Are the Azande?</h2>
+        <h2 className="font-display text-trafalgar sm:text-trafalgar-lg font-medium text-ink pt-4">Who are the Azande?</h2>
         <p>
           The Azande (also spelt Zande, and referred to in the singular as a Zande person) are a Central African
           people whose name is widely translated as &ldquo;the people who possess much land,&rdquo; reflecting their
@@ -28,7 +28,7 @@ export default function AzandePeoplePage() {
           transnational ethnic groups in Central Africa.
         </p>
 
-        <h2 className="font-display text-trafalgar sm:text-trafalgar-lg font-medium text-ink pt-4">Where the Azande Live Today</h2>
+        <h2 className="font-display text-trafalgar sm:text-trafalgar-lg font-medium text-ink pt-4">Where the Azande live today</h2>
         <p>
           <strong>Democratic Republic of the Congo</strong> &mdash; the largest Azande population, concentrated along
           the Uele River in the Bas-Uélé, Haut-Uélé and Tshopo provinces, including areas around Isiro, Dungu and Kisangani.
@@ -47,7 +47,7 @@ export default function AzandePeoplePage() {
           a precise, universally agreed figure.
         </p>
 
-        <h2 className="font-display text-trafalgar sm:text-trafalgar-lg font-medium text-ink pt-4">Origins and the Rise of the Kingdom</h2>
+        <h2 className="font-display text-trafalgar sm:text-trafalgar-lg font-medium text-ink pt-4">Origins and the rise of the kingdom</h2>
         <p>
           The Azande identity formed when two ruling lineages merged: the <strong>Avongara</strong> (also written Vungara) and the <strong>Bandia</strong>. This began in the 18th century near the Mbomu River. Under Avongara leadership, a people calling themselves the Ambomu expanded into surrounding territory, through conquest and by absorbing neighbouring peoples. Historians and anthropologists, including E.E. Evans-Pritchard, estimate that as many as fifty
           different ethnic groups were absorbed into the Zande cultural and political sphere over time, which is why
@@ -66,7 +66,7 @@ export default function AzandePeoplePage() {
           led to his defeat by Basanginonga, from whom the Avongara dynasty descended.
         </p>
 
-        <h2 className="font-display text-trafalgar sm:text-trafalgar-lg font-medium text-ink pt-4">Clans and Social Structure</h2>
+        <h2 className="font-display text-trafalgar sm:text-trafalgar-lg font-medium text-ink pt-4">Clans and social structure</h2>
         <p>
           Traditional Zande society is organised into three broad tiers:
         </p>
@@ -97,7 +97,7 @@ export default function AzandePeoplePage() {
           family or community traces its clan and it is missing here, we welcome that correction.
         </p>
 
-        <h2 className="font-display text-trafalgar sm:text-trafalgar-lg font-medium text-ink pt-4">King Gbudwe: The Last Independent King</h2>
+        <h2 className="font-display text-trafalgar sm:text-trafalgar-lg font-medium text-ink pt-4">King Gbudwe: the last independent king</h2>
         <p>
           The most thoroughly documented Azande ruler is <strong>King Gbudwe Bazingbi</strong> (circa 1835&ndash;1905),
           who ruled from roughly 1870 until his death in 1905, based near Yambio. Gbudwe led sustained resistance
@@ -124,7 +124,7 @@ export default function AzandePeoplePage() {
           restoring the monarchy after 117 years without a reigning king.
         </p>
 
-        <h2 className="font-display text-trafalgar sm:text-trafalgar-lg font-medium text-ink pt-4">Way of Life</h2>
+        <h2 className="font-display text-trafalgar sm:text-trafalgar-lg font-medium text-ink pt-4">Way of life</h2>
         <p>
           Traditionally, the Azande lived in widely scattered family homesteads rather than dense villages, with a
           household typically consisting of a man, his wife or wives and their children. Chiefdoms were governed by
@@ -148,7 +148,7 @@ export default function AzandePeoplePage() {
           continue to shape culture and naming traditions.
         </p>
 
-        <h2 className="font-display text-trafalgar sm:text-trafalgar-lg font-medium text-ink pt-4">Traditional Names</h2>
+        <h2 className="font-display text-trafalgar sm:text-trafalgar-lg font-medium text-ink pt-4">Traditional names</h2>
         <p>
           Many Zande personal names carry meaning rather than being chosen arbitrarily. A significant tradition of
           <strong> theophoric names</strong> &mdash; names referencing Mbori, the Zande Supreme Being &mdash; has
@@ -180,7 +180,7 @@ export default function AzandePeoplePage() {
           from around one million to several million across the three countries where Azande live.
         </p>
 
-        <h2 className="font-display text-trafalgar sm:text-trafalgar-lg font-medium text-ink pt-4">The Azande Today</h2>
+        <h2 className="font-display text-trafalgar sm:text-trafalgar-lg font-medium text-ink pt-4">The Azande today</h2>
         <p>
           Azande communities today span South Sudan, DR Congo and the Central African Republic, alongside a growing
           diaspora around the world. Despite colonial borders that formally divided the Azande over a century ago,
@@ -200,6 +200,7 @@ export default function AzandePeoplePage() {
     </div>
   );
 }
+
 
 
 

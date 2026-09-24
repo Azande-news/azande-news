@@ -63,9 +63,9 @@ export default function Footer() {
         <nav className="flex flex-wrap gap-x-6 gap-y-2 text-sm mb-8">
           <Link href="/about" className="hover:text-white transition-colors">About Us</Link>
           <Link href="/contact" className="hover:text-white transition-colors">Contact Us</Link>
-          <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
-          <Link href="/terms" className="hover:text-white transition-colors">Terms of Use</Link>
-          <Link href="/editorial-standards" className="hover:text-white transition-colors">Editorial Guidelines</Link>
+          <Link href="/privacy" className="hover:text-white transition-colors">Privacy policy</Link>
+          <Link href="/terms" className="hover:text-white transition-colors">Terms of use</Link>
+          <Link href="/editorial-standards" className="hover:text-white transition-colors">Editorial guidelines</Link>
         </nav>
 
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-xs font-meta text-white/50">
@@ -76,4 +76,5 @@ export default function Footer() {
     </footer>
   );
 }
+
 

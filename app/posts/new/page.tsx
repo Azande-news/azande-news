@@ -6,6 +6,7 @@ import { createClient } from "@/lib/supabase/client";
 import { CATEGORIES, CATEGORY_DESCRIPTIONS } from "@/lib/categories";
 import RichTextEditor from "@/components/RichTextEditor";
 import { censorText } from "@/lib/profanity";
+import { getVideoEmbedUrl, getAudioEmbedUrl } from "@/lib/embeds";
 
 const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
 
@@ -42,6 +43,10 @@ export default function NewPostPage() {
   const [body, setBody] = useState("");
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [imageCaption, setImageCaption] = useState("");
+  const [imageCredit, setImageCredit] = useState("");
+  const [videoUrl, setVideoUrl] = useState("");
+  const [audioUrl, setAudioUrl] = useState("");
   const [publishMode, setPublishMode] = useState<PublishMode>("now");
   const [scheduleDate, setScheduleDate] = useState("");
   const [loading, setLoading] = useState(false);
@@ -51,6 +56,9 @@ export default function NewPostPage() {
   const [categoryNote, setCategoryNote] = useState<string | null>(null);
   const [polishingTitle, setPolishingTitle] = useState(false);
   const [polishingBody, setPolishingBody] = useState(false);
+
+  const videoUrlValid = videoUrl.trim().length === 0 || getVideoEmbedUrl(videoUrl.trim()) !== null;
+  const audioUrlValid = audioUrl.trim().length === 0 || getAudioEmbedUrl(audioUrl.trim()) !== null;
 
   function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -155,6 +163,14 @@ export default function NewPostPage() {
       setError("Scheduled time must be in the future.");
       return;
     }
+    if (!videoUrlValid) {
+      setError("That video link isn't recognized. Please use a YouTube or Vimeo link.");
+      return;
+    }
+    if (!audioUrlValid) {
+      setError("That audio link isn't recognized. Please use a SoundCloud link.");
+      return;
+    }
 
     setLoading(true);
 
@@ -240,6 +256,10 @@ export default function NewPostPage() {
         category,
         author_id: user.id,
         cover_image_url: coverImageUrl,
+        image_caption: imageCaption.trim() || null,
+        image_credit: imageCredit.trim() || null,
+        video_url: videoUrl.trim() || null,
+        audio_url: audioUrl.trim() || null,
         status: finalStatus,
         publish_at: publishAt,
         ai_flagged: aiFlagged,
@@ -268,7 +288,7 @@ export default function NewPostPage() {
         <div>
           <div className="flex items-center justify-between mb-1">
             <label className="block font-body text-sm text-ink">Title</label>
-            <button type="button" onClick={handlePolishTitle} disabled={polishingTitle} className="text-xs text-accent hover:underline disabled:opacity-50">
+            <button type="button" onClick={handlePolishTitle} disabled={polishingTitle} className="text-xs text-ink underline underline-offset-2 hover:no-underline disabled:opacity-50">
               {polishingTitle ? "Fixing..." : "Fix spelling & grammar"}
             </button>
           </div>
@@ -278,21 +298,21 @@ export default function NewPostPage() {
             maxLength={200}
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="w-full border border-border rounded-sm px-3 py-2 font-body focus:outline-none focus:ring-2 focus:ring-accent"
+            className="w-full border border-border px-3 py-2 font-body focus:outline-none focus:border-ink"
           />
         </div>
 
         <div>
           <div className="flex items-center justify-between mb-1">
             <label className="block font-body text-sm text-ink">Category</label>
-            <button type="button" onClick={handleSuggestCategory} disabled={suggestingCategory} className="text-xs text-accent hover:underline disabled:opacity-50">
+            <button type="button" onClick={handleSuggestCategory} disabled={suggestingCategory} className="text-xs text-ink underline underline-offset-2 hover:no-underline disabled:opacity-50">
               {suggestingCategory ? "Thinking..." : "Suggest a category for me"}
             </button>
           </div>
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            className="w-full border border-border rounded-sm px-3 py-2 font-body focus:outline-none focus:ring-2 focus:ring-accent bg-paper text-ink"
+            className="w-full border border-border px-3 py-2 font-body focus:outline-none focus:border-ink bg-paper text-ink"
           >
             {CATEGORIES.map((c) => (
               <option key={c.value} value={c.value}>{c.label}: {c.description}</option>
@@ -301,26 +321,72 @@ export default function NewPostPage() {
           {categoryNote && <p className="text-xs text-grey mt-1">{categoryNote}</p>}
         </div>
 
-        <div>
-          <label className="block font-body text-sm text-ink mb-1">Cover photo <span className="text-grey">(optional)</span></label>
+        <div className="border border-rule p-4 space-y-3">
+          <label className="block font-meta text-brevier font-semibold text-ink">Cover photo <span className="text-grey font-normal">(optional)</span></label>
           <input
             type="file"
             accept="image/*"
             onChange={handleImageChange}
-            className="w-full font-body text-sm file:mr-4 file:py-2 file:px-4 file:rounded-sm file:border-0 file:bg-ink file:text-paper file:cursor-pointer hover:file:bg-accent"
+            className="w-full font-body text-sm file:mr-4 file:py-2 file:px-4 file:border-0 file:bg-ink file:text-paper file:cursor-pointer hover:file:bg-accent"
           />
           {imagePreview && (
-            <div className="w-full h-56 mt-3 overflow-hidden border border-border">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={imagePreview} alt="Cover preview" className="w-full h-full object-cover" />
-            </div>
+            <>
+              <div className="w-full aspect-[16/9] overflow-hidden border border-border bg-offwhite">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={imagePreview} alt="Cover preview" className="w-full h-full object-cover" />
+              </div>
+              <div>
+                <label className="block font-body text-sm text-ink mb-1">Caption</label>
+                <input
+                  type="text"
+                  value={imageCaption}
+                  onChange={(e) => setImageCaption(e.target.value)}
+                  placeholder="What does this photo show?"
+                  className="w-full border border-border px-3 py-2 font-body text-sm focus:outline-none focus:border-ink"
+                />
+              </div>
+              <div>
+                <label className="block font-body text-sm text-ink mb-1">Photo credit <span className="text-grey">(optional)</span></label>
+                <input
+                  type="text"
+                  value={imageCredit}
+                  onChange={(e) => setImageCredit(e.target.value)}
+                  placeholder="e.g. Your name, or the photographer's"
+                  className="w-full border border-border px-3 py-2 font-body text-sm focus:outline-none focus:border-ink"
+                />
+              </div>
+            </>
           )}
+        </div>
+
+        <div>
+          <label className="block font-body text-sm text-ink mb-1">Video link <span className="text-grey">(optional)</span></label>
+          <input
+            type="url"
+            value={videoUrl}
+            onChange={(e) => setVideoUrl(e.target.value)}
+            placeholder="Paste a YouTube or Vimeo link"
+            className="w-full border border-border px-3 py-2 font-body text-sm focus:outline-none focus:border-ink"
+          />
+          {!videoUrlValid && <p className="text-xs text-accent mt-1">That link isn't recognized. Use a YouTube or Vimeo link.</p>}
+        </div>
+
+        <div>
+          <label className="block font-body text-sm text-ink mb-1">Audio link <span className="text-grey">(optional)</span></label>
+          <input
+            type="url"
+            value={audioUrl}
+            onChange={(e) => setAudioUrl(e.target.value)}
+            placeholder="Paste a SoundCloud link"
+            className="w-full border border-border px-3 py-2 font-body text-sm focus:outline-none focus:border-ink"
+          />
+          {!audioUrlValid && <p className="text-xs text-accent mt-1">That link isn't recognized. Use a SoundCloud link.</p>}
         </div>
 
         <div>
           <div className="flex items-center justify-between mb-1">
             <label className="block font-body text-sm text-ink">Content</label>
-            <button type="button" onClick={handlePolishBody} disabled={polishingBody} className="text-xs text-accent hover:underline disabled:opacity-50">
+            <button type="button" onClick={handlePolishBody} disabled={polishingBody} className="text-xs text-ink underline underline-offset-2 hover:no-underline disabled:opacity-50">
               {polishingBody ? "Fixing..." : "Fix spelling & grammar"}
             </button>
           </div>
@@ -348,7 +414,7 @@ export default function NewPostPage() {
               type="datetime-local"
               value={scheduleDate}
               onChange={(e) => setScheduleDate(e.target.value)}
-              className="border border-border rounded-sm px-3 py-2 font-body bg-paper text-ink focus:outline-none focus:ring-2 focus:ring-accent"
+              className="border border-border px-3 py-2 font-body bg-paper text-ink focus:outline-none focus:border-ink"
             />
           )}
         </div>
@@ -358,7 +424,7 @@ export default function NewPostPage() {
         <button
           type="submit"
           disabled={loading}
-          className="bg-ink text-paper px-6 py-3 rounded-sm hover:bg-accent-dark transition-colors font-body font-medium disabled:opacity-60"
+          className="bg-ink text-paper px-6 py-3 hover:bg-accent-dark transition-colors font-meta text-brevier font-semibold disabled:opacity-60"
         >
           {loading ? "Saving…" : publishMode === "now" ? "Publish to Azande News" : publishMode === "draft" ? "Save draft" : "Schedule post"}
         </button>
@@ -366,10 +432,3 @@ export default function NewPostPage() {
     </div>
   );
 }
-
-
-
-
-
-
-

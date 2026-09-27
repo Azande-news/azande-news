@@ -30,23 +30,11 @@ export default function PostCard({
 
   const Meta = ({ className = "" }: { className?: string }) => (
     <div className={`font-meta text-minion text-grey ${className}`}>
-      <span><SmartTime iso={post.created_at} /></span>
-      <span className="mx-1.5 text-border">|</span>
-      <Link href={`/category/${post.category}`} className="hover:underline">
+      <Link href={`/category/${post.category}`} className="hover:underline text-accent">
         {categoryLabel}
       </Link>
-    </div>
-  );
-
-  const AuthorLink = ({ className = "" }: { className?: string }) => (
-    <div className={`font-meta text-minion text-grey ${className}`}>
-      {post.profiles?.username ? (
-        <Link href={`/author/${post.profiles.username}`} className="hover:underline">
-          {post.profiles.display_name}
-        </Link>
-      ) : (
-        "Unknown"
-      )}
+      <span className="mx-1.5 text-border">|</span>
+      <span><SmartTime iso={post.created_at} /></span>
     </div>
   );
 
@@ -136,7 +124,6 @@ export default function PostCard({
         </p>
       </Link>
       <Meta className="mt-2" />
-      <AuthorLink className="mt-1" />
     </article>
   );
 }

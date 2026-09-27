@@ -13,7 +13,6 @@ const LINKS: { href: string; label: string }[] = [
   { href: "/category/announcements", label: "Notices" },
   { href: "/azande-people", label: "Heritage" },
   { href: "/dictionary", label: "Dictionary" },
-  { href: "/posts/new", label: "Write a Post" },
 ];
 
 export default function MainNav() {

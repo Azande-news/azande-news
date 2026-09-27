@@ -327,7 +327,7 @@ export default function NewPostPage() {
             type="file"
             accept="image/*"
             onChange={handleImageChange}
-            className="w-full font-body text-sm file:mr-4 file:py-2 file:px-4 file:border-0 file:bg-ink file:text-paper file:cursor-pointer hover:file:bg-accent"
+            className="w-full font-body text-sm file:mr-4 file:py-2 file:px-4 file:border-0 file:bg-ink file:text-paper file:cursor-pointer hover:file:opacity-90"
           />
           {imagePreview && (
             <>
@@ -424,7 +424,7 @@ export default function NewPostPage() {
         <button
           type="submit"
           disabled={loading}
-          className="bg-ink text-paper px-6 py-3 hover:bg-accent-dark transition-colors font-meta text-brevier font-semibold disabled:opacity-60"
+          className="bg-ink text-paper px-6 py-3 hover:opacity-90 transition-colors font-meta text-brevier font-semibold disabled:opacity-60"
         >
           {loading ? "Saving…" : publishMode === "now" ? "Publish to Azande News" : publishMode === "draft" ? "Save draft" : "Schedule post"}
         </button>

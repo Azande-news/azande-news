@@ -143,7 +143,7 @@ export default function CommentSection({ postId, isAdmin = false }: { postId: st
           <button
             type="submit"
             disabled={submitting || body.trim().length === 0}
-            className="bg-ink text-paper px-5 py-2 rounded-sm hover:bg-accent transition-colors font-body text-sm font-medium disabled:opacity-60"
+            className="bg-ink text-paper px-5 py-2 hover:opacity-90 transition-colors font-body text-sm font-medium disabled:opacity-60"
           >
             {submitting ? "Posting…" : "Post comment"}
           </button>

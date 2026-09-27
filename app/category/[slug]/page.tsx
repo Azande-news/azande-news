@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import PostCard from "@/components/PostCard";
 import { CATEGORY_LABELS, CATEGORY_DESCRIPTIONS } from "@/lib/categories";
@@ -51,6 +52,11 @@ export default async function CategoryPage({
   return (
     <div>
       <div className="pb-6 mb-8 border-b-4 border-ink">
+        <nav aria-label="Breadcrumb" className="font-meta text-brevier text-grey mb-3">
+          <Link href="/" className="hover:underline">Home</Link>
+          <span className="mx-1.5 text-border">&rsaquo;</span>
+          <span className="text-ink">{label}</span>
+        </nav>
         <h1 className="font-display text-canon sm:text-canon-lg font-medium text-ink">
           {label}
         </h1>

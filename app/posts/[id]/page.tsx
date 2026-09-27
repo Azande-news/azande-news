@@ -129,6 +129,11 @@ export default async function PostPage({ params }: { params: { id: string } }) {
           <ViewTracker postId={post.id} />
 
           <div className="max-w-read">
+            <nav aria-label="Breadcrumb" className="font-meta text-brevier text-grey mb-3">
+              <Link href="/" className="hover:underline">Home</Link>
+              <span className="mx-1.5 text-border">&rsaquo;</span>
+              <Link href={`/category/${post.category}`} className="hover:underline">{categoryLabel}</Link>
+            </nav>
             <h1 className="font-display text-canon sm:text-canon-lg font-medium text-ink mb-4">
               {post.title}
             </h1>

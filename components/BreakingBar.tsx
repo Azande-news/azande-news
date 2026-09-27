@@ -20,7 +20,7 @@ export default async function BreakingBar() {
   if (hoursOld > 48) return null;
 
   return (
-    <div className="bg-accent text-white">
+    <div className="bg-accent text-white" role="status" aria-live="polite">
       <div className="max-w-shell mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex items-center gap-3">
         <span className="font-meta text-minion font-extrabold tracking-[0.75px] uppercase shrink-0">
           Breaking

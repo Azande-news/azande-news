@@ -74,7 +74,7 @@ export default async function AuthorPage({
         </div>
       </div>
 
-      <h2 className="font-display text-lg font-bold text-ink border-l-4 border-accent pl-3 mb-6">
+      <h2 className="font-display text-trafalgar font-medium text-ink border-l-4 border-ink pl-3 mb-6">
         Posts by {profile.display_name} ({authorPosts.length})
       </h2>
 

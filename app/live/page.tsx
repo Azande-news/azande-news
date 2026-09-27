@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { stripHtml, sanitizeHtml } from "@/lib/html";
 import type { Metadata } from "next";
@@ -42,6 +43,11 @@ export default async function LivePage() {
 
   return (
     <div className="max-w-read">
+      <nav aria-label="Breadcrumb" className="font-meta text-brevier text-grey mb-3">
+        <Link href="/" className="hover:underline">Home</Link>
+        <span className="mx-1.5 text-border">&rsaquo;</span>
+        <span className="text-ink">Live</span>
+      </nav>
       <div className="flex items-center gap-2 mb-2">
         <span className="relative flex h-2.5 w-2.5">
           {isActive && (

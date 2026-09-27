@@ -227,15 +227,9 @@ export default async function PostPage({ params }: { params: { id: string } }) {
               </Link>
               <Link
                 href="/dictionary"
-                className="block py-2.5 border-b border-rule text-ink hover:underline"
-              >
-                Zande Dictionary
-              </Link>
-              <Link
-                href="/posts/new"
                 className="block py-2.5 text-ink hover:underline"
               >
-                Write a Post
+                Zande Dictionary
               </Link>
             </div>
           </div>

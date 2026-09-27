@@ -23,13 +23,13 @@ export async function generateMetadata({
   const supabase = createClient();
   const { data: post } = await supabase
     .from("posts")
-    .select("title, body, cover_image_url")
+    .select("title, body, standfirst, cover_image_url")
     .eq("id", params.id)
     .single();
 
   if (!post) return {};
 
-  const description = stripHtml(post.body).slice(0, 160);
+  const description = post.standfirst || stripHtml(post.body).slice(0, 160);
 
   return {
     title: `${post.title} - Azande News`,
@@ -56,7 +56,7 @@ export default async function PostPage({ params }: { params: { id: string } }) {
   const { data: post } = await supabase
     .from("posts")
     .select(
-      "id, title, body, category, created_at, updated_at, author_id, cover_image_url, image_caption, image_credit, profiles(display_name, username)"
+      "id, title, body, standfirst, category, created_at, updated_at, author_id, cover_image_url, image_caption, image_credit, profiles(display_name, username)"
     )
     .eq("id", params.id)
     .single();
@@ -110,7 +110,7 @@ export default async function PostPage({ params }: { params: { id: string } }) {
         url: "https://azande-news.vercel.app/logo.png",
       },
     },
-    description: stripHtml(post.body).slice(0, 160),
+    description: post.standfirst || stripHtml(post.body).slice(0, 160),
     image: post.cover_image_url ? [post.cover_image_url] : undefined,
     mainEntityOfPage: {
       "@type": "WebPage",
@@ -137,6 +137,12 @@ export default async function PostPage({ params }: { params: { id: string } }) {
             <h1 className="font-display text-canon sm:text-canon-lg font-medium text-ink mb-4">
               {post.title}
             </h1>
+
+            {post.standfirst && (
+              <p className="font-body text-paragon font-medium text-grey-dark mb-4">
+                {post.standfirst}
+              </p>
+            )}
 
             <div className="font-meta text-brevier text-grey pb-4 mb-6 border-b border-rule">
               <div className="font-semibold text-ink">

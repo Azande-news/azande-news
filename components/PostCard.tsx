@@ -8,6 +8,7 @@ type Post = {
   id: string;
   title: string;
   body: string;
+  standfirst?: string | null;
   category: string;
   created_at: string;
   cover_image_url?: string | null;
@@ -39,7 +40,8 @@ export default function PostCard({
   );
 
   if (v === "lead") {
-    const excerpt = stripHtml(post.body).slice(0, 220);
+    const leadSource = post.standfirst || stripHtml(post.body);
+    const excerpt = leadSource.slice(0, 220);
     return (
       <article>
         {post.cover_image_url && (
@@ -62,7 +64,7 @@ export default function PostCard({
           </h2>
           <p className="font-body text-body-copy text-grey">
             {excerpt}
-            {post.body.length > excerpt.length ? "…" : ""}
+            {leadSource.length > excerpt.length ? "…" : ""}
           </p>
         </Link>
         <Meta className="mt-3" />
@@ -98,7 +100,8 @@ export default function PostCard({
     );
   }
 
-  const excerpt = stripHtml(post.body).slice(0, 110);
+  const gridSource = post.standfirst || stripHtml(post.body);
+  const excerpt = gridSource.slice(0, 110);
   return (
     <article className="pb-2">
       {post.cover_image_url && (
@@ -120,7 +123,7 @@ export default function PostCard({
         </h3>
         <p className="font-body text-brevier text-grey line-clamp-2">
           {excerpt}
-          {post.body.length > excerpt.length ? "…" : ""}
+          {gridSource.length > excerpt.length ? "…" : ""}
         </p>
       </Link>
       <Meta className="mt-2" />

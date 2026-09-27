@@ -41,6 +41,7 @@ export default function NewPostPage() {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("general");
   const [body, setBody] = useState("");
+  const [standfirst, setStandfirst] = useState("");
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [imageCaption, setImageCaption] = useState("");
@@ -254,6 +255,7 @@ export default function NewPostPage() {
         title: censorText(title.trim()),
         body: censorText(body),
         category,
+        standfirst: standfirst.trim() || null,
         author_id: user.id,
         cover_image_url: coverImageUrl,
         image_caption: imageCaption.trim() || null,
@@ -299,6 +301,18 @@ export default function NewPostPage() {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             className="w-full border border-border px-3 py-2 font-body focus:outline-none focus:border-ink"
+          />
+        </div>
+
+        <div>
+          <label className="block font-body text-sm text-ink mb-1">Standfirst <span className="text-grey">(optional)</span></label>
+          <textarea
+            value={standfirst}
+            onChange={(e) => setStandfirst(e.target.value)}
+            rows={2}
+            maxLength={220}
+            placeholder="A one or two sentence summary shown below the headline"
+            className="w-full border border-border px-3 py-2 font-body text-sm focus:outline-none focus:border-ink"
           />
         </div>
 

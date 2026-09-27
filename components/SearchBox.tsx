@@ -20,7 +20,7 @@ export default function SearchBox() {
         value={q}
         onChange={(e) => setQ(e.target.value)}
         placeholder="Search articles"
-        className="flex-1 min-w-0 border border-border rounded-sm px-3 py-1.5 text-sm text-ink bg-paper placeholder-grey focus:outline-none focus:border-accent"
+        className="flex-1 min-w-0 border border-border px-3 py-1.5 text-sm text-ink bg-paper placeholder-grey focus:outline-none focus:border-ink"
       />
       <button
         type="submit"

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { censorText } from "@/lib/profanity";
+import SmartTime from "@/components/SmartTime";
 
 type Comment = {
   id: string;
@@ -107,7 +108,7 @@ export default function CommentSection({ postId, isAdmin = false }: { postId: st
                 {c.profiles?.display_name ?? "Unknown"}
               </span>
               <span className="font-meta text-xs text-grey">
-                {new Date(c.created_at).toLocaleDateString()}
+                <SmartTime iso={c.created_at} />
               </span>
             </div>
             <p className="text-grey-dark mt-1 whitespace-pre-wrap">{c.body}</p>
@@ -136,7 +137,7 @@ export default function CommentSection({ postId, isAdmin = false }: { postId: st
             rows={3}
             maxLength={2000}
             placeholder="Add a comment…"
-            className="w-full border border-border rounded-sm px-3 py-2 font-body focus:outline-none focus:ring-2 focus:ring-accent"
+            className="w-full border border-border px-3 py-2 font-body focus:outline-none focus:border-ink"
           />
           {error && <p className="text-accent font-body text-sm">{error}</p>}
           <button

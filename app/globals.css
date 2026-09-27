@@ -142,6 +142,21 @@
   }
 }
 
+@media print {
+  header, nav, footer, [aria-live="polite"] {
+    display: none !important;
+  }
+  body {
+    color: #000;
+    background: #fff;
+  }
+  a[href]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    color: #555;
+  }
+}
+
 
 
 

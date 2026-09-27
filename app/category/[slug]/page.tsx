@@ -49,8 +49,21 @@ export default async function CategoryPage({
   const sidebar = rest.slice(0, 4);
   const gridPosts = rest.slice(4);
 
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://azande-news.vercel.app/" },
+      { "@type": "ListItem", position: 2, name: label, item: `https://azande-news.vercel.app/category/${params.slug}` },
+    ],
+  };
+
   return (
     <div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <div className="pb-6 mb-8 border-b-4 border-ink">
         <nav aria-label="Breadcrumb" className="font-meta text-brevier text-grey mb-3">
           <Link href="/" className="hover:underline">Home</Link>

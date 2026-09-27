@@ -118,11 +118,25 @@ export default async function PostPage({ params }: { params: { id: string } }) {
     },
   };
 
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://azande-news.vercel.app/" },
+      { "@type": "ListItem", position: 2, name: categoryLabel, item: `https://azande-news.vercel.app/category/${post.category}` },
+      { "@type": "ListItem", position: 3, name: post.title, item: `https://azande-news.vercel.app/posts/${post.id}` },
+    ],
+  };
+
   return (
     <div>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-8 gap-y-10">
         <article className="lg:col-span-8 min-w-0">

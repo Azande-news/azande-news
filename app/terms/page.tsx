@@ -4,7 +4,7 @@ export default function TermsPage() {
   return (
     <div className="max-w-2xl mx-auto">
       <h1 className="font-display text-canon sm:text-canon-lg font-medium text-ink mb-6">Terms of use</h1>
-      <div className="prose-article font-body text-ink/90 space-y-5">
+      <div className="prose-article font-body text-grey-dark space-y-5">
         <p>Last updated: July 2026</p>
         <p>
           By using Azande News, you agree to these terms. This is a community platform for news, culture, history and language relevant to the Azande people of Western Equatoria and

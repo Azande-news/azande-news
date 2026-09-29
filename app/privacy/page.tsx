@@ -4,7 +4,7 @@ export default function PrivacyPage() {
   return (
     <div className="max-w-2xl mx-auto">
       <h1 className="font-display text-canon sm:text-canon-lg font-medium text-ink mb-6">Privacy policy</h1>
-      <div className="prose-article font-body text-ink/90 space-y-5">
+      <div className="prose-article font-body text-grey-dark space-y-5">
         <p>Last updated: July 2026</p>
         <p>
           Azande News is a community-run project. We collect only the information needed to

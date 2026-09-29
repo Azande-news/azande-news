@@ -18,7 +18,7 @@ export default function ContactPage() {
         <p>
           <a
             href="mailto:azandenews@gmail.com"
-            className="text-accent hover:underline text-lg font-medium"
+            className="text-ink underline underline-offset-2 hover:no-underline text-lg font-medium"
           >
             azandenews@gmail.com
           </a>

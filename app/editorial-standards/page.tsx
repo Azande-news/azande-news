@@ -4,7 +4,7 @@ export default function EditorialStandardsPage() {
   return (
     <div className="max-w-2xl mx-auto">
       <h1 className="font-display text-canon sm:text-canon-lg font-medium text-ink mb-6">Editorial standards</h1>
-      <div className="prose-article font-body text-ink/90 space-y-5">
+      <div className="prose-article font-body text-grey-dark space-y-5">
         <p>
           Azande News is a community-run publication. We report news, culture and history for the Azande people, and we aim to get it right and be fair.
         </p>

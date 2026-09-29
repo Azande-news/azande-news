@@ -42,7 +42,7 @@ export default async function SearchPage({
           />
           <button
             type="submit"
-            className="bg-ink text-paper px-5 py-2.5 font-meta text-brevier font-semibold hover:bg-accent transition-colors"
+            className="bg-ink text-paper px-5 py-2.5 font-meta text-brevier font-semibold hover:opacity-90 transition-colors"
           >
             Search
           </button>

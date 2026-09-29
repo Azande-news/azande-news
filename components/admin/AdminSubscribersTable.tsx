@@ -35,12 +35,12 @@ export default function AdminSubscribersTable({ subscribers }: { subscribers: Su
         </p>
         <button
           onClick={copyAllEmails}
-          className="text-sm font-medium text-accent hover:underline shrink-0"
+          className="text-sm font-medium text-ink hover:underline shrink-0"
         >
           {copied ? "Copied!" : "Copy all emails"}
         </button>
       </div>
-      <div className="divide-y divide-border border border-border rounded-sm max-h-80 overflow-y-auto">
+      <div className="divide-y divide-border border border-border max-h-80 overflow-y-auto">
         {subscribers.map((s) => (
           <div key={s.id} className="py-2 px-3 flex items-center justify-between gap-3 font-body text-sm">
             <span className="text-ink">{s.email}</span>

@@ -63,7 +63,7 @@ export default function AdminPostsTable({ posts }: { posts: Post[] }) {
       {posts.map((post) => (
         <div key={post.id} className="py-4 flex flex-wrap items-center justify-between gap-3">
           <div>
-            <Link href={`/posts/${post.id}`} className="font-body font-medium text-ink hover:text-accent">
+            <Link href={`/posts/${post.id}`} className="font-body font-medium text-ink hover:underline">
               {post.title}
             </Link>
             <div className="font-meta text-xs text-grey mt-1">
@@ -89,7 +89,7 @@ export default function AdminPostsTable({ posts }: { posts: Post[] }) {
               <button
                 onClick={() => publishNow(post.id)}
                 disabled={busyId === post.id}
-                className="text-accent hover:underline disabled:opacity-50"
+                className="text-ink hover:underline disabled:opacity-50"
               >
                 Publish now
               </button>

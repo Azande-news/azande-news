@@ -75,42 +75,42 @@ export default async function AdminPage() {
       </p>
 
       <section className="mb-14">
-        <h2 className="font-display text-trafalgar font-medium text-ink border-l-4 border-accent pl-3 mb-4">
+        <h2 className="font-display text-trafalgar font-medium text-ink border-l-4 border-ink pl-3 mb-4">
           Overview
         </h2>
         <AdminAnalytics posts={(posts ?? []) as any} />
       </section>
 
       <section className="mb-14">
-        <h2 className="font-display text-trafalgar font-medium text-ink border-l-4 border-accent pl-3 mb-4">
+        <h2 className="font-display text-trafalgar font-medium text-ink border-l-4 border-ink pl-3 mb-4">
           Open reports
         </h2>
         <AdminReportsTable reports={(reports ?? []) as any} />
       </section>
 
       <section className="mb-14">
-        <h2 className="font-display text-trafalgar font-medium text-ink border-l-4 border-accent pl-3 mb-4">
+        <h2 className="font-display text-trafalgar font-medium text-ink border-l-4 border-ink pl-3 mb-4">
           Dictionary submissions ({dictionaryEntries?.length ?? 0})
         </h2>
         <AdminDictionaryTable entries={(dictionaryEntries ?? []) as any} />
       </section>
 
       <section className="mb-14">
-        <h2 className="font-display text-trafalgar font-medium text-ink border-l-4 border-accent pl-3 mb-4">
+        <h2 className="font-display text-trafalgar font-medium text-ink border-l-4 border-ink pl-3 mb-4">
           All posts ({posts?.length ?? 0})
         </h2>
         <AdminPostsTable posts={(posts ?? []) as any} />
       </section>
 
       <section className="mb-14">
-        <h2 className="font-display text-trafalgar font-medium text-ink border-l-4 border-accent pl-3 mb-4">
+        <h2 className="font-display text-trafalgar font-medium text-ink border-l-4 border-ink pl-3 mb-4">
           Newsletter subscribers ({subscribers?.length ?? 0})
         </h2>
         <AdminSubscribersTable subscribers={(subscribers ?? []) as any} />
       </section>
 
       <section>
-        <h2 className="font-display text-trafalgar font-medium text-ink border-l-4 border-accent pl-3 mb-4">
+        <h2 className="font-display text-trafalgar font-medium text-ink border-l-4 border-ink pl-3 mb-4">
           Users ({profiles?.length ?? 0})
         </h2>
         <AdminUsersTable profiles={(profiles ?? []) as any} currentUserId={user.id} />

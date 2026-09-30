@@ -16,6 +16,13 @@ async function googleSearch(query: string): Promise<SearchResult[]> {
   });
   const res = await fetch(`https://www.googleapis.com/customsearch/v1?${params.toString()}`);
   const data = await res.json();
+
+  if (data.error) {
+    throw new Error(
+      `Google Custom Search error (${data.error.code}): ${data.error.message}`
+    );
+  }
+
   return (data.items ?? []).map((item: any) => ({
     title: item.title,
     snippet: item.snippet,

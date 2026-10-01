@@ -98,7 +98,12 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ status: "no-search-results-this-week" });
     }
 
-    const searchResultsText = allResults
+    const trimmedResults = allResults.slice(0, 30).map((r) => ({
+      ...r,
+      snippet: r.snippet.length > 400 ? r.snippet.slice(0, 400) + "..." : r.snippet,
+    }));
+
+    const searchResultsText = trimmedResults
       .map((r, i) => `[${i + 1}] ${r.title}\n${r.snippet}\nURL: ${r.url}`)
       .join("\n\n");
 
@@ -143,8 +148,19 @@ ${searchResultsText}`;
       }),
     });
 
-    const data = await response.json();
-    const text = data.choices?.[0]?.message?.content ?? "{}";
+    const groqRawText = await response.text();
+
+    if (!response.ok) {
+      throw new Error(`Groq API error (HTTP ${response.status}): ${groqRawText}`);
+    }
+
+    const data = JSON.parse(groqRawText);
+    const text = data.choices?.[0]?.message?.content;
+
+    if (!text) {
+      throw new Error(`Groq returned no content: ${groqRawText}`);
+    }
+
     const parsed = JSON.parse(text);
 
     const debugMode = request.nextUrl.searchParams.get("debug") === "1";

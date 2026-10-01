@@ -1,3 +1,6 @@
+cd "$HOME\Downloads\azande-news"
+
+$routeCode = @'
 import { NextRequest, NextResponse } from "next/server";
 import { createClient as createServiceClient } from "@supabase/supabase-js";
 
@@ -152,3 +155,32 @@ ${searchResultsText}`;
     return NextResponse.json({ error: err.message ?? "Unknown error" }, { status: 500 });
   }
 }
+'@
+
+Set-Content -Path "app\api\cron\weekly-news\route.ts" -Value $routeCode -Encoding utf8
+Write-Host "REPLACED - app\api\cron\weekly-news\route.ts now uses Tavily instead of Google Custom Search" -ForegroundColor Green
+
+$envNote = @'
+
+# --- Switched from Google Custom Search to Tavily (no billing required) ---
+# Free API key from tavily.com - sign up, key is in your dashboard
+TAVILY_API_KEY=
+# GOOGLE_SEARCH_API_KEY and GOOGLE_SEARCH_CSE_ID are no longer used, safe to remove from Vercel
+'@
+
+if (Test-Path ".env.example") {
+    Add-Content -Path ".env.example" -Value $envNote -Encoding utf8
+    Write-Host "UPDATED - .env.example" -ForegroundColor Green
+}
+
+Write-Host ""
+Write-Host "Done. Review with 'git diff', then commit and push:" -ForegroundColor Cyan
+Write-Host "  git diff" -ForegroundColor White
+Write-Host "  git add ." -ForegroundColor White
+Write-Host "  git commit -m 'Switch from Google Custom Search to Tavily (no billing account required)'" -ForegroundColor White
+Write-Host "  git push" -ForegroundColor White
+Write-Host ""
+Write-Host "IN VERCEL:" -ForegroundColor Cyan
+Write-Host "  1. Add new variable: TAVILY_API_KEY (from your Tavily dashboard)" -ForegroundColor White
+Write-Host "  2. You can delete GOOGLE_SEARCH_API_KEY and GOOGLE_SEARCH_CSE_ID - no longer used" -ForegroundColor White
+Write-Host "  3. Redeploy" -ForegroundColor White

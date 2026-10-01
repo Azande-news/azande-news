@@ -147,6 +147,16 @@ ${searchResultsText}`;
     const text = data.choices?.[0]?.message?.content ?? "{}";
     const parsed = JSON.parse(text);
 
+    const debugMode = request.nextUrl.searchParams.get("debug") === "1";
+    if (debugMode) {
+      return NextResponse.json({
+        debug: true,
+        searchResultsCount: allResults.length,
+        searchResults: allResults,
+        groqDecision: parsed,
+      });
+    }
+
     if (!parsed.found) {
       return NextResponse.json({ status: "no-verifiable-news-found-this-week" });
     }

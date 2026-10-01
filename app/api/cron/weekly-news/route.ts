@@ -14,7 +14,9 @@ async function tavilySearch(query: string): Promise<SearchResult[]> {
     body: JSON.stringify({
       api_key: process.env.TAVILY_API_KEY,
       query,
-      max_results: 10,
+      topic: "news",
+      days: 10,
+      max_results: 8,
     }),
   });
 
@@ -68,16 +70,29 @@ export async function GET(request: NextRequest) {
 
   try {
     // Real search results, not model memory - this is what keeps drafts grounded in fact.
+    // Covers all three Azande regions plus the diaspora, not just South Sudan.
     const queries = [
-      "Azande people news",
-      "South Sudan Western Equatoria news this week",
-      "Yambio news",
+      "Azande people",
+      "Yambio South Sudan",
+      "Western Equatoria South Sudan",
+      "Dungu DR Congo",
+      "Isiro DR Congo",
+      "Haut-Uele DR Congo",
+      "Obo Central African Republic",
+      "Azande diaspora",
     ];
-    const allResults: SearchResult[] = [];
+    const rawResults: SearchResult[] = [];
     for (const q of queries) {
       const results = await tavilySearch(q);
-      allResults.push(...results);
+      rawResults.push(...results);
     }
+
+    const seenUrls = new Set<string>();
+    const allResults = rawResults.filter((r) => {
+      if (seenUrls.has(r.url)) return false;
+      seenUrls.add(r.url);
+      return true;
+    });
 
     if (allResults.length === 0) {
       return NextResponse.json({ status: "no-search-results-this-week" });

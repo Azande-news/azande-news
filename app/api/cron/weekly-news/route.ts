@@ -18,13 +18,23 @@ async function tavilySearch(query: string): Promise<SearchResult[]> {
     }),
   });
 
-  const data = await res.json();
+  const rawText = await res.text();
+
+  if (!res.ok) {
+    throw new Error(`Tavily search failed (HTTP ${res.status}): ${rawText}`);
+  }
+
+  const data = JSON.parse(rawText);
 
   if (data.error) {
     throw new Error(`Tavily search error: ${data.error}`);
   }
 
-  return (data.results ?? []).map((item: any) => ({
+  if (!Array.isArray(data.results)) {
+    throw new Error(`Tavily returned an unexpected shape: ${rawText}`);
+  }
+
+  return data.results.map((item: any) => ({
     title: item.title,
     snippet: item.content,
     url: item.url,

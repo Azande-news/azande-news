@@ -125,7 +125,7 @@ export async function GET(request: NextRequest) {
 
     const trimmedResults = allResults.slice(0, 30).map((r) => ({
       ...r,
-      snippet: r.snippet.length > 400 ? r.snippet.slice(0, 400) + "..." : r.snippet,
+      snippet: r.snippet.length > 1500 ? r.snippet.slice(0, 1500) + "..." : r.snippet,
     }));
 
     const searchResultsText = trimmedResults
@@ -141,6 +141,8 @@ export async function GET(request: NextRequest) {
     const systemPrompt = `You are a careful news researcher for Azande News, a community site for the Azande people of South Sudan, DR Congo, the Central African Republic, and the diaspora.
 
 Below are REAL web search results from this week. Use ONLY the information in these results. Do not add any fact, name, date, or detail that is not present in them - if it is not in the results, it does not go in the article.
+
+NEVER INVENT PLAUSIBLE-SOUNDING FILLER. Do not add reactions, causes, consequences, named officials, follow-up actions, or background that are not explicitly stated in the source text, even if they sound like the kind of thing that would plausibly happen in a story like this. Examples of what NOT to do: inventing that a release happened "following negotiations" when the source doesn't say why it happened; inventing that officials "urged" some response when no such statement is in the source; inventing that "local NGOs pledged support" or similar generic follow-up when it is not stated. If the source material only supports a short article, write a SHORT article using only confirmed facts - do not pad it out to a standard length with invented specifics. Every sentence must be traceable to something actually stated in the source text above. A short, fully accurate article is always better than a longer one containing invented plausible-sounding material.
 
 Look for ONE genuine, specific news story clearly relevant to the Azande people or their regions (Western Equatoria, Yambio, Haut-Uele, Bas-Uele, or the Azande diaspora), fitting one of these categories: general, culture, history, language, community, diaspora.
 

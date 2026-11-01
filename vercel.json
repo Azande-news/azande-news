@@ -1,8 +1,12 @@
 {
   "crons": [
     {
-      "path": "/api/cron/weekly-news",
-      "schedule": "0 9 * * 1"
+      "path": "/api/cron/daily-story",
+      "schedule": "0 6 * * *"
+    },
+    {
+      "path": "/api/cron/daily-briefing",
+      "schedule": "0 8 * * *"
     }
   ]
 }

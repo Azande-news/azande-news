@@ -5,7 +5,7 @@ export const dynamic = "force-dynamic";
 
 const ALLOWED_CATEGORIES = ["general", "culture", "history", "language", "community", "diaspora"];
 
-type SearchResult = { title: string; snippet: string; url: string };
+type SearchResult = { title: string; snippet: string; url: string; query?: string; published?: string };
 
 type ImageCandidate = { url: string; description: string };
 
@@ -36,6 +36,8 @@ const RELEVANCE_TERMS = [
   "azande", "azandé", "zande", "yambio", "western equatoria", "tombura", "tambura",
   "mundri", "ibba", "nzara", "ezo", "haut-uele", "haut-uélé", "bas-uele", "bas-uélé",
   "dungu", "isiro", "obo", "zemio", "rafai", "rafaï",
+  "maridi", "mvolo", "niangara", "rungu", "ango", "bondo", "bambesa", "poko", "wamba",
+  "faradje", "watsa", "haut-mbomou", "mbomou", "bambouti", "djema", "mboki", "bangassou",
 ];
 
 const MONTHS = "january|february|march|april|may|june|july|august|september|october|november|december";
@@ -52,6 +54,59 @@ function relevanceScore(r: SearchResult): number {
   }
   if (DATE_SIGNAL.test(text)) score += 2;
   return score;
+}
+
+function hasRegionTerm(r: SearchResult): boolean {
+  const text = `${r.title} ${r.snippet ?? ""}`.toLowerCase();
+  return RELEVANCE_TERMS.some((term) => new RegExp(`(^|[^a-zé])${term}([^a-zé]|$)`).test(text));
+}
+
+// Drops results whose own published date (when the search supplies one) is clearly too old.
+function isStale(r: SearchResult, maxDays: number): boolean {
+  if (!r.published) return false;
+  const t = Date.parse(r.published);
+  if (Number.isNaN(t)) return false;
+  return Date.now() - t > maxDays * 24 * 60 * 60 * 1000;
+}
+
+function isOwnSite(url: string): boolean {
+  try {
+    return new URL(url).hostname.endsWith("azande-news.vercel.app");
+  } catch {
+    return false;
+  }
+}
+
+function stripTags(html: string): string {
+  return html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+}
+
+function contentStems(text: string): string[] {
+  return (text.toLowerCase().match(/[a-zà-ÿ0-9]{5,}/g) ?? []).map((w) => w.slice(0, 5));
+}
+
+function numbersIn(text: string): string[] {
+  return (text.match(/\d[\d,]*\d|\d/g) ?? []).map((n) => n.replace(/,/g, ""));
+}
+
+// Warns the reviewer about sentences whose wording or numbers are not found in the cited sources.
+function findUnsupportedSentences(bodyHtml: string, sourceText: string): string[] {
+  const sourceStems = new Set(contentStems(sourceText));
+  const sourceNumbers = new Set(numbersIn(sourceText));
+  const withoutSources = bodyHtml.split(/<h[23][^>]*>\s*Sources/i)[0];
+  const sentences = stripTags(withoutSources).match(/[^.!?]+[.!?]+/g) ?? [];
+  const flagged: string[] = [];
+
+  for (const raw of sentences) {
+    const sentence = raw.trim();
+    const stems = contentStems(sentence);
+    if (sentence.length < 40 || stems.length < 5) continue;
+
+    const supported = stems.filter((s) => sourceStems.has(s)).length;
+    const missingNumber = numbersIn(sentence).some((n) => !sourceNumbers.has(n));
+    if (supported / stems.length < 0.6 || missingNumber) flagged.push(sentence);
+  }
+  return flagged;
 }
 
 function isSocialHost(url: string): boolean {
@@ -146,6 +201,37 @@ async function fetchOgImage(pageUrl: string): Promise<ResolvedImage | null> {
 }
 
 // Picks the cover image. Only ever uses URLs that came from real search results.
+// Debug only: explains why a source article's own photo could or could not be found.
+async function probeOgImage(pageUrl: string, results: SearchResult[]) {
+  if (!pageUrl.startsWith("https://") || !results.some((r) => r.url === pageUrl)) {
+    return { note: "source URL was not one of the search results" };
+  }
+  try {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 8000);
+    try {
+      const res = await fetch(pageUrl, {
+        headers: {
+          "User-Agent": "Mozilla/5.0 (compatible; AzandeNewsBot/1.0; +https://azande-news.vercel.app)",
+          Accept: "text/html",
+        },
+        signal: controller.signal,
+        redirect: "follow",
+      });
+      const html = res.ok ? (await res.text()).slice(0, 300000) : "";
+      return {
+        httpStatus: res.status,
+        htmlLength: html.length,
+        ogImage: html ? getMetaContent(html, ["og:image", "og:image:url", "twitter:image"]) : null,
+      };
+    } finally {
+      clearTimeout(timer);
+    }
+  } catch {
+    return { note: "request failed or timed out" };
+  }
+}
+
 async function resolveCoverImage(
   parsed: any,
   results: SearchResult[],
@@ -160,7 +246,7 @@ async function resolveCoverImage(
   }
 
   const chosen = typeof parsed.coverImageUrl === "string" ? parsed.coverImageUrl.trim() : "";
-  if (chosen) {
+  if (chosen && ["history", "culture", "language"].includes(String(parsed.category))) {
     const match = candidates.find((c) => c.url === chosen);
     if (match && match.url.startsWith("https://")) {
       let credit: string | null = typeof parsed.coverImageCredit === "string" ? parsed.coverImageCredit : null;
@@ -215,6 +301,7 @@ async function tavilySearch(query: string): Promise<{ results: SearchResult[]; i
     title: item.title,
     snippet: item.content,
     url: item.url,
+    published: item.published_date ?? item.publishedDate ?? undefined,
   }));
 
   const images: ImageCandidate[] = Array.isArray(data.images)
@@ -270,7 +357,7 @@ export async function GET(request: NextRequest) {
     const rawImages: ImageCandidate[] = [];
     for (const q of queries) {
       const { results, images } = await tavilySearch(q);
-      rawResults.push(...results);
+      rawResults.push(...results.map((r) => ({ ...r, query: q })));
       rawImages.push(...images);
     }
 
@@ -298,7 +385,7 @@ export async function GET(request: NextRequest) {
     const RESULTS_CHAR_BUDGET = 8000;
 
     const ranked = allResults
-      .filter((r) => !JUNK_TITLE_PATTERNS.some((p) => p.test(r.title)) && !isSocialHost(r.url))
+      .filter((r) => !JUNK_TITLE_PATTERNS.some((p) => p.test(r.title)) && !isSocialHost(r.url) && !isOwnSite(r.url) && hasRegionTerm(r) && !isStale(r, 14))
       .map((r, index) => ({ r, index, score: relevanceScore(r) }))
       .sort((a, b) => b.score - a.score || a.index - b.index);
 
@@ -306,7 +393,24 @@ export async function GET(request: NextRequest) {
     const keptTitleTokens: Set<string>[] = [];
     let usedChars = 0;
 
+    // Take the best result from each search in turn, so one big story cannot crowd out the rest.
+    const byQuery = new Map<string, SearchResult[]>();
     for (const { r } of ranked) {
+      const key = r.query ?? "other";
+      const list = byQuery.get(key) ?? [];
+      list.push(r);
+      byQuery.set(key, list);
+    }
+    const queryLists = Array.from(byQuery.values());
+    const longest = queryLists.reduce((m, l) => Math.max(m, l.length), 0);
+    const interleaved: SearchResult[] = [];
+    for (let i = 0; i < longest; i++) {
+      for (const list of queryLists) {
+        if (list[i]) interleaved.push(list[i]);
+      }
+    }
+
+    for (const r of interleaved) {
       const tokens = titleTokens(r.title);
       if (keptTitleTokens.some((k) => titleSimilarity(tokens, k) >= 0.4)) continue;
 
@@ -325,7 +429,7 @@ export async function GET(request: NextRequest) {
     }
 
     const searchResultsText = trimmedResults
-      .map((r, i) => `[${i + 1}] ${r.title}\n${r.snippet}\nURL: ${r.url}`)
+      .map((r, i) => `[${i + 1}] ${r.title}\n${r.snippet}\nURL: ${r.url}${r.published ? `\nPublished: ${r.published}` : ""}`)
       .join("\n\n");
 
     const imageCandidatesText = allImages.length > 0
@@ -334,11 +438,18 @@ export async function GET(request: NextRequest) {
           .join("\n\n")
       : "No candidate images were found.";
 
+    const fmtDate = (d: Date) =>
+      d.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
+    const todayText = fmtDate(new Date());
+    const cutoffText = fmtDate(new Date(Date.now() - 10 * 24 * 60 * 60 * 1000));
+
     const systemPrompt = `You are a careful news researcher for Azande News, a community site for the Azande people of South Sudan, DR Congo, the Central African Republic, and the diaspora.
+
+TODAY'S DATE IS ${todayText}. A story counts as fresh news only if the event itself happened on or after ${cutoffText}. Anything older is background and must not be presented as current news (the history category is the only exception). Each search result below may show a Published date; use it, together with the dates stated in the text, to judge freshness.
 
 Below are REAL web search results from this week. Use ONLY the information in these results. Do not add any fact, name, date, or detail that is not present in them - if it is not in the results, it does not go in the article.
 
-NEVER INVENT PLAUSIBLE-SOUNDING FILLER. Do not add reactions, causes, consequences, named officials, follow-up actions, or background that are not explicitly stated in the source text, even if they sound like the kind of thing that would plausibly happen in a story like this. Examples of what NOT to do: inventing that a release happened "following negotiations" when the source doesn't say why it happened; inventing that officials "urged" some response when no such statement is in the source; inventing that "local NGOs pledged support" or similar generic follow-up when it is not stated. If the source material only supports a short article, write a SHORT article using only confirmed facts - do not pad it out to a standard length with invented specifics. Every sentence must be traceable to something actually stated in the source text above. A short, fully accurate article is always better than a longer one containing invented plausible-sounding material.
+NEVER INVENT PLAUSIBLE-SOUNDING FILLER. Do not add reactions, causes, consequences, named officials, follow-up actions, or background that are not explicitly stated in the source text, even if they sound like the kind of thing that would plausibly happen in a story like this. Examples of what NOT to do: inventing that a release happened "following negotiations" when the source doesn't say why it happened; inventing that officials "urged" some response when no such statement is in the source; inventing that "local NGOs pledged support" or similar generic follow-up when it is not stated. If the source material only supports a short article, write a SHORT article using only confirmed facts - do not pad it out to a standard length with invented specifics. Every sentence must be traceable to something actually stated in the source text above. A short, fully accurate article is always better than a longer one containing invented plausible-sounding material. Attribute every statement to exactly the person or organisation the source says made it - never move a statement from one body to another (for example, do not credit a national agency's warning to an international organisation). Do not add general background knowledge (what a town or region is known for, who lives there, why a topic is "relevant to local communities") unless it appears in the source text; if the source does not state a link to the Azande people or their regions, say only what the source states.
 
 Look for ONE genuine, specific news story clearly relevant to the Azande people or their regions (Western Equatoria, Yambio, Haut-Uele, Bas-Uele, or the Azande diaspora), fitting one of these categories: general, culture, history, language, community, diaspora.
 
@@ -411,6 +522,21 @@ ${imageCandidatesText}`;
 
     const parsed = JSON.parse(text);
 
+    const citedTexts = trimmedResults
+      .filter(
+        (r) =>
+          (typeof parsed.body === "string" && parsed.body.includes(r.url)) ||
+          r.url === parsed.primarySourceUrl
+      )
+      .map((r) => `${r.title} ${r.snippet} ${r.url}`);
+    const groundingText = (
+      citedTexts.length > 0 ? citedTexts : trimmedResults.map((r) => `${r.title} ${r.snippet} ${r.url}`)
+    ).join(" ");
+    const unsupportedSentences: string[] =
+      parsed.found && typeof parsed.body === "string"
+        ? findUnsupportedSentences(parsed.body, groundingText)
+        : [];
+
     const resolvedImage = parsed.found
       ? await resolveCoverImage(parsed, allResults, allImages)
       : null;
@@ -422,8 +548,13 @@ ${imageCandidatesText}`;
         searchResultsCount: allResults.length,
         searchResults: allResults,
         promptChars: systemPrompt.length,
+        unsupportedSentences,
         resolvedImage,
-        sentToModel: trimmedResults.map((r) => ({ title: r.title, url: r.url, chars: r.snippet.length })),
+        ogProbe:
+          parsed.found && typeof parsed.primarySourceUrl === "string"
+            ? await probeOgImage(parsed.primarySourceUrl, allResults)
+            : null,
+        sentToModel: trimmedResults.map((r) => ({ title: r.title, url: r.url, published: r.published, chars: r.snippet.length })),
         imageCandidatesCount: allImages.length,
         imageCandidates: allImages,
         groqDecision: parsed,
@@ -449,7 +580,16 @@ ${imageCandidatesText}`;
         image_caption: resolvedImage?.caption ?? null,
         status: "pending",
         ai_flagged: true,
-        ai_flag_reason: "AI-drafted from real web search results. Review the sources listed in the article before publishing.",
+        ai_flag_reason:
+          "AI-drafted from real web search results. Review the sources listed in the article before publishing." +
+          (resolvedImage
+            ? ` Cover image is the publisher's lead photo for the source article (${resolvedImage.credit ?? "source"}); confirm it fits this story.`
+            : "") +
+          (unsupportedSentences.length > 0
+            ? ` Check these sentences against the sources (little overlap with the cited text): ${unsupportedSentences
+                .map((s) => `"${s}"`)
+                .join(" | ")}`
+            : ""),
       })
       .select("id")
       .single();

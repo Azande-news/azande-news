@@ -66,6 +66,7 @@ export default function Footer() {
           <Link href="/privacy" className="hover:text-white transition-colors">Privacy policy</Link>
           <Link href="/terms" className="hover:text-white transition-colors">Terms of use</Link>
           <Link href="/editorial-standards" className="hover:text-white transition-colors">Editorial guidelines</Link>
+          <a href="/feed.xml" className="hover:text-white transition-colors">RSS feed</a>
         </nav>
 
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-xs font-meta text-white/50">

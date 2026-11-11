@@ -466,23 +466,28 @@ function sanitizeHtml(html: string): string {
   });
 }
 
+function matches(text: string, re: RegExp): string[] {
+  const found = text.match(re);
+  return found ? Array.from(found) : [];
+}
+
 function stripTags(html: string): string {
   return html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
 }
 
 function contentStems(text: string): string[] {
-  return (text.toLowerCase().match(/[a-zà-ÿ0-9]{5,}/g) ?? []).map((w) => w.slice(0, 5));
+  return matches(text.toLowerCase(), /[a-zà-ÿ0-9]{5,}/g).map((w) => w.slice(0, 5));
 }
 
 function numbersIn(text: string): string[] {
-  return (text.match(/\d[\d,]*\d|\d/g) ?? []).map((n) => n.replace(/,/g, ""));
+  return matches(text, /\d[\d,]*\d|\d/g).map((n) => n.replace(/,/g, ""));
 }
 
 // Lists sentences whose wording or numbers do not appear in the cited sources.
 function findUnsupportedSentences(html: string, sourceText: string): string[] {
   const sourceStems = new Set(contentStems(sourceText));
   const sourceNumbers = new Set(numbersIn(sourceText));
-  const sentences = stripTags(html).match(/[^.!?]+[.!?]+/g) ?? [];
+  const sentences = matches(stripTags(html), /[^.!?]+[.!?]+/g);
   const flagged: string[] = [];
   sentences.forEach((raw) => {
     const sentence = raw.trim();
@@ -540,7 +545,7 @@ function getAttr(tag: string, name: string): string | null {
 }
 
 function getMetaContent(html: string, keys: string[]): string | null {
-  const tags = html.match(/<meta\b[^>]*>/gi) ?? [];
+  const tags = matches(html, /<meta\b[^>]*>/gi);
   for (const wanted of keys) {
     for (const tag of tags) {
       const key = (getAttr(tag, "property") ?? getAttr(tag, "name") ?? "").toLowerCase();
